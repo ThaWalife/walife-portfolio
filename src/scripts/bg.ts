@@ -3,10 +3,9 @@
 import { ShaderMount, meshGradientFragmentShader, getShaderColorFromString } from '@paper-design/shaders';
 
 const HERO = ['#0d9e5b', '#0d9e5b', '#f4f4f4', '#0d9e5b', '#0d9e5b'];
-const PAGE = ['#f4f4f4', '#f4f4f4', '#0d9e5b', '#f4f4f4', '#f4f4f4'];
 
-export function mountHeroShader(el: HTMLElement, reduced: boolean, page = false) {
-  const colors = (page ? PAGE : HERO).map(getShaderColorFromString);
+export function mountHeroShader(el: HTMLElement, reduced: boolean) {
+  const colors = HERO.map(getShaderColorFromString);
   const uniforms: Record<string, unknown> = {
     u_colors: colors,
     u_colorsCount: colors.length,

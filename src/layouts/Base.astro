@@ -50,7 +50,6 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
     </script>
   </head>
   <body data-page={page}>
-    <div class="page-shader" aria-hidden="true" data-shader-page></div>
     <a class="skip" href="#main">{t(lang, 'skip')}</a>
     <header class="pillbar">
       <a class="brand" href={url(routes.home[lang])} aria-label="Walife — Home" data-snd>
@@ -81,6 +80,7 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
     <main id="main">
       <slot />
     </main>
+    <canvas class="leaf-bg" aria-hidden="true" data-leaves></canvas>
     <footer class="site-footer">
       <div class="wrap">
         <a class="label" href="#main" data-top>{t(lang, 'toTop')}</a>

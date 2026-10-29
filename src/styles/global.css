@@ -41,9 +41,10 @@ em { font-style: normal; color: var(--green); }
 p { margin: 0; }
 .wrap { padding-inline: var(--margin); max-width: 1920px; margin-inline: auto; }
 .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); }
-section, .band { position: relative; z-index: 1; }
-.page-shader { position: fixed; inset: 0; z-index: -1; }
-.page-shader canvas { width: 100% !important; height: 100% !important; display: block; }
+/* ordine di pittura: sfondi sezione (z auto) < foglie (z1) < contenuto (z2) < logo 3D (z5) */
+section, .band { position: relative; }
+.wrap, .pin-wrap, .marquee, .pat, .site-footer { position: relative; z-index: 2; }
+.leaf-bg { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
 
 /* ───────── nav a pillole flottanti ───────── */
 .pillbar { position: fixed; inset: 16px var(--margin) auto var(--margin); z-index: 60; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; pointer-events: none; }

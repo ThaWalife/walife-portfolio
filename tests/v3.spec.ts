@@ -184,3 +184,24 @@ test('callout: i punti di partenza cadono su pixel opachi del logo (allineati ai
   expect(hits).toHaveLength(4);
   for (const a of hits) expect(a).toBeGreaterThan(250);
 });
+
+test('sfondo foglie: canvas dietro al contenuto, disegna pixel, statico con reduced-motion', async ({ page, browser }) => {
+  await page.goto('archivio/');
+  await page.waitForTimeout(1200);
+  const z = await page.locator('.leaf-bg').evaluate((c) => getComputedStyle(c).zIndex);
+  expect(z).toBe('1');
+  const ink = await page.locator('.leaf-bg').evaluate((c: HTMLCanvasElement) => {
+    const d = c.getContext('2d')!.getImageData(0, 0, c.width, c.height).data;
+    let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i] > 40) n++;
+    return n;
+  });
+  expect(ink).toBeGreaterThan(500);
+  const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+  const p2 = await ctx.newPage();
+  await p2.goto('archivio/');
+  await p2.waitForTimeout(800);
+  const a = await p2.locator('.leaf-bg').evaluate((c: HTMLCanvasElement) => c.toDataURL());
+  await p2.waitForTimeout(700);
+  expect(await p2.locator('.leaf-bg').evaluate((c: HTMLCanvasElement) => c.toDataURL())).toBe(a);
+  await ctx.close();
+});

@@ -2,9 +2,9 @@
 import './fx';
 import './sound';
 
-// sfondo di pagina (dietro al vetro): shader caricato lazy, statico con reduced-motion
-const pageShader = document.querySelector<HTMLElement>('[data-shader-page]');
-if (pageShader) import('./bg').then((m) => m.mountHeroShader(pageShader, matchMedia('(prefers-reduced-motion: reduce)').matches, true)).catch(() => { /* resta il bianco */ });
+// campo di foglie dietro al vetro (canvas 2D, statico con reduced-motion)
+const leafCanvas = document.querySelector<HTMLCanvasElement>('[data-leaves]');
+if (leafCanvas) import('./leaves').then((m) => m.mountLeaves(leafCanvas, matchMedia('(prefers-reduced-motion: reduce)').matches)).catch(() => { /* resta lo sfondo piatto */ });
 
 const store = {
   get: (k: string) => { try { return localStorage.getItem(k); } catch { return null; } },
