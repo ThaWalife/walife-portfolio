@@ -63,18 +63,6 @@ if (fine && !reduced) {
   });
 }
 
-// ── magnetici
-if (fine && !reduced) {
-  document.querySelectorAll<HTMLElement>('[data-magnet]').forEach((el) => {
-    el.addEventListener('pointermove', (e) => {
-      const r = el.getBoundingClientRect();
-      const dx = (e.clientX - (r.left + r.width / 2)) * 0.28, dy = (e.clientY - (r.top + r.height / 2)) * 0.28;
-      el.style.transform = `translate(${dx}px,${dy}px)`;
-    });
-    el.addEventListener('pointerleave', () => { el.style.transform = ''; });
-  });
-}
-
 // ── wipe di pagina a 43° (uscita: copre; ingresso: scopre)
 const wipe = document.querySelector<HTMLElement>('.wipe')!;
 const SLANT = 1 / Math.tan((43 * Math.PI) / 180); // dx per dy

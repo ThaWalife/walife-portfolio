@@ -1,11 +1,8 @@
-// Home: sfondo hero (gradiente Paper), CTA in liquid glass, parallasse, shelf progetti pinned con focus.
+// Home: CTA in liquid glass, parallasse, shelf progetti pinned con focus.
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine = matchMedia('(pointer: fine)').matches;
 const stack = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
 const clamp = (v: number, a = 0, b = 1) => Math.min(Math.max(v, a), b);
-
-const shaderEl = document.querySelector<HTMLElement>('[data-shader]');
-if (shaderEl) import('./bg').then((m) => m.mountHeroShader(shaderEl, reduced)).catch(() => { /* resta il verde piatto */ });
 
 // CTA hero in liquid glass: solo mouse, senza reduced-motion, dopo che la scena è pronta
 const glassSlot = document.querySelector<HTMLElement>('[data-glass]');

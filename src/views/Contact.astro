@@ -14,7 +14,7 @@ const email = site.SOCIALS.find((s) => s.name === 'Email')!;
       <span class="label">{t(lang, 'ctIdx')}</span>
       <h1 data-split style="font-size:clamp(48px,9vw,136px)">{t(lang, 'contactTitle')}<em>.</em></h1>
       <p style="max-width:44ch;color:var(--fg-soft);font-size:clamp(18px,1.8vw,26px);line-height:1.5">{t(lang, 'contactIntro')}</p>
-      <a class="mail" data-magnet data-cursor="MAIL" href={email.url}>{email.handle}</a>
+      <a class="mail" data-cursor="MAIL" href={email.url}>{email.handle}</a>
       <span class="label" style="margin-top:12px">{t(lang, 'channels')}</span>
       <ul class="socials" style="margin-top:0">
         {(site.SOCIALS as any[]).filter((s) => s.name !== 'Email').map((s) => (

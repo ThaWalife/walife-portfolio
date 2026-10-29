@@ -10,7 +10,7 @@ import { routes, t, type Lang, type PageKey } from '../lib/i18n';
 interface Props { lang: Lang; page: PageKey; title: string; description: string; home?: boolean }
 const { lang, page, title, description, home = false } = Astro.props;
 const abs = (p: string) => new URL(url(p), Astro.site).href;
-const label = (k: PageKey) => (k === 'home' ? t(lang, 'home') : k === 'archive' ? t(lang, 'navArchive') : k === 'about' ? t(lang, 'navAbout') : t(lang, 'navContact'));
+const label = (k: PageKey) => (k === 'privacy' ? t(lang, 'privacy') : k === 'home' ? t(lang, 'home') : k === 'archive' ? t(lang, 'navArchive') : k === 'about' ? t(lang, 'navAbout') : t(lang, 'navContact'));
 const center: PageKey[] = ['home', 'archive', 'about'];
 const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
 ---
@@ -52,12 +52,12 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
   <body data-page={page}>
     <a class="skip" href="#main">{t(lang, 'skip')}</a>
     <header class="pillbar">
-      <a class="brand" href={url(routes.home[lang])} aria-label="Walife — Home" data-snd>
+      <a class="brand" href={url(routes.home[lang])} aria-label="Walife, Home" data-snd>
         <img src={url('brand/walife-lockup-horizontal-green.svg')} alt="Walife" width="66" height="26" />
       </a>
       <nav class="pill center" aria-label="Main">
         {center.map((k) => (
-          <a href={url(routes[k][lang])} aria-current={k === page ? 'page' : undefined} data-snd data-magnet>{label(k)}</a>
+          <a href={url(routes[k][lang])} aria-current={k === page ? 'page' : undefined} data-snd>{label(k)}</a>
         ))}
       </nav>
       <div class="right">
@@ -83,8 +83,9 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
     <footer class="site-footer">
       <div class="wrap">
         <a class="label" href="#main" data-top>{t(lang, 'toTop')}</a>
+        <a class="label" href={url(routes.privacy[lang])}>{t(lang, 'privacy')}</a>
         <span class="label">{t(lang, 'ctTime')} <span data-clock>--:--</span> CET</span>
-        <span class="label">© 2026 Walife — Federico Marini</span>
+        <span class="label">© 2026 Walife · Federico Marini</span>
       </div>
     </footer>
     <div class="cursor" aria-hidden="true"><span data-cursor-label></span></div>

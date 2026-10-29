@@ -2,11 +2,13 @@
 import Base from '../layouts/Base.astro';
 import PatternBand from '../components/PatternBand.astro';
 import site from '../content/site.json';
+import logoRaw from '../assets/walife-logo.svg?raw';
 import { url } from '../lib/url';
 import { routes, t, loc, type Lang } from '../lib/i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
+const logoSvg = logoRaw.replace(/<style>[\s\S]*?<\/style>/, '').replace(/<defs>\s*<\/defs>/, '').replace(/class="cls-1"/g, '');
 const featured = (site.PROJECTS as any[]).slice(0, 4);
 const services = [1, 2, 3, 4].map((n) => ({ t: t(lang, `s${n}t`), p: t(lang, `s${n}p`) }));
 const email = site.SOCIALS.find((s) => s.name === 'Email')!;
@@ -15,8 +17,8 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
 ---
 <Base lang={lang} page="home" home title={t(lang, 'docTitle')} description={t(lang, 'docDesc')}>
   <section class="hero on-green" id="hero" data-hero>
-    <div class="hero-shader" aria-hidden="true" data-shader></div>
     <img class="hero-wm" src={url('brand/walife-wordmark-white.svg')} alt="" aria-hidden="true" width="1057" height="414" decoding="async" />
+    <div class="hero-logo" aria-hidden="true" set:html={logoSvg} />
     <div class="wrap hero-grid">
       <div class="meta">
         <span class="label">{t(lang, 'eyebrow')}</span>
@@ -25,7 +27,7 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
       <div class="bl">
         <h1 data-split>{t(lang, 'tagline')}</h1>
         <div class="glass-slot" data-glass data-glass-base={url('vendor/liquid-glass/')} data-glass-text={t(lang, 'open')}>
-          <a class="btn" href={url(routes.archive[lang])} data-magnet data-snd>{t(lang, 'open')} <span class="arr" aria-hidden="true">↘</span></a>
+          <a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'open')} <span class="arr" aria-hidden="true">↘</span></a>
         </div>
       </div>
       <p class="scroll label" aria-hidden="true">{t(lang, 'drag')} ↓</p>
@@ -46,7 +48,7 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
         <div class="gtrack" data-track>
           {featured.map((p, i) => (
             <a class="slide" href={`https://thawalife.com/p/${p.slug}.html`} target="_blank" rel="noopener" data-cursor="OPEN" data-snd data-slide>
-              <div class="im"><img src={url(p.img)} alt={`${loc(p.title, lang)} — ${p.tags[lang]}`} width="900" height="900" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" /></div>
+              <div class="im"><img src={url(p.img)} alt={`${loc(p.title, lang)}, ${p.tags[lang]}`} width="900" height="900" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" /></div>
               <div class="meta">
                 <div><span class="n">0{i + 1}</span><h3>{loc(p.title, lang)}</h3><span class="tags">{p.tags[lang]}</span></div>
                 <span class="go">{t(lang, 'openProject')} ↗</span>
@@ -55,7 +57,7 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
           ))}
           <div class="end-slide">
             <p class="label">{t(lang, 'arIdx')}</p>
-            <a class="btn" href={url(routes.archive[lang])} data-magnet data-snd>{t(lang, 'menuAll')}</a>
+            <a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'menuAll')}</a>
           </div>
         </div>
       </div>
@@ -74,7 +76,6 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
               <div class="svc-row" role="listitem" tabindex="0" data-snd>
                 <span class="n">0{i + 1}</span>
                 <h3>{s.t}</h3>
-                <span class="arr" aria-hidden="true">↗</span>
                 <p>{s.p}</p>
               </div>
             ))}
@@ -88,7 +89,7 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
       <span class="label">{t(lang, 'arIdx')}</span>
       <h2 data-split set:html={t(lang, 'arTitle')} />
       <p>{t(lang, 'arCopy')}</p>
-      <div><a class="btn" href={url(routes.archive[lang])} data-magnet data-snd>{t(lang, 'menuAll')}</a></div>
+      <div><a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'menuAll')}</a></div>
     </div>
   </section>
   <PatternBand />
@@ -97,10 +98,10 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
     <div class="wrap contact-big">
       <span class="label rv">{t(lang, 'ctIdx')}</span>
       <h2 data-split>{t(lang, 'ctLead')} <em>{t(lang, 'ctLink')}</em></h2>
-      <a class="mail" href={email.url} data-magnet data-cursor="MAIL">{email.handle}</a>
+      <a class="mail" href={email.url} data-cursor="MAIL">{email.handle}</a>
       <ul class="socials rv">
         {(site.SOCIALS as any[]).filter((s) => s.name !== 'Email').map((s) => (
-          <li><a href={s.url} target="_blank" rel="noopener" data-snd data-magnet><span class="label">{s.name} ↗</span><span class="h">{s.handle}</span></a></li>
+          <li><a href={s.url} target="_blank" rel="noopener" data-snd><span class="label">{s.name} ↗</span><span class="h">{s.handle}</span></a></li>
         ))}
       </ul>
     </div>

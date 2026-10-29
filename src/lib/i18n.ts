@@ -1,13 +1,14 @@
 import site from '../content/site.json';
 
 export type Lang = 'it' | 'en';
-export type PageKey = 'home' | 'archive' | 'about' | 'contact';
+export type PageKey = 'home' | 'archive' | 'about' | 'contact' | 'privacy';
 
 export const routes: Record<PageKey, Record<Lang, string>> = {
   home: { it: '', en: 'en/' },
   archive: { it: 'archivio/', en: 'en/archive/' },
   about: { it: 'chi-sono/', en: 'en/about/' },
   contact: { it: 'contatti/', en: 'en/contact/' },
+  privacy: { it: 'privacy/', en: 'en/privacy/' },
 };
 
 export const dict = site.DICT as unknown as Record<Lang, Record<string, any>>;
@@ -25,6 +26,7 @@ const extra: Record<Lang, Record<string, string>> = {
     lang: 'Lingua',
     skip: 'Vai al contenuto',
     sound: 'Suono',
+    privacy: 'Privacy e condizioni',
     drag: 'Scorri',
     featured: '02 / In primo piano',
     contactIntro: 'Scrivimi, rispondo volentieri.',
@@ -47,6 +49,7 @@ const extra: Record<Lang, Record<string, string>> = {
     lang: 'Language',
     skip: 'Skip to content',
     sound: 'Sound',
+    privacy: 'Privacy and terms',
     drag: 'Scroll',
     featured: '02 / Featured',
     contactIntro: 'Write to me, I’m happy to reply.',
