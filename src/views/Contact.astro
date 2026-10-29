@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import PatternBand from '../components/PatternBand.astro';
+import site from '../content/site.json';
+import { t, type Lang } from '../lib/i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const email = site.SOCIALS.find((s) => s.name === 'Email')!;
+---
+<Base lang={lang} page="contact" title={t(lang, 'docTitleContact')} description={t(lang, 'docDescContact')}>
+  <section class="inner on-green" style="min-height:70vh">
+    <div class="wrap contact-big">
+      <span class="label">{t(lang, 'ctIdx')}</span>
+      <h1 data-split style="font-size:clamp(48px,9vw,136px)">{t(lang, 'contactTitle')}<em>.</em></h1>
+      <p style="max-width:44ch;color:var(--fg-soft);font-size:clamp(18px,1.8vw,26px);line-height:1.5">{t(lang, 'contactIntro')}</p>
+      <a class="mail" data-magnet data-cursor="MAIL" href={email.url}>{email.handle}</a>
+      <span class="label" style="margin-top:12px">{t(lang, 'channels')}</span>
+      <ul class="socials" style="margin-top:0">
+        {(site.SOCIALS as any[]).filter((s) => s.name !== 'Email').map((s) => (
+          <li><a href={s.url} target="_blank" rel="noopener"><span class="label">{s.name} ↗</span><span class="h">{s.handle}</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <PatternBand />
+</Base>

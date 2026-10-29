@@ -1,0 +1,30 @@
+---
+// Pattern Renewal: scacchiera di moduli quadrati a polarità alternata (verde ↔ bianco), ogni modulo mostra
+// una finestra sul simbolo con colore opposto allo sfondo; rotazioni solo a passi di 90°. Colonne DISPARI
+// → la polarità segue la parità dell'indice anche andando a capo (scacchiera vera a qualsiasi larghezza).
+import logoRaw from '../assets/walife-logo.svg?raw';
+const paths = [...logoRaw.matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]);
+const W = 269.13, H = 414.41, S = 230;
+// finestre (x,y) sul simbolo, scelte in sequenza fissa: nessun casuale
+const wins = [[20, 10], [40, 100], [0, 200], [40, 190], [10, 60], [40, 0], [30, 150], [0, 120]];
+const cells = Array.from({ length: 26 }, (_, i) => {
+  const [x, y] = wins[(i * 3) % wins.length];
+  return { i, a: i % 2 === 0, x: Math.min(x, W - S + 40), y: Math.min(y, H - S), rot: ((i * 5 + Math.floor(i / 13)) % 4) * 90 };
+});
+---
+<div class="pat" aria-hidden="true">
+  <svg width="0" height="0" style="position:absolute"><defs><symbol id="wl-mark" viewBox={`0 0 ${W} ${H}`}>{paths.map((d) => <path d={d} />)}</symbol></defs></svg>
+  {cells.map((c) => (
+    <svg class={c.a ? 'a' : 'b'} viewBox={`${c.x} ${c.y} ${S} ${S}`} preserveAspectRatio="xMidYMid slice" shape-rendering="geometricPrecision">
+      <g transform={`rotate(${c.rot} ${c.x + S / 2} ${c.y + S / 2})`}><use href="#wl-mark" width={W} height={H} /></g>
+    </svg>
+  ))}
+</div>
+<style>
+  .pat { display: grid; grid-template-columns: repeat(13, 1fr); overflow: hidden; position: relative; z-index: 1; }
+  .pat > svg:not([width]) { width: 100%; height: auto; aspect-ratio: 1; display: block; }
+  .pat .a { background: #0d9e5b; color: #f4f4f4; }
+  .pat .b { background: #f4f4f4; color: #0d9e5b; }
+  .pat use { fill: currentColor; }
+  @media (max-width: 900px) { .pat { grid-template-columns: repeat(5, 1fr); } .pat > svg:nth-child(n + 12) { display: none; } }
+</style>

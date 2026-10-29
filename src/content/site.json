@@ -1,0 +1,613 @@
+{
+  "PROJECTS": [
+    {
+      "slug": "edits",
+      "cats": [
+        "motion",
+        "experiments"
+      ],
+      "title": "Edits",
+      "date": "2026-10-07",
+      "img": "img/projects/edits.webp",
+      "tags": {
+        "it": "Video edit / After Effects",
+        "en": "Video edits / After Effects"
+      },
+      "desc": {
+        "it": "Un’immersione nella manipolazione video, negli effetti e negli studi sul movimento.",
+        "en": "A deep dive into video manipulation, effects, and motion studies."
+      }
+    },
+    {
+      "slug": "club-italia-flyers",
+      "cats": [
+        "events",
+        "vr"
+      ],
+      "title": "Club Italia flyers",
+      "date": "2026-10-01",
+      "img": "img/projects/club-italia-flyers.webp",
+      "tags": {
+        "it": "Eventi / VR Integrated Works",
+        "en": "Events / VR Integrated Works"
+      },
+      "desc": {
+        "it": "Una serie di poster per gli eventi musicali della community Club Italia in VRChat, affiancati da progetti di comunicazione e identità del gruppo.",
+        "en": "A series of posters for the Club Italia community’s music events in VRChat, alongside pieces focused on the group’s communication and identity."
+      }
+    },
+    {
+      "slug": "the-tower-official-merch-design",
+      "cats": [
+        "events",
+        "merch"
+      ],
+      "title": "The Tower – Official Merch",
+      "date": "2026-05-11",
+      "img": "img/projects/the-tower-official-merch-design.webp",
+      "tags": {
+        "it": "Eventi / Merch",
+        "en": "Events / Merch"
+      },
+      "desc": {
+        "it": "La linea di merchandising ufficiale di The Tower, club internazionale nato nella realtà virtuale: un’identità misteriosa e mutevole tradotta in capi da indossare.",
+        "en": "The official merchandise line for The Tower, an international club born in virtual reality: a mysterious, ever-changing identity translated into wearable pieces."
+      }
+    },
+    {
+      "slug": "octopus-brand-collab",
+      "cats": [
+        "events",
+        "vr",
+        "motion"
+      ],
+      "title": "Octopus Brand Collab",
+      "date": "2026-04-30",
+      "img": "img/projects/octopus-brand-collab.webp",
+      "tags": {
+        "it": "Eventi / VR Integrated Works / Video edit",
+        "en": "Events / VR Integrated Works / Video edits"
+      },
+      "desc": {
+        "it": "Una collaborazione tra Walife e Octopus Brand, dal 2024 al 2026: artwork, contenuti social, video promozionali e moda digitale nella realtà virtuale.",
+        "en": "A collaboration between Walife and Octopus Brand, from 2024 to 2026: artworks, social content, promo videos and digital fashion in virtual reality."
+      }
+    },
+    {
+      "slug": "visual-experiments-2",
+      "cats": [
+        "experiments"
+      ],
+      "title": "Visual Experiments #2",
+      "date": "2026-01-10",
+      "img": "img/projects/visual-experiments-2.webp",
+      "tags": {
+        "it": "Esperimenti",
+        "en": "Experiments"
+      },
+      "desc": {
+        "it": "Esperimenti grafici e studi visivi senza un brief preciso: tecniche, composizioni e stili che diventano spunti per progetti futuri.",
+        "en": "Graphic experiments and visual studies with no set brief: techniques, compositions and styles that become seeds for future projects."
+      }
+    },
+    {
+      "slug": "gdt-identity",
+      "cats": [
+        "identity"
+      ],
+      "title": "GDT Identity",
+      "date": "2025-12-04",
+      "img": "img/projects/gdt-identity.webp",
+      "tags": {
+        "it": "Identità",
+        "en": "Identity"
+      },
+      "desc": {
+        "it": "Micro brand identity per il clan GDT (Guerrieri delle Tenebre) di Destiny 2: un logo iconico e aggressivo ispirato alle tre classi del gioco.",
+        "en": "Micro brand identity for GDT (Guerrieri delle Tenebre), a Destiny 2 clan: an iconic, aggressive logo inspired by the game’s three classes."
+      }
+    },
+    {
+      "slug": "visual-experiments-1",
+      "cats": [
+        "experiments"
+      ],
+      "title": "Visual Experiments #1",
+      "date": "2025-11-18",
+      "img": "img/projects/visual-experiments-1.webp",
+      "tags": {
+        "it": "Esperimenti",
+        "en": "Experiments"
+      },
+      "desc": {
+        "it": "Una raccolta di esperimenti grafici e studi visivi: alcuni risultati diventano spunti, altri restano semplici tentativi.",
+        "en": "A collection of graphic experiments and visual studies: some results become starting points, others stay as simple attempts."
+      }
+    },
+    {
+      "slug": "urban-hideout",
+      "cats": [
+        "experiments",
+        "vr"
+      ],
+      "title": "Urban Hideout",
+      "date": "2025-10-14",
+      "img": "img/projects/urban-hideout.webp",
+      "tags": {
+        "it": "Esperimenti / VR Integrated Works",
+        "en": "Experiments / VR Integrated Works"
+      },
+      "desc": {
+        "it": "Un esperimento creativo personale: un appartamento rimasto fermo nel tempo mentre il mondo esterno è andato avanti. Photoshop, Illustrator, Blender e Unity.",
+        "en": "A personal creative experiment: an apartment frozen in time while the outside world moved on. Built with Photoshop, Illustrator, Blender and Unity."
+      }
+    },
+    {
+      "slug": "elaborato-conclusivo-del-percorso-scolastico",
+      "cats": [
+        "school",
+        "vr"
+      ],
+      "title": {
+        "it": "Elaborato conclusivo",
+        "en": "Final School Project"
+      },
+      "date": "2025-06-12",
+      "img": "img/projects/elaborato-conclusivo.webp",
+      "tags": {
+        "it": "Progetti scolastici / VR Integrated Works",
+        "en": "School Projects / VR Integrated Works"
+      },
+      "desc": {
+        "it": "L’elaborato conclusivo del percorso scolastico: un progetto grafico completo di 62 pagine.",
+        "en": "The final project of my school path: a complete 62-page graphic work."
+      }
+    },
+    {
+      "slug": "dragone7-identity",
+      "cats": [
+        "identity"
+      ],
+      "title": "Dragone7 Identity",
+      "date": "2025-02-27",
+      "img": "img/projects/dragone7-identity.webp",
+      "tags": {
+        "it": "Identità",
+        "en": "Identity"
+      },
+      "desc": {
+        "it": "Identità visiva per lo streamer Dragone7: pagina offline, pannelli, ranks degli iscritti e altri asset per lo streaming.",
+        "en": "Visual identity for the streamer Dragone7: offline page, panels, subscriber ranks and other streaming assets."
+      }
+    },
+    {
+      "slug": "cloud-paradise",
+      "cats": [
+        "vr"
+      ],
+      "title": "Cloud Paradise",
+      "date": "2025-01-03",
+      "img": "img/projects/cloud-paradise.webp",
+      "tags": {
+        "it": "Mondi virtuali",
+        "en": "Virtual worlds"
+      },
+      "desc": {
+        "it": "Un mondo virtuale sopra le nuvole, sereno e avvolgente, e la serie di risorse grafiche costruita attorno a esso.",
+        "en": "A virtual world above the clouds, serene and enveloping, and the series of graphic assets built around it."
+      }
+    }
+  ],
+  "CATEGORIES": {
+    "identity": {
+      "it": "Identità",
+      "en": "Identity"
+    },
+    "events": {
+      "it": "Eventi",
+      "en": "Events"
+    },
+    "merch": {
+      "it": "Merch",
+      "en": "Merch"
+    },
+    "vr": {
+      "it": "VR Integrated Works",
+      "en": "VR Integrated Works"
+    },
+    "experiments": {
+      "it": "Esperimenti",
+      "en": "Experiments"
+    },
+    "school": {
+      "it": "Progetti scolastici",
+      "en": "School Projects"
+    },
+    "motion": {
+      "it": "Video edit",
+      "en": "Video Edits"
+    }
+  },
+  "ABOUT": {
+    "photo": "img/walife.webp",
+    "photoFallback": "img/logo.webp",
+    "tools": [
+      {
+        "abbr": "Ai",
+        "name": "Adobe Illustrator",
+        "level": "adv",
+        "fg": "#FF9A00",
+        "bg": "#330000"
+      },
+      {
+        "abbr": "Ps",
+        "name": "Adobe Photoshop",
+        "level": "adv",
+        "fg": "#31A8FF",
+        "bg": "#001E36"
+      },
+      {
+        "abbr": "Id",
+        "name": "Adobe InDesign",
+        "level": "adv",
+        "fg": "#FF3366",
+        "bg": "#49021F"
+      },
+      {
+        "abbr": "Ae",
+        "name": "Adobe After Effects",
+        "level": "adv",
+        "fg": "#9999FF",
+        "bg": "#00005B"
+      },
+      {
+        "abbr": "Lr",
+        "name": "Adobe Lightroom",
+        "level": "int",
+        "fg": "#31A8FF",
+        "bg": "#001E36"
+      },
+      {
+        "abbr": "Pr",
+        "name": "Adobe Premiere Pro",
+        "level": "int",
+        "fg": "#9999FF",
+        "bg": "#00005B"
+      },
+      {
+        "abbr": "Pt",
+        "name": "Substance 3D Painter",
+        "level": "int",
+        "fg": "#FF4B5C",
+        "bg": "#250A0D"
+      },
+      {
+        "abbr": "Dr",
+        "name": "DaVinci Resolve",
+        "level": "int",
+        "fg": "#FFD25A",
+        "bg": "#1E1A12"
+      },
+      {
+        "abbr": "Bl",
+        "name": "Blender",
+        "level": "int",
+        "fg": "#F5792A",
+        "bg": "#16222F"
+      },
+      {
+        "abbr": "U",
+        "name": "Unity",
+        "level": "int",
+        "fg": "#FFFFFF",
+        "bg": "#1A1A1A"
+      }
+    ],
+    "education": [
+      {
+        "years": "2026",
+        "title": {
+          "it": "Corso IFTS – Tecniche delle elaborazioni multimediali e animazione 3D",
+          "en": "IFTS course – Multimedia processing and 3D animation techniques"
+        },
+        "place": {
+          "it": "CFP Canossa, Lodi",
+          "en": "CFP Canossa, Lodi"
+        }
+      },
+      {
+        "years": "2025",
+        "title": {
+          "it": "Diploma di Tecnico Grafico",
+          "en": "Diploma as Graphic Technician"
+        },
+        "place": {
+          "it": "CFP ASFOL, Casalpusterlengo (LO)",
+          "en": "CFP ASFOL, Casalpusterlengo (LO)"
+        }
+      }
+    ],
+    "experience": [
+      {
+        "years": "2026",
+        "title": {
+          "it": "Stage – Youth S.r.l.",
+          "en": "Internship – Youth S.r.l."
+        },
+        "place": {
+          "it": "Milano (MI)",
+          "en": "Milan (MI)"
+        },
+        "desc": {
+          "it": "Modellazione 3D e progettazione di ambienti e architetture virtuali. Attività di fashion e graphic design per l’ideazione di collezioni d’abbigliamento, sviluppo di asset 3D digitali e supporto alla definizione di strategie di brand marketing su piattaforme digitali.",
+          "en": "3D modeling and design of virtual environments and architecture. Fashion and graphic design work on clothing collections, development of digital 3D assets and support in defining brand marketing strategies on digital platforms."
+        }
+      },
+      {
+        "years": "2023 – 2025",
+        "title": {
+          "it": "Stage – ARS Tipolitografia",
+          "en": "Internship – ARS Tipolitografia"
+        },
+        "place": {
+          "it": "Casalpusterlengo (LO)",
+          "en": "Casalpusterlengo (LO)"
+        },
+        "desc": {
+          "it": "Supporto alla produzione tipografica e realizzazione di materiali coordinati e per stampa offset. Attività di preparazione esecutivi di stampa, creazione loghi, impaginazione di manuali, brochure e pieghevoli.",
+          "en": "Support for print production and creation of coordinated materials for offset printing. Preparation of print-ready files, logo design and layout of manuals, brochures and leaflets."
+        }
+      }
+    ]
+  },
+  "SOCIALS": [
+    {
+      "name": "Discord",
+      "handle": "thawalife",
+      "url": "https://discord.com/users/139710182526550016"
+    },
+    {
+      "name": "Email",
+      "handle": "thawalife@gmail.com",
+      "url": "mailto:thawalife@gmail.com"
+    },
+    {
+      "name": "TikTok",
+      "handle": "@thawalife",
+      "url": "https://www.tiktok.com/@thawalife"
+    },
+    {
+      "name": "Bluesky",
+      "handle": "@thawalife.com",
+      "url": "https://bsky.app/profile/thawalife.com"
+    }
+  ],
+  "DICT": {
+    "it": {
+      "navAbout": "Chi sono",
+      "abDocTitle": "Chi sono – Federico, graphic designer | Walife",
+      "abDocDesc": "Federico (Walife), 21 anni, graphic designer italiano: brand identity, ambienti e oggetti 3D, asset per social media ed eventi. Competenze, formazione ed esperienze.",
+      "abIdx": "CHI SONO",
+      "abTitle": "Ciao, sono <em>Federico.</em>",
+      "abBio": "Ho 21 anni, vivo in Italia e sono diplomato come tecnico grafico. Sviluppo brand identity, ambienti e oggetti 3D, asset per social media ed eventi, trasformando idee e concept in progetti concreti e riconoscibili.",
+      "abBio2": "Il mio approccio unisce estetica e funzionalità: credo in un design pulito, coerente e capace di dare a ogni lavoro un carattere forte e memorabile.",
+      "abF1": "21 anni",
+      "abF2": "Italia",
+      "abF3": "Tecnico grafico",
+      "abToolsIdx": "SOFTWARE",
+      "abToolsTitle": "I miei <em>strumenti.</em>",
+      "abLvAdv": "Avanzato",
+      "abLvInt": "Intermedio",
+      "abLvBase": "Base",
+      "abEduIdx": "FORMAZIONE",
+      "abEduTitle": "Education",
+      "abExpIdx": "ESPERIENZE",
+      "abExpTitle": "Experience",
+      "abCtIdx": "CONTATTI",
+      "abCtTitle": "Scrivimi, rispondo volentieri.",
+      "abWork": "Guarda i lavori ↗",
+      "pgBack": "← Tutti i progetti",
+      "pgIdx": "PROGETTO {n} / {t}",
+      "pgYear": "Anno",
+      "pgCats": "Categorie",
+      "pgLinks": "Link",
+      "pgNext": "Prossimo progetto",
+      "pgPrev": "Precedente",
+      "pgNotFound": "Progetto non trovato.",
+      "pgNotFoundLink": "Vai all’archivio →",
+      "pgPage": "Pagina",
+      "pgOf": "di",
+      "pgPlay": "Guarda il video",
+      "pgClose": "Chiudi",
+      "pgPrevImg": "Immagine precedente",
+      "pgNextImg": "Immagine successiva",
+      "pgBookPrev": "Pagina precedente",
+      "pgBookNext": "Pagina successiva",
+      "pgBookHint": "Clicca una pagina per vederla a schermo intero",
+      "pjDocTitle": "Portfolio progetti di grafica e brand identity – Walife",
+      "pjDocDesc": "Tutti i progetti di Walife, graphic designer: brand identity, flyer per eventi, merchandising, ambienti VR, esperimenti visivi, video edit e lavori scolastici.",
+      "pjIdx": "ARCHIVIO / TUTTI I LAVORI",
+      "pjTitle": "Tutti i <em>progetti.</em>",
+      "pjLead": "Tutti i lavori, gli esperimenti e i progetti in un unico posto. Questo è l’archivio completo.",
+      "pjCount": "{n} progetti",
+      "pjAll": "Tutti",
+      "pjGrid": "Griglia",
+      "pjList": "Lista",
+      "pjEmpty": "Nessun progetto in questa categoria.",
+      "pjBack": "← Home",
+      "pjFilterAria": "Filtra per categoria",
+      "pjViewAria": "Vista",
+      "docTitle": "Walife – Graphic Designer italiano | Brand Identity, Grafica e 3D",
+      "docDesc": "Portfolio di Walife (Federico), graphic designer italiano: brand identity, loghi, locandine per eventi, merchandising, grafica social e ambienti 3D.",
+      "navWork": "Lavori",
+      "navArchive": "Archivio",
+      "navServices": "Servizi",
+      "navContact": "Contatti",
+      "menuAll": "Tutti i progetti ↗",
+      "eyebrow": "GRAPHIC DESIGNER",
+      "h1aria": "Idee trasformate in immagini.",
+      "h1a": "Idee trasformate",
+      "h1b": "in",
+      "rot": [
+        "immagini.",
+        "brand.",
+        "poster.",
+        "identità.",
+        "mondi."
+      ],
+      "heroText": "Progetto identità visive, materiali promozionali e ambienti 3D, trasformando le idee in progetti unici e riconoscibili.",
+      "ctaWork": "Guarda i lavori",
+      "ctaProject": "Chi sono",
+      "heroNote": "Trascina il badge. Clicca per girarlo.",
+      "scroll": "SCORRI",
+      "badgeTop": "WALIFE / PORTFOLIO",
+      "badgeKicker": "PORTFOLIO 2026",
+      "badgeRole": "GRAPHIC DESIGNER",
+      "badgeBackKicker": "INFO & CONTATTI",
+      "badgeBackTitle": "CHANNELS",
+      "badgeWith": "PROGETTI CONDIVISI CON",
+      "badgeFlipHint": "CLICCA PER TORNARE",
+      "badgeBottom": "PS · AI · BLENDER · UNITY",
+      "pill": "TRASCINA / GIRA",
+      "cfIdx": "02 / IN PRIMO PIANO",
+      "cfTitle": "Trascina. Gira. Esplora.",
+      "cfPrev": "Progetto precedente",
+      "cfNext": "Progetto successivo",
+      "cfOpen": "Apri progetto",
+      "arIdx": "03 / L’ARCHIVIO",
+      "arTitle": "Questa è solo <em>la superficie.</em>",
+      "arCopy": "Qui si chiude la selezione principale. Tutto il resto dei lavori e degli esperimenti ti aspetta nell’archivio completo.",
+      "arOrb": "TUTTI I PROGETTI ✦ TUTTI I PROGETTI ✦ TUTTI I PROGETTI ✦ ",
+      "arAria": "Vedi tutti i progetti",
+      "svcIdx": "04 / SERVIZI",
+      "svcTitle": "Cosa progetto.",
+      "s1t": "Brand Identity",
+      "s1p": "Loghi, linguaggi visivi, brand communication e linee guida.",
+      "s2t": "Digital Design",
+      "s2p": "Asset social, campagne e grafiche web.",
+      "s3t": "Editorial & Print",
+      "s3p": "Poster, impaginazioni, pubblicazioni ed elaborati destinati alla stampa.",
+      "s4t": "3D Modeling & Environment Art",
+      "s4p": "Modelli 3D, props e ambienti renderizzati.",
+      "ctIdx": "05 / CONTATTI",
+      "ctLead": "Hai un progetto in mente?",
+      "ctLink": "Parliamone insieme.",
+      "ctFooter": "WALIFE PORTFOLIO",
+      "ctTime": "ORA LOCALE",
+      "toTop": "TORNA SU ↑"
+    },
+    "en": {
+      "navAbout": "About",
+      "abDocTitle": "About – Walife",
+      "abDocDesc": "Federico, graphic designer: brand identity, 3D environments and objects, assets for social media and events.",
+      "abIdx": "ABOUT ME",
+      "abTitle": "Hi, I’m <em>Federico.</em>",
+      "abBio": "I’m 21, I live in Italy and I hold a diploma as a graphic technician. I develop brand identities, 3D environments and objects, assets for social media and events, turning ideas and concepts into concrete, recognizable projects.",
+      "abBio2": "My approach combines aesthetics and functionality: I believe in clean, coherent design that gives every project a strong, memorable character.",
+      "abF1": "21 years old",
+      "abF2": "Italy",
+      "abF3": "Graphic technician",
+      "abToolsIdx": "SOFTWARE",
+      "abToolsTitle": "My <em>tools.</em>",
+      "abLvAdv": "Advanced",
+      "abLvInt": "Intermediate",
+      "abLvBase": "Basic",
+      "abEduIdx": "EDUCATION",
+      "abEduTitle": "Education",
+      "abExpIdx": "EXPERIENCE",
+      "abExpTitle": "Experience",
+      "abCtIdx": "CONTACT",
+      "abCtTitle": "Write to me, I’m happy to reply.",
+      "abWork": "See the work ↗",
+      "pgBack": "← All projects",
+      "pgIdx": "PROJECT {n} / {t}",
+      "pgYear": "Year",
+      "pgCats": "Categories",
+      "pgLinks": "Links",
+      "pgNext": "Next project",
+      "pgPrev": "Previous",
+      "pgNotFound": "Project not found.",
+      "pgNotFoundLink": "Go to the archive →",
+      "pgPage": "Page",
+      "pgOf": "of",
+      "pgPlay": "Watch the video",
+      "pgClose": "Close",
+      "pgPrevImg": "Previous image",
+      "pgNextImg": "Next image",
+      "pgBookPrev": "Previous page",
+      "pgBookNext": "Next page",
+      "pgBookHint": "Click a page to view it full screen",
+      "pjDocTitle": "Projects – Walife",
+      "pjDocDesc": "Every Walife project: visual identities, event posters, merch, virtual worlds and experiments.",
+      "pjIdx": "ARCHIVE / ALL WORK",
+      "pjTitle": "All <em>projects.</em>",
+      "pjLead": "All the work, experiments and projects in one place. This is the complete archive.",
+      "pjCount": "{n} projects",
+      "pjAll": "All",
+      "pjGrid": "Grid",
+      "pjList": "List",
+      "pjEmpty": "No projects in this category.",
+      "pjBack": "← Home",
+      "pjFilterAria": "Filter by category",
+      "pjViewAria": "View",
+      "docTitle": "Walife – Graphic Designer",
+      "docDesc": "Walife’s graphic design portfolio: visual identities, event posters, merch and virtual worlds.",
+      "navWork": "Work",
+      "navArchive": "Archive",
+      "navServices": "Services",
+      "navContact": "Contact",
+      "menuAll": "All projects ↗",
+      "eyebrow": "GRAPHIC DESIGNER",
+      "h1aria": "Ideas shaped into visuals.",
+      "h1a": "Ideas shaped",
+      "h1b": "into",
+      "rot": [
+        "visuals.",
+        "brands.",
+        "posters.",
+        "identities.",
+        "worlds."
+      ],
+      "heroText": "I design visual identities, promotional materials and 3D environments, turning ideas into unique, recognizable projects.",
+      "ctaWork": "View selected work",
+      "ctaProject": "About me",
+      "heroNote": "Drag the badge. Click to flip.",
+      "scroll": "SCROLL",
+      "badgeTop": "WALIFE / PORTFOLIO",
+      "badgeKicker": "PORTFOLIO 2026",
+      "badgeRole": "GRAPHIC DESIGNER",
+      "badgeBackKicker": "INFO & CONTACTS",
+      "badgeBackTitle": "CHANNELS",
+      "badgeWith": "SHARED PROJECTS WITH",
+      "badgeFlipHint": "CLICK TO FLIP BACK",
+      "badgeBottom": "PS · AI · BLENDER · UNITY",
+      "pill": "DRAG / FLIP",
+      "cfIdx": "02 / IN THE SPOTLIGHT",
+      "cfTitle": "Drag. Spin. Explore.",
+      "cfPrev": "Previous project",
+      "cfNext": "Next project",
+      "cfOpen": "Open project",
+      "arIdx": "03 / THE ARCHIVE",
+      "arTitle": "This is only <em>the surface.</em>",
+      "arCopy": "This is where the main selection ends. The rest of the work and experiments is waiting for you in the full archive.",
+      "arOrb": "SEE ALL PROJECTS ✦ SEE ALL PROJECTS ✦ SEE ALL PROJECTS ✦ ",
+      "arAria": "See all projects",
+      "svcIdx": "04 / SERVICES",
+      "svcTitle": "What I design.",
+      "s1t": "Brand Identity",
+      "s1p": "Logos, visual languages, brand communication and guidelines.",
+      "s2t": "Digital Design",
+      "s2p": "Social assets, campaigns and web visuals.",
+      "s3t": "Editorial & Print",
+      "s3p": "Posters, layouts, publications and print-ready materials.",
+      "s4t": "3D Modeling & Environment Art",
+      "s4p": "3D models, props, and rendered environments",
+      "ctIdx": "05 / CONTACT",
+      "ctLead": "Have a project in mind?",
+      "ctLink": "Let’s talk it through.",
+      "ctFooter": "WALIFE PORTFOLIO",
+      "ctTime": "LOCAL TIME",
+      "toTop": "BACK TO TOP ↑"
+    }
+  }
+}

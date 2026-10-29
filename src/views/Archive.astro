@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import site from '../content/site.json';
+import { t, type Lang } from '../lib/i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const projects = site.PROJECTS as any[];
+const cats = site.CATEGORIES as Record<string, Record<Lang, string>>;
+const total = projects.length;
+const tpl = t(lang, 'pjCount');
+---
+<Base lang={lang} page="archive" title={t(lang, 'docTitleArchive')} description={t(lang, 'pjDocDesc')}>
+  <section class="inner" data-archive data-view="grid">
+    <div class="wrap">
+      <span class="label">{t(lang, 'pjIdx')}</span>
+      <h1 data-split style="font-size:clamp(48px,9vw,136px);margin-top:18px" set:html={t(lang, 'pjTitle')} />
+      <p style="margin-top:24px;max-width:54ch;color:var(--fg-soft)">{t(lang, 'pjLead')}</p>
+
+      <div class="filters" role="group" aria-label={t(lang, 'pjFilterAria')}>
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">{t(lang, 'pjAll')}</button>
+        {Object.entries(cats).map(([k, v]) => (
+          <button class="chip" type="button" data-filter={k} aria-pressed="false">{v[lang]}</button>
+        ))}
+        <div class="view" role="group" aria-label={t(lang, 'pjViewAria')}>
+          <button class="chip" type="button" data-view-btn="grid" aria-pressed="true">{t(lang, 'pjGrid')}</button>
+          <button class="chip" type="button" data-view-btn="list" aria-pressed="false">{t(lang, 'pjList')}</button>
+        </div>
+      </div>
+      <p class="count" data-count data-tpl={tpl} aria-live="polite">{tpl.replace('{n}', String(total))}</p>
+
+      <div class="cards">
+        {projects.map((p, i) => <ProjectCard p={p} lang={lang} level={2} loading={i < 3 ? 'eager' : 'lazy'} />)}
+      </div>
+      <p class="empty" data-empty>{t(lang, 'pjEmpty')}</p>
+    </div>
+  </section>
+</Base>

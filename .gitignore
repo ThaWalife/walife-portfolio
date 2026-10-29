@@ -4,3 +4,6 @@ dist
 PLAN.md
 PLAN-REVIEW-LOG.md
 .runs
+test-results
+playwright-report
+.taste-skill

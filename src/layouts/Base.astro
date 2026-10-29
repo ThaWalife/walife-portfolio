@@ -1,0 +1,96 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '../styles/global.css';
+import { ROOT, url } from '../lib/url';
+import { routes, t, type Lang, type PageKey } from '../lib/i18n';
+
+interface Props { lang: Lang; page: PageKey; title: string; description: string; home?: boolean }
+const { lang, page, title, description, home = false } = Astro.props;
+const abs = (p: string) => new URL(url(p), Astro.site).href;
+const label = (k: PageKey) => (k === 'home' ? t(lang, 'home') : k === 'archive' ? t(lang, 'navArchive') : k === 'about' ? t(lang, 'navAbout') : t(lang, 'navContact'));
+const center: PageKey[] = ['home', 'archive', 'about'];
+const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
+---
+<!doctype html>
+<html lang={lang} class="no-js" data-logo="pending">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F4F4F4" />
+    <link rel="canonical" href={abs(routes[page][lang])} />
+    <link rel="alternate" hreflang="it" href={abs(routes[page].it)} />
+    <link rel="alternate" hreflang="en" href={abs(routes[page].en)} />
+    <link rel="alternate" hreflang="x-default" href={abs(routes[page].it)} />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />
+    <script is:inline define:vars={{ root: ROOT, redirect: home && lang === 'it' }}>
+      (function () {
+        var d = document.documentElement;
+        d.classList.remove('no-js');
+        var pref = null;
+        try { pref = localStorage.getItem('wl-lang'); } catch (e) {}
+        // Redirect lingua: solo alla radice del sito (dopo il base path), mai per i bot.
+        if (redirect) {
+          var p = location.pathname.replace(/index\.html$/, '');
+          var bot = /bot|crawl|spider|slurp|lighthouse/i.test(navigator.userAgent);
+          if (p === root && !bot) {
+            var nl = ((navigator.languages && navigator.languages[0]) || navigator.language || 'it').toLowerCase();
+            var lang = pref === 'it' || pref === 'en' ? pref : nl.indexOf('it') === 0 ? 'it' : 'en';
+            if (lang === 'en') location.replace(root + 'en/' + location.search + location.hash);
+          }
+        }
+      })();
+    </script>
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#main">{t(lang, 'skip')}</a>
+    <header class="pillbar">
+      <a class="brand" href={url(routes.home[lang])} aria-label="Walife — Home" data-snd>
+        <img src={url('brand/walife-lockup-horizontal-green.svg')} alt="Walife" width="66" height="26" />
+      </a>
+      <nav class="pill center" aria-label="Main">
+        {center.map((k) => (
+          <a href={url(routes[k][lang])} aria-current={k === page ? 'page' : undefined} data-snd data-magnet>{label(k)}</a>
+        ))}
+      </nav>
+      <div class="right">
+        <div class="pill">
+          <a class="cta" href={url(routes.contact[lang])} aria-current={page === 'contact' ? 'page' : undefined} data-snd>{label('contact')}</a>
+          <div class="lang" role="group" aria-label={t(lang, 'lang')}>
+            <a href={url(routes[page].it)} hreflang="it" lang="it" data-lang-switch="it" aria-current={lang === 'it' ? 'true' : undefined}>IT</a>
+            <a href={url(routes[page].en)} hreflang="en" lang="en" data-lang-switch="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+          </div>
+          <button type="button" data-sound-toggle aria-pressed="false" title={t(lang, 'sound')}>{t(lang, 'sound')}</button>
+        </div>
+      </div>
+    </header>
+    <nav class="pill mobile-nav" aria-label="Main (mobile)">
+      {mobile.map((k) => (
+        <a href={url(routes[k][lang])} aria-current={k === page ? 'page' : undefined}>{label(k)}</a>
+      ))}
+    </nav>
+    {home && <canvas id="logo-canvas" aria-hidden="true"></canvas>}
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <a class="label" href="#main" data-top>{t(lang, 'toTop')}</a>
+        <span class="label">{t(lang, 'ctTime')} <span data-clock>--:--</span> CET</span>
+        <span class="label">© 2026 Walife — Federico Marini</span>
+      </div>
+    </footer>
+    <div class="cursor" aria-hidden="true"><span data-cursor-label></span></div>
+    <div class="wipe" aria-hidden="true"></div>
+    <script>
+      import '../scripts/ui';
+    </script>
+  </body>
+</html>

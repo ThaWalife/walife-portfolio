@@ -1,0 +1,19 @@
+---
+import { url } from '../lib/url';
+import { loc, t, type Lang } from '../lib/i18n';
+interface Props { p: any; lang: Lang; loading?: 'lazy' | 'eager'; level?: 2 | 3 }
+const { p, lang, loading = 'lazy', level = 3 } = Astro.props;
+const H = `h${level}`;
+const title = loc(p.title, lang);
+const href = `https://thawalife.com/p/${p.slug}.html`;
+const year = String(p.date).slice(0, 4);
+---
+<a class="card rv" href={href} data-cats={p.cats.join(' ')} data-peek={url(p.img)} data-cursor="OPEN" data-snd target="_blank" rel="noopener">
+  <div class="img"><img src={url(p.img)} alt={`${title} — ${p.tags[lang]}`} width="800" height="800" loading={loading} decoding="async" /></div>
+  <div class="body">
+    <span class="tags">{p.tags[lang]} · {year}</span>
+    <H>{title}</H>
+    <p>{p.desc[lang]}</p>
+    <span class="go">{t(lang, 'openProject')}</span>
+  </div>
+</a>
