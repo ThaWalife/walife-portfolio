@@ -2,13 +2,11 @@
 import Base from '../layouts/Base.astro';
 import PatternBand from '../components/PatternBand.astro';
 import site from '../content/site.json';
-import logoRaw from '../assets/walife-logo.svg?raw';
 import { url } from '../lib/url';
 import { routes, t, loc, type Lang } from '../lib/i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const logoSvg = logoRaw.replace(/<style>[\s\S]*?<\/style>/, '').replace(/<defs>\s*<\/defs>/, '').replace(/class="cls-1"/g, '');
 const featured = (site.PROJECTS as any[]).slice(0, 4);
 const services = [1, 2, 3, 4].map((n) => ({ t: t(lang, `s${n}t`), p: t(lang, `s${n}p`) }));
 const email = site.SOCIALS.find((s) => s.name === 'Email')!;
@@ -16,8 +14,7 @@ const cats = Object.values(site.CATEGORIES as Record<string, Record<Lang, string
 const marquee = [...cats, ...cats, ...cats, ...cats];
 ---
 <Base lang={lang} page="home" home title={t(lang, 'docTitle')} description={t(lang, 'docDesc')}>
-  <section class="hero on-green" id="hero" data-logo-stop="hero" data-hero>
-    <div class="hero-fallback" aria-hidden="true" set:html={logoSvg} />
+  <section class="hero on-green" id="hero" data-hero>
     <div class="hero-shader" aria-hidden="true" data-shader></div>
     <img class="hero-wm" src={url('brand/walife-wordmark-white.svg')} alt="" aria-hidden="true" width="1057" height="414" decoding="async" />
     <div class="wrap hero-grid">
@@ -37,7 +34,7 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
 
   <div class="marquee" aria-hidden="true"><div class="track">{marquee.map((c) => <span>{c}</span>)}</div></div>
 
-  <section class="work" id="work" data-logo-stop="work">
+  <section class="work" id="work">
     <div class="wrap head">
       <div>
         <span class="label">{t(lang, 'featured')}</span>
@@ -65,8 +62,7 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
     </div>
   </section>
 
-  <section class="services on-green" id="services" data-logo-stop="services" data-svc-section>
-    <div class="svc-pin">
+  <section class="services on-green" id="services">
       <div class="wrap svc-grid">
         <div class="svc-col">
           <div class="head">
@@ -75,7 +71,7 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
           </div>
           <div role="list">
             {services.map((s, i) => (
-              <div class="svc-row" role="listitem" tabindex="0" data-svc={i} data-snd>
+              <div class="svc-row" role="listitem" tabindex="0" data-snd>
                 <span class="n">0{i + 1}</span>
                 <h3>{s.t}</h3>
                 <span class="arr" aria-hidden="true">↗</span>
@@ -85,13 +81,9 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
           </div>
         </div>
       </div>
-      <svg class="callouts" aria-hidden="true" data-callouts>
-        {[0, 1, 2, 3].map((n) => <><path data-line={n} d="M0 0" /><circle data-dot={n} r="4" cx="-20" cy="-20" /></>)}
-      </svg>
-    </div>
   </section>
 
-  <section class="arch" id="archive-cta" data-logo-stop="archive">
+  <section class="arch" id="archive-cta">
     <div class="wrap">
       <span class="label">{t(lang, 'arIdx')}</span>
       <h2 data-split set:html={t(lang, 'arTitle')} />
@@ -101,7 +93,7 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
   </section>
   <PatternBand />
 
-  <section class="contact on-green" id="contact" data-logo-stop="contact">
+  <section class="contact on-green" id="contact">
     <div class="wrap contact-big">
       <span class="label rv">{t(lang, 'ctIdx')}</span>
       <h2 data-split>{t(lang, 'ctLead')} <em>{t(lang, 'ctLink')}</em></h2>

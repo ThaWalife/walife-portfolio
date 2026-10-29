@@ -15,7 +15,7 @@ const center: PageKey[] = ['home', 'archive', 'about'];
 const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
 ---
 <!doctype html>
-<html lang={lang} class="no-js" data-logo="pending">
+<html lang={lang} class="no-js">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -76,7 +76,6 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
         <a href={url(routes[k][lang])} aria-current={k === page ? 'page' : undefined}>{label(k)}</a>
       ))}
     </nav>
-    {home && <canvas id="logo-canvas" aria-hidden="true"></canvas>}
     <main id="main">
       <slot />
     </main>
