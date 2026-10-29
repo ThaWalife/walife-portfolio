@@ -2,6 +2,10 @@
 import './fx';
 import './sound';
 
+// sfondo di pagina (dietro al vetro): shader caricato lazy, statico con reduced-motion
+const pageShader = document.querySelector<HTMLElement>('[data-shader-page]');
+if (pageShader) import('./bg').then((m) => m.mountHeroShader(pageShader, matchMedia('(prefers-reduced-motion: reduce)').matches, true)).catch(() => { /* resta il bianco */ });
+
 const store = {
   get: (k: string) => { try { return localStorage.getItem(k); } catch { return null; } },
   set: (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* storage non disponibile */ } },

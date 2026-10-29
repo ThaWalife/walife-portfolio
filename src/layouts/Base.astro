@@ -50,6 +50,7 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
     </script>
   </head>
   <body data-page={page}>
+    <div class="page-shader" aria-hidden="true" data-shader-page></div>
     <a class="skip" href="#main">{t(lang, 'skip')}</a>
     <header class="pillbar">
       <a class="brand" href={url(routes.home[lang])} aria-label="Walife — Home" data-snd>
