@@ -1,66 +1,81 @@
-// Home: CTA in liquid glass, parallasse, shelf progetti pinned con focus.
+// Home: CTA in vetro, righe di anteprime guidate dallo scroll, testo che si rivela scrollando, card progetti impilate.
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine = matchMedia('(pointer: fine)').matches;
 const stack = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
 const clamp = (v: number, a = 0, b = 1) => Math.min(Math.max(v, a), b);
 
-// CTA hero in liquid glass: solo mouse, senza reduced-motion, dopo che la scena è pronta
+// CTA hero in liquid glass: solo mouse, senza reduced-motion
 const glassSlot = document.querySelector<HTMLElement>('[data-glass]');
 if (glassSlot && fine && !reduced && !stack) {
-  setTimeout(() => import('./glass').then((m) => m.mountGlass(glassSlot)).catch(() => { /* resta il bottone normale */ }), 2200);
+  setTimeout(() => import('./glass').then((m) => m.mountGlass(glassSlot)).catch(() => { /* resta il bottone normale */ }), 1800);
 }
 
-const hero = document.querySelector<HTMLElement>('[data-hero]');
-if (hero && fine && !reduced) {
-  let tx = 0, ty = 0, x = 0, y = 0;
-  addEventListener('pointermove', (e) => { tx = (e.clientX / innerWidth) * 2 - 1; ty = (e.clientY / innerHeight) * 2 - 1; }, { passive: true });
-  const loop = () => { x += (tx - x) * 0.06; y += (ty - y) * 0.06; hero.style.setProperty('--px', x.toFixed(3)); hero.style.setProperty('--py', y.toFixed(3)); requestAnimationFrame(loop); };
-  loop();
+// titolo hero: font-size calcolato perché il testo occupi esattamente la larghezza della zona sicura
+const heroH = document.querySelector<HTMLElement>('.hero-h');
+if (heroH) {
+  const fit = () => {
+    if (innerWidth <= 900) { heroH.style.fontSize = ''; return; }
+    heroH.style.fontSize = '100px';
+    const r = document.createRange();
+    r.selectNodeContents(heroH);
+    const w = r.getBoundingClientRect().width;
+    heroH.style.fontSize = `${(100 * heroH.clientWidth / w * 0.998).toFixed(2)}px`;
+  };
+  fit();
+  document.fonts?.ready.then(fit);
+  addEventListener('resize', fit);
 }
 
-// shelf progetti: orizzontale pinned, la card centrale è in focus (scala 1), le altre ≈0.86 e più scure
-const wrap = document.querySelector<HTMLElement>('[data-pin]');
-const track = document.querySelector<HTMLElement>('[data-track]');
-if (wrap && track) {
-  if (reduced || stack) {
-    wrap.classList.add('no-pin');
-  } else {
-    const slides = [...track.querySelectorAll<HTMLElement>('[data-slide]')];
-    let dist = 0;
-    const measure = () => {
-      dist = Math.max(0, track.scrollWidth - innerWidth);
-      wrap.style.height = `${dist + innerHeight}px`;
-    };
-    measure();
-    addEventListener('resize', measure);
-    addEventListener('load', measure);
-    const frame = () => {
-      const p = clamp(-wrap.getBoundingClientRect().top / Math.max(1, dist));
-      track.style.transform = `translate3d(${-p * dist}px,0,0)`;
-      for (const s of slides) {
-        const r = s.getBoundingClientRect();
-        const c = (r.left + r.width / 2 - innerWidth / 2) / innerWidth; // -1..1
-        const d = clamp(Math.abs(c) * 1.6);
-        s.style.setProperty('--shift', `${(-c * 70).toFixed(1)}px`);
-        s.style.setProperty('--sc', (1 - 0.14 * d).toFixed(3));
-        s.style.setProperty('--br', (1 - 0.45 * d).toFixed(3));
-      }
-      track.dataset.p = p.toFixed(3);
-      requestAnimationFrame(frame);
-    };
-    frame();
-  }
-  if (fine && !reduced) {
-    track.querySelectorAll<HTMLElement>('[data-slide]').forEach((s) => {
-      const im = s.querySelector<HTMLElement>('.im')!;
-      s.addEventListener('pointermove', (e) => {
-        const r = s.getBoundingClientRect();
-        im.style.setProperty('--ry', `${(((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(2)}deg`);
-        im.style.setProperty('--rx', `${(-((e.clientY - r.top) / r.height - 0.5) * 8).toFixed(2)}deg`);
-      });
-      s.addEventListener('pointerleave', () => { im.style.setProperty('--ry', '0deg'); im.style.setProperty('--rx', '0deg'); });
+// righe di anteprime: scorrono in senso opposto con lo scroll (offset = (scroll - top + vh) * 0.3)
+const strip = document.querySelector<HTMLElement>('.strip');
+const rows = [...document.querySelectorAll<HTMLElement>('[data-strip]')];
+if (strip && rows.length && !reduced) {
+  const move = () => {
+    const off = (scrollY - (strip.getBoundingClientRect().top + scrollY) + innerHeight) * 0.3;
+    for (const r of rows) r.style.transform = `translate3d(${Number(r.dataset.strip) * (off - 200)}px,0,0)`;
+  };
+  addEventListener('scroll', move, { passive: true });
+  move();
+}
+
+// testo che si rivela scrollando: ogni carattere passa dal grigio all'inchiostro (grigio con contrasto ≥ 4.5:1)
+const scrub = document.querySelector<HTMLElement>('[data-scrub]');
+if (scrub && !reduced) {
+  const words = scrub.textContent!.trim().split(/\s+/);
+  scrub.textContent = '';
+  const chars: HTMLSpanElement[] = [];
+  words.forEach((w, wi) => {
+    const wEl = document.createElement('span');
+    wEl.className = 'sw';
+    for (const ch of w) { const c = document.createElement('span'); c.textContent = ch; wEl.append(c); chars.push(c); }
+    scrub.append(wEl, wi < words.length - 1 ? ' ' : '');
+  });
+  const paint = () => {
+    const r = scrub.getBoundingClientRect();
+    const p = clamp((innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.45));
+    const k = p * (chars.length + 24);
+    chars.forEach((c, i) => c.classList.toggle('on', k > i + 12));
+  };
+  addEventListener('scroll', paint, { passive: true });
+  addEventListener('resize', paint);
+  paint();
+}
+
+// card progetti impilate: ogni card, mentre la successiva sale, si rimpicciolisce (1 → 1 - 0.03·(n-1-i))
+const cards = [...document.querySelectorAll<HTMLElement>('[data-pcard]')];
+if (cards.length && !reduced && !stack) {
+  const n = cards.length;
+  const frame = () => {
+    cards.forEach((c, i) => {
+      const slot = c.parentElement!;
+      const r = slot.getBoundingClientRect();
+      const done = clamp(-r.top / Math.max(1, r.height)); // quanto lo slot è già "passato"
+      const to = 1 - (n - 1 - i) * 0.03;
+      c.style.transform = `scale(${(1 - (1 - to) * done).toFixed(4)})`;
     });
-  }
+    requestAnimationFrame(frame);
+  };
+  frame();
 }
 
 export {};

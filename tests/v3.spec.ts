@@ -10,20 +10,45 @@ test('hero: nessuna immagine di sfondo, nav a pillole fissa, hero >= viewport', 
   expect(await page.locator('.hero').evaluate((e) => e.getBoundingClientRect().height)).toBeGreaterThanOrEqual(vh - 1);
 });
 
-test('shelf progetti: il track scorre con lo scroll e la slide centrale è in focus', async ({ page }) => {
+test('progetti: 4 card sticky impilate, le precedenti si rimpiccioliscono scrollando', async ({ page }) => {
   await page.goto('');
-  await page.waitForTimeout(1200);
-  const geo = await page.evaluate(() => { const s = document.querySelector('[data-pin]') as HTMLElement; return { top: s.getBoundingClientRect().top + scrollY, h: s.offsetHeight, vh: innerHeight }; });
-  const xs: number[] = [];
-  for (const p of [0.05, 0.35, 0.65]) {
-    await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), geo.top + (geo.h - geo.vh) * p);
-    await page.waitForTimeout(500);
-    xs.push(await page.locator('[data-track]').evaluate((e) => new DOMMatrix(getComputedStyle(e).transform).m41));
-  }
-  expect(xs[1]).toBeLessThan(xs[0]);
-  expect(xs[2]).toBeLessThan(xs[1]);
-  const sc = await page.locator('[data-slide]').evaluateAll((els) => els.map((e) => Number((e as HTMLElement).style.getPropertyValue('--sc'))));
-  expect(Math.max(...sc) - Math.min(...sc)).toBeGreaterThan(0.04);
+  await page.waitForTimeout(1000);
+  const y0 = await page.evaluate(() => document.querySelector('[data-stack]')!.getBoundingClientRect().top + scrollY - 100);
+  await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), y0);
+  await page.waitForTimeout(400);
+  const sc = () => page.locator('[data-pcard]').evaluateAll((els) => els.map((e) => new DOMMatrix(getComputedStyle(e).transform).a));
+  const before = await sc();
+  expect(before).toHaveLength(4);
+  await page.evaluate((y) => window.scrollTo({ top: y + innerHeight * 2.4, behavior: 'instant' }), y0);
+  await page.waitForTimeout(500);
+  const after = await sc();
+  expect(after[0]).toBeLessThan(before[0]);
+  expect(after[0]).toBeGreaterThanOrEqual(0.9 - 0.001);
+  expect(after[3]).toBeGreaterThan(after[0]);
+  expect(await page.locator('[data-pcard]').first().evaluate((e) => getComputedStyle(e).position)).toBe('sticky');
+});
+
+test('hero: titolo enorme a una riga (desktop) e logo piatto al centro, nessun logo 3D', async ({ page }) => {
+  await page.goto('');
+  const h = page.locator('.hero-h');
+  const box = await h.boundingBox();
+  const fs = await h.evaluate((e) => parseFloat(getComputedStyle(e).fontSize));
+  expect(fs).toBeGreaterThan(page.viewportSize()!.width * 0.09);
+  expect(box!.height).toBeLessThan(fs * 1.2); // una sola riga
+  await expect(page.locator('.hero-logo svg')).toBeVisible();
+  await expect(page.locator('#logo-canvas')).toHaveCount(0);
+});
+
+test('chi sono (home): il testo si rivela scrollando, grigio con contrasto leggibile', async ({ page }) => {
+  await page.goto('');
+  await page.waitForTimeout(800);
+  await page.evaluate(() => document.querySelector('[data-scrub]')!.scrollIntoView({ block: 'center', behavior: 'instant' }));
+  await page.waitForTimeout(600);
+  const on1 = await page.locator('[data-scrub] .on').count();
+  expect(await page.locator('[data-scrub] .sw span:not(.on)').last().evaluate((e) => getComputedStyle(e).color)).toBe('rgb(107, 107, 107)');
+  await page.evaluate(() => scrollBy({ top: 500, behavior: 'instant' }));
+  await page.waitForTimeout(600);
+  expect(await page.locator('[data-scrub] .on').count()).toBeGreaterThan(on1);
 });
 
 test('cursore custom: compare col mouse, assente su touch', async ({ browser }) => {
@@ -129,11 +154,11 @@ test('sfondo foglie: canvas dietro al contenuto, disegna pixel, statico con redu
   await ctx.close();
 });
 
-test('reduced-motion: shelf impilata e nessun lenis', async ({ browser }) => {
+test('reduced-motion: nessun lenis, card statiche', async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await ctx.newPage();
   await page.goto('');
-  await expect(page.locator('[data-pin]')).toHaveClass(/no-pin/);
+  expect(await page.locator('[data-pcard]').first().evaluate((e) => (e as HTMLElement).style.transform)).toBe('');
   expect(await page.locator('html').evaluate((e) => e.classList.contains('lenis'))).toBe(false);
   await ctx.close();
 });
@@ -146,3 +171,27 @@ test('nessun logo 3D: niente canvas WebGL né chunk three', async ({ page }) => 
   await expect(page.locator('#logo-canvas')).toHaveCount(0);
   expect(reqs.filter((u) => /logo3d|three/i.test(u))).toEqual([]);
 });
+
+for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
+  test(`home ${w}px: titolo, logo, tagline e CTA dentro la zona sicura e centrati`, async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, locale: 'it-IT' });
+    const page = await ctx.newPage();
+    await page.goto('');
+    await page.waitForTimeout(2800); // font + fit + CTA in vetro
+    const m = Math.min(Math.max(20, w * 0.05), 96);
+    const box = async (sel: string) => (await page.locator(sel).first().boundingBox())!;
+    const hh = page.locator('.hero-h');
+    const range = await hh.evaluate((e) => { const r = document.createRange(); r.selectNodeContents(e); const b = r.getBoundingClientRect(); return { l: b.left, r: b.right }; });
+    expect(range.l).toBeGreaterThanOrEqual(m - 2);
+    expect(range.r).toBeLessThanOrEqual(w - m + 2);
+    expect(Math.abs(range.l - (w - range.r))).toBeLessThanOrEqual(6); // margini sx/dx uguali
+    const logo = await box('.hero-logo svg');
+    expect(Math.abs(logo.x + logo.width / 2 - w / 2)).toBeLessThanOrEqual(2);
+    for (const sel of ['.hero-bar .lead', '.hero-bar .glass-slot', '.hero-bar .btn, .hero-bar .glass-container', '.hero-sub']) {
+      const b = await box(sel);
+      expect(b.x, sel).toBeGreaterThanOrEqual(m - 2);
+      expect(b.x + b.width, sel).toBeLessThanOrEqual(w - m + 2);
+    }
+    await ctx.close();
+  });
+}

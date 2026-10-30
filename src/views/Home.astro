@@ -9,79 +9,78 @@ import { routes, t, loc, type Lang } from '../lib/i18n';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const logoSvg = logoRaw.replace(/<style>[\s\S]*?<\/style>/, '').replace(/<defs>\s*<\/defs>/, '').replace(/class="cls-1"/g, '');
-const featured = (site.PROJECTS as any[]).slice(0, 4);
+const all = site.PROJECTS as any[];
+const featured = all.slice(0, 4);
+// due righe di anteprime che scorrono in senso opposto con lo scroll
+const row1 = [...all.slice(0, 6), ...all.slice(0, 6)];
+const row2 = [...all.slice(6), ...all.slice(6), ...all.slice(6)];
 const services = [1, 2, 3, 4].map((n) => ({ t: t(lang, `s${n}t`), p: t(lang, `s${n}p`) }));
 const email = site.SOCIALS.find((s) => s.name === 'Email')!;
-const cats = Object.values(site.CATEGORIES as Record<string, Record<Lang, string>>).map((c) => c[lang]);
-const marquee = [...cats, ...cats, ...cats, ...cats];
+const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
 ---
 <Base lang={lang} page="home" home title={t(lang, 'docTitle')} description={t(lang, 'docDesc')}>
   <section class="hero on-green" id="hero" data-hero>
-    <img class="hero-wm" src={url('brand/walife-wordmark-white.svg')} alt="" aria-hidden="true" width="1057" height="414" decoding="async" />
-    <div class="hero-logo" aria-hidden="true" set:html={logoSvg} />
     <div class="wrap hero-grid">
-      <div class="meta">
-        <span class="label">{t(lang, 'eyebrow')}</span>
-        <p>{t(lang, 'abF2')} · <span data-clock>--:--</span> CET<br />Portfolio 2026</p>
-      </div>
-      <div class="bl">
-        <h1 data-split>{t(lang, 'tagline')}</h1>
+      <h1 class="hero-h" data-lang={lang}>{t(lang, 'heroH')}</h1>
+      <p class="hero-sub label">{t(lang, 'eyebrow')} · {t(lang, 'abF2')}</p>
+      <div class="hero-logo" aria-hidden="true" set:html={logoSvg} />
+      <div class="hero-bar">
+        <p class="lead">{t(lang, 'tagline')}</p>
         <div class="glass-slot" data-glass data-glass-base={url('vendor/liquid-glass/')} data-glass-text={t(lang, 'open')}>
-          <a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'open')} <span class="arr" aria-hidden="true">↘</span></a>
+          <a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'open')}</a>
         </div>
       </div>
-      <p class="scroll label" aria-hidden="true">{t(lang, 'drag')} ↓</p>
     </div>
   </section>
 
-  <div class="marquee" aria-hidden="true"><div class="track">{marquee.map((c) => <span>{c}</span>)}</div></div>
+  <section class="strip" aria-hidden="true">
+    <div class="strip-row" data-strip="1">{row1.map((p) => <img src={url(p.img)} alt="" width="420" height="270" loading="lazy" decoding="async" />)}</div>
+    <div class="strip-row" data-strip="-1">{row2.map((p) => <img src={url(p.img)} alt="" width="420" height="270" loading="lazy" decoding="async" />)}</div>
+  </section>
 
-  <section class="work" id="work">
-    <div class="wrap head">
-      <div>
-        <span class="label">{t(lang, 'featured')}</span>
-        <h2 data-split style="margin-top:14px">{t(lang, 'cfTitle')}</h2>
-      </div>
-    </div>
-    <div class="pin-wrap" data-pin>
-      <div class="pin">
-        <div class="gtrack" data-track>
-          {featured.map((p, i) => (
-            <a class="slide" href={`https://thawalife.com/p/${p.slug}.html`} target="_blank" rel="noopener" data-cursor="OPEN" data-snd data-slide>
-              <div class="im"><img src={url(p.img)} alt={`${loc(p.title, lang)}, ${p.tags[lang]}`} width="900" height="900" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" /></div>
-              <div class="meta">
-                <div><span class="n">0{i + 1}</span><h3>{loc(p.title, lang)}</h3><span class="tags">{p.tags[lang]}</span></div>
-                <span class="go">{t(lang, 'openProject')} ↗</span>
-              </div>
-            </a>
-          ))}
-          <div class="end-slide">
-            <p class="label">{t(lang, 'arIdx')}</p>
-            <a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'menuAll')}</a>
-          </div>
-        </div>
-      </div>
+  <section class="about" id="about">
+    <div class="wrap about-wrap">
+      <h2 data-split>{t(lang, 'aboutTitle')}</h2>
+      <p class="scrub" data-scrub>{about}</p>
+      <a class="btn" href={url(routes.about[lang])} data-snd>{t(lang, 'ctaProject')}</a>
     </div>
   </section>
 
   <section class="services on-green" id="services">
-      <div class="wrap svc-grid">
-        <div class="svc-col">
-          <div class="head">
-            <span class="label rv">{t(lang, 'svcIdx')}</span>
-            <h2 data-split>{t(lang, 'svcTitle')}</h2>
-          </div>
-          <div role="list">
-            {services.map((s, i) => (
-              <div class="svc-row" role="listitem" tabindex="0" data-snd>
-                <span class="n">0{i + 1}</span>
-                <h3>{s.t}</h3>
-                <p>{s.p}</p>
-              </div>
-            ))}
-          </div>
+    <div class="wrap">
+      <h2 data-split>{t(lang, 'svcTitle')}</h2>
+      <ol class="svc-list">
+        {services.map((s, i) => (
+          <li class="svc-row rv" tabindex="0" data-snd>
+            <span class="n">0{i + 1}</span>
+            <div><h3>{s.t}</h3><p>{s.p}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="projects" id="work">
+    <div class="wrap">
+      <h2 data-split>{t(lang, 'projectsTitle')}</h2>
+    </div>
+    <div class="stack wrap" data-stack>
+      {featured.map((p, i) => (
+        <div class="stack-slot">
+          <a class="pcard" data-pcard={i} href={`https://thawalife.com/p/${p.slug}.html`} target="_blank" rel="noopener" data-cursor="OPEN" data-snd style={`--top:${i * 28}px`}>
+            <div class="pc-text">
+              <span class="n">0{i + 1}</span>
+              <span class="tags">{p.tags[lang]} · {String(p.date).slice(0, 4)}</span>
+              <h3>{loc(p.title, lang)}</h3>
+              <p>{p.desc[lang]}</p>
+              <span class="go">{t(lang, 'openProject')}</span>
+            </div>
+            <div class="pc-img"><img src={url(p.img)} alt={`${loc(p.title, lang)}, ${p.tags[lang]}`} width="900" height="900" loading={i < 1 ? 'eager' : 'lazy'} decoding="async" /></div>
+          </a>
         </div>
-      </div>
+      ))}
+    </div>
+    <div class="wrap more"><a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'menuAll')}</a></div>
   </section>
 
   <section class="arch" id="archive-cta">
@@ -89,7 +88,6 @@ const marquee = [...cats, ...cats, ...cats, ...cats];
       <span class="label">{t(lang, 'arIdx')}</span>
       <h2 data-split set:html={t(lang, 'arTitle')} />
       <p>{t(lang, 'arCopy')}</p>
-      <div><a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'menuAll')}</a></div>
     </div>
   </section>
   <PatternBand />
