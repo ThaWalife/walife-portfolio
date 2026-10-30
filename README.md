@@ -17,7 +17,7 @@ node scripts/verify-content.mjs   # confronta site.json con data.js live di thaw
 
 ## Note
 
-- Deploy: GitHub Pages (`.github/workflows/deploy.yml`), base path `/walife-portfolio/` (`astro.config.mjs`). In Settings → Pages la sorgente deve essere **GitHub Actions**.
+- Deploy: GitHub Pages (`.github/workflows/deploy.yml`), dominio custom `thawalife.com` (`public/CNAME`), base `/` (`astro.config.mjs`). In Settings → Pages la sorgente deve essere **GitHub Actions**.
 - Logo 3D: i 4 path di `src/assets/walife-logo.svg` estrusi con Three.js (`src/scripts/logo3d.ts`), caricati solo in home. `prefers-reduced-motion` o assenza di WebGL → logo SVG statico.
 - Lingua: IT di default; alla prima visita sulla radice, browser non italiano → `/en/`. Lo switch IT/EN prevale sempre (localStorage `wl-lang`).
 - Font: Clash Display e General Sans (Fontshare, licenza gratuita anche commerciale), self-hosted in `src/assets/fonts/`.

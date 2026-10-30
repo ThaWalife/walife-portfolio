@@ -8,13 +8,13 @@ export default defineConfig({
   workers: 2,
   reporter: [['list']],
   use: {
-    baseURL: 'http://localhost:4321/walife-portfolio/',
+    baseURL: 'http://localhost:4321/',
     channel: 'msedge',
     launchOptions: { args: ['--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] },
   },
   webServer: {
     command: 'npm run build && npx astro preview --port 4321',
-    url: 'http://localhost:4321/walife-portfolio/',
+    url: 'http://localhost:4321/',
     reuseExistingServer: true,
     timeout: 120_000,
   },

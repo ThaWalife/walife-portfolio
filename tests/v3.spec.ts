@@ -131,10 +131,10 @@ test('card progetto: link alle pagine dettaglio interne (IT e EN)', async ({ pag
   await page.goto('archivio/');
   const hrefs = await page.locator('.card').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href));
   expect(hrefs).toHaveLength(12);
-  for (const h of hrefs) expect(h).toMatch(/\/walife-portfolio\/progetti\/[a-z0-9-]+\/$/);
+  for (const h of hrefs) expect(h).toMatch(/\/progetti\/[a-z0-9-]+\/$/);
   await page.addInitScript(() => localStorage.setItem('wl-lang', 'en'));
   await page.goto('en/archive/');
-  for (const h of await page.locator('.card').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href))) expect(h).toMatch(/\/walife-portfolio\/en\/projects\/[a-z0-9-]+\/$/);
+  for (const h of await page.locator('.card').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href))) expect(h).toMatch(/\/en\/projects\/[a-z0-9-]+\/$/);
 });
 
 test('sfondo foglie: canvas dietro al contenuto, disegna pixel, statico con reduced-motion', async ({ page, browser }) => {
