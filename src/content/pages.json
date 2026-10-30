@@ -407,6 +407,15 @@
             "w": 800,
             "h": 800
           }
+        ],
+        "rows": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
         ]
       },
       {
@@ -1010,6 +1019,23 @@
             "w": 800,
             "h": 422
           }
+        ],
+        "rows": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
         ]
       }
     ]
@@ -1184,7 +1210,7 @@
         "en": "More artworks"
       },
       {
-        "type": "slider",
+        "type": "player",
         "items": [
           {
             "src": "img/projects/octopus-brand-collab/01.webp",

@@ -142,4 +142,28 @@ document.querySelectorAll<HTMLElement>('[data-book]').forEach((book) => {
   addEventListener('resize', label);
 });
 
+// player artwork: una slide alla volta, frecce, anteprime, tastiera, trascinamento orizzontale
+document.querySelectorAll<HTMLElement>('[data-player]').forEach((pl) => {
+  const slides = [...pl.querySelectorAll<HTMLElement>('.pj-pl-slide')];
+  const thumbs = [...pl.querySelectorAll<HTMLButtonElement>('[data-pl-go]')];
+  const count = pl.querySelector<HTMLElement>('[data-pl-count]')!;
+  let i = 0;
+  const go = (n: number) => {
+    i = (n + slides.length) % slides.length;
+    slides.forEach((s, k) => { s.hidden = k !== i; });
+    thumbs.forEach((t, k) => { if (k === i) { t.setAttribute('aria-current', 'true'); t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } else t.removeAttribute('aria-current'); });
+    count.textContent = `${i + 1} / ${slides.length}`;
+  };
+  pl.querySelector('[data-pl-prev]')!.addEventListener('click', () => go(i - 1));
+  pl.querySelector('[data-pl-next]')!.addEventListener('click', () => go(i + 1));
+  thumbs.forEach((t) => t.addEventListener('click', () => go(Number(t.dataset.plGo))));
+  pl.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') go(i - 1); if (e.key === 'ArrowRight') go(i + 1); });
+  let x0 = 0, moved = false;
+  const stage = pl.querySelector<HTMLElement>('.pj-pl-stage')!;
+  stage.addEventListener('pointerdown', (e) => { x0 = e.clientX; moved = false; });
+  stage.addEventListener('pointerup', (e) => { const dx = e.clientX - x0; if (Math.abs(dx) > 60) { moved = true; go(i + (dx < 0 ? 1 : -1)); } });
+  // il click che apre la lente non parte se c'è stato uno swipe
+  stage.addEventListener('click', (e) => { if (moved) { e.stopImmediatePropagation(); moved = false; } }, true);
+});
+
 export {};

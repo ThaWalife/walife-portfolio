@@ -634,3 +634,58 @@ for (const [slug, n] of [['club-italia-flyers', 0], ['club-italia-flyers', 13], 
     expect(r.inside).toBe(true);
   });
 }
+
+test('Edits: video secondari in 2 colonne grandi (>= 560px)', async ({ page }) => {
+  await page.goto('progetti/edits/');
+  await page.waitForTimeout(800);
+  const w = await page.locator('.pj-ytgrid:not(.vert) .pj-yt').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().width)));
+  expect(w.length).toBeGreaterThan(5);
+  await expect(page.locator('.pj-ytgrid.vert .pj-yt')).toHaveCount(1); // il solo edit verticale sta in una riga a parte
+  for (const x of w) expect(x).toBeGreaterThanOrEqual(560);
+});
+
+test('Octopus: player artwork (frecce, anteprime, contatore, tastiera) e anteprime Instagram al posto dei bottoni', async ({ page }) => {
+  await page.goto('progetti/octopus-brand-collab/');
+  const pl = page.locator('[data-player]');
+  await pl.scrollIntoViewIfNeeded();
+  await expect(pl.locator('[data-pl-count]')).toHaveText('1 / 5');
+  await pl.locator('[data-pl-next]').click();
+  await expect(pl.locator('[data-pl-count]')).toHaveText('2 / 5');
+  await pl.locator('[data-pl-go="4"]').click();
+  await expect(pl.locator('[data-pl-count]')).toHaveText('5 / 5');
+  await pl.locator('[data-pl-next]').click();
+  await expect(pl.locator('[data-pl-count]')).toHaveText('1 / 5');   // giro continuo
+  expect(await pl.locator('.pj-pl-slide:not([hidden])').count()).toBe(1);
+  // l'immagine sta tutta dentro il riquadro
+  const inside = await pl.evaluate((e) => { const s = e.querySelector('.pj-pl-stage')!.getBoundingClientRect(); const i = e.querySelector('.pj-pl-slide:not([hidden]) img')!.getBoundingClientRect(); return i.top >= s.top - 1 && i.bottom <= s.bottom + 1; });
+  expect(inside).toBe(true);
+  // Instagram: 4 anteprime locali e nessun bottone testuale puro
+  const igs = page.locator('.pj-igs .pj-ig-card img');
+  await expect(igs).toHaveCount(4);
+  await page.locator('.pj-igs').first().scrollIntoViewIfNeeded();
+  await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
+  await page.waitForTimeout(500);
+  for (const n of await igs.evaluateAll((els) => els.map((e) => (e as HTMLImageElement).naturalWidth))) expect(n).toBeGreaterThan(500);
+  // video verticali Summer Sales grandi
+  const vw = await page.locator('.pj-ytgrid.vert .pj-yt').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().width));
+  for (const x of vw) expect(x).toBeGreaterThanOrEqual(340); // 88vh*9/16 su 1280x720
+});
+
+for (const slug of ['cloud-paradise', 'visual-experiments-2']) {
+  test(`${slug}: risorse in righe ordinate (stessa altezza in riga, ordine di lettura, nessuna fuori colonna)`, async ({ page }) => {
+    await page.goto(`progetti/${slug}/`);
+    await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
+    await page.waitForTimeout(600);
+    const rows = await page.locator('.pj-row').evaluateAll((els) => els.map((r) => { const b = [...r.querySelectorAll('img')].map((i) => i.getBoundingClientRect()); return { n: b.length, tops: b.map((x) => Math.round(x.top)), hs: b.map((x) => Math.round(x.height)), l: Math.round(b[0].left), r: Math.round(b.at(-1)!.right), srcs: [...r.querySelectorAll('img')].map((i) => (i as HTMLImageElement).src.split('/').pop()) }; }));
+    const body = await page.locator('.pj-body').evaluate((e) => { const r = e.getBoundingClientRect(); return { l: Math.round(r.left), r: Math.round(r.right) }; });
+    for (const r of rows) {
+      expect(new Set(r.tops).size).toBe(1);                                  // stessa riga
+      expect(Math.max(...r.hs) - Math.min(...r.hs)).toBeLessThanOrEqual(2); // stessa altezza
+      expect(r.l).toBeGreaterThanOrEqual(body.l - 1); expect(r.r).toBeLessThanOrEqual(body.r + 1);
+    }
+    const order = rows.flatMap((r) => r.srcs);
+    expect(order).toEqual([...order].sort());                              // 01, 02, 03… in ordine
+    const ys = rows.map((r) => r.tops[0]);
+    expect(ys).toEqual([...ys].sort((a, b) => a - b));
+  });
+}

@@ -49,10 +49,32 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
           if (b.type === 'quote') return <blockquote class="pj-q">{b[lang]}</blockquote>;
           if (b.type === 'label') return <p class="label pj-label">{b[lang]}</p>;
           if (b.type === 'cta') return <a class="btn pj-cta" href={b.url} target="_blank" rel="noopener" data-snd>{b[lang]} ↗</a>;
+          if (b.type === 'gallery' && b.rows)
+            return <div class="pj-rows">{b.rows.map((row: number[]) => (
+              <ul class="pj-row">{row.map((n: number) => { const i = b.items[n]; return (
+                <li style={`--a:${(i.w / i.h).toFixed(4)}`}><button type="button" class="pj-zoom" data-zoom={url(i.src)} aria-label={`${title} ${n + 1}`}><img src={url(i.src)} alt={`${title}, ${n + 1}`} width={i.w} height={i.h} loading="lazy" decoding="async" /></button></li>
+              ); })}</ul>
+            ))}</div>;
           if (b.type === 'gallery')
             return <ul class="pj-gal" data-cols={b.cols ?? (b.items.length === 1 ? 1 : b.items[0].w >= b.items[0].h ? 2 : 3)}>{b.items.map((i: any, k: number) => (
               <li><button type="button" class="pj-zoom" data-zoom={url(i.src)} aria-label={`${title} ${k + 1}`}><img src={url(i.src)} alt={`${title}, ${k + 1}`} width={i.w} height={i.h} loading="lazy" decoding="async" style={`aspect-ratio:${i.w} / ${i.h}`} /></button></li>
             ))}</ul>;
+          if (b.type === 'player')
+            return <div class="pj-player" data-player role="region" aria-roledescription="carousel" aria-label={title}>
+              <div class="pj-pl-stage">
+                {b.items.map((i: any, k: number) => (
+                  <button type="button" class="pj-pl-slide pj-zoom" data-zoom={url(i.src)} aria-label={`${title} ${k + 1} / ${b.items.length}`} hidden={k > 0}><img src={url(i.src)} alt={`${title}, ${k + 1}`} width={i.w} height={i.h} loading={k < 2 ? 'eager' : 'lazy'} decoding="async" /></button>
+                ))}
+                <button class="btn pj-pl-arrow l" type="button" data-pl-prev aria-label={t(lang, 'pgPrevImg')}>←</button>
+                <button class="btn pj-pl-arrow r" type="button" data-pl-next aria-label={t(lang, 'pgNextImg')}>→</button>
+              </div>
+              <div class="pj-pl-bar">
+                <ul class="pj-pl-thumbs" aria-label="Thumbnails">
+                  {b.items.map((i: any, k: number) => <li><button type="button" data-pl-go={k} aria-label={`${k + 1}`} aria-current={k === 0 ? 'true' : undefined}><img src={url(i.src)} alt="" width="120" height="120" loading="lazy" decoding="async" /></button></li>)}
+                </ul>
+                <span class="label" data-pl-count>1 / {b.items.length}</span>
+              </div>
+            </div>;
           if (b.type === 'slider')
             return <ul class="pj-slider">{b.items.map((i: any, k: number) => (
               <li><button type="button" class="pj-zoom" data-zoom={url(i.src)} aria-label={`${title} ${k + 1}`}><img src={url(i.src)} alt={`${title}, ${k + 1}`} width={i.w} height={i.h} loading="lazy" decoding="async" /></button></li>
@@ -71,10 +93,21 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
           if (b.type === 'video')
             return <video class="pj-video" controls playsinline preload="none" poster={url(b.poster)} width={b.w} height={b.h} loop={b.loop} style={`aspect-ratio:${b.w} / ${b.h}`}><source src={url(b.src)} type="video/mp4" /></video>;
           if (b.type === 'youtube') return <div class="pj-yt"><img src={url(`img/yt/${b.id}.jpg`)} alt="" width="1280" height="720" loading="lazy" decoding="async" /><button class="btn pj-play" type="button" data-yt={b.id} aria-label={`${t(lang, 'pgPlay')} (YouTube)`}>▶ {t(lang, 'pgPlay')}</button></div>;
-          if (b.type === 'ytgrid')
-            return <ul class="pj-ytgrid">{b.items.map((i: any) => <li><div class="pj-yt"><img src={url(`img/yt/${i.id}.jpg`)} alt="" width="1280" height="720" loading="lazy" decoding="async" /><button class="btn pj-play" type="button" data-yt={i.id} aria-label={`${t(lang, 'pgPlay')}: ${i.title}`}>▶</button></div><p>{i.title}</p></li>)}</ul>;
+          if (b.type === 'ytgrid') {
+            const cell = (i: any) => <li><div class={`pj-yt${i.vertical ? ' v' : ''}`}><img src={url(`img/yt/${i.id}.jpg`)} alt="" width="1280" height="720" loading="lazy" decoding="async" /><button class="btn pj-play" type="button" data-yt={i.id} aria-label={`${t(lang, 'pgPlay')}: ${i.title}`}>▶</button></div><p>{i.title}</p></li>;
+            const hs = b.items.filter((i: any) => !i.vertical), vs = b.items.filter((i: any) => i.vertical);
+            return <>
+              {hs.length > 0 && <ul class="pj-ytgrid">{hs.map(cell)}</ul>}
+              {vs.length > 0 && <ul class="pj-ytgrid vert">{vs.map(cell)}</ul>}
+            </>;
+          }
           if (b.type === 'instagram')
-            return <div class="pj-ig">{b.ids.map((id: string, k: number) => <a class="btn" href={ig(id)} target="_blank" rel="noopener" data-snd>{t(lang, 'openIG')} {k + 1} ↗</a>)}</div>;
+            return <ul class="pj-igs">{b.ids.map((id: string, k: number) => (
+              <li><a class="pj-ig-card" href={ig(id)} target="_blank" rel="noopener" data-snd aria-label={`${t(lang, 'openIG')} ${k + 1}`}>
+                <img src={url(`img/ig/${id}.webp`)} alt="" width="1200" height="1200" loading="lazy" decoding="async" />
+                <span class="btn pj-ig-tag">{t(lang, 'openIG')} ↗</span>
+              </a></li>
+            ))}</ul>;
           return null;
         })}
       </div>

@@ -48,6 +48,16 @@ const PAGES = ctx.window.WALIFE.PAGES;
   for (const [n, w, h] of [['13', 1434, 2048], ['14', 1400, 2000]])
     if (!g.items.some((i) => i.src.endsWith(`/${n}.webp`))) g.items.push({ src: `img/projects/club-italia-flyers/${n}.webp`, w, h });
 }
+// ── ordine e dimensione delle risorse: file di righe esplicite (indici nella galleria), così nulla è "sparso"
+{
+  const rowsOf = (slug, rows) => { const g = PAGES[slug].blocks.find((b) => b.type === 'gallery'); g.rows = rows; };
+  rowsOf('visual-experiments-2', [[0], [1, 2]]);                 // banner largo, poi i due quadrati; il video segue
+  rowsOf('cloud-paradise', [[0], [1, 2], [3, 4], [5, 6]]);       // banner, due coppie di verticali, poi la riga finale
+  // Octopus: "Altri artwork" diventa un player (immagine grande + anteprime + frecce)
+  const oc = PAGES['octopus-brand-collab'].blocks;
+  const sl = oc.find((b) => b.type === 'slider');
+  if (sl) sl.type = 'player';
+}
 writeFileSync(new URL('../src/content/pages.json', import.meta.url), JSON.stringify(PAGES, null, 2), 'utf8');
 
 const assets = new Set();

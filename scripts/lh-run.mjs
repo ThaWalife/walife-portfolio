@@ -1,7 +1,7 @@
 // Lighthouse locale su `astro preview` (porta 4321): mediana di 3 esecuzioni per pagina, desktop e mobile.
 // Uso: node scripts/lh-run.mjs  (richiede Edge: CHROME_PATH)  → stampa una tabella.
 import { spawnSync } from 'node:child_process';
-import { readFileSync, mkdirSync, mkdtempSync } from 'node:fs';
+import { readFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 

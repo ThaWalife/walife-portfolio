@@ -522,3 +522,44 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
   .pj-gal[data-cols='2'], .pj-gal[data-cols='3'] { --c: 1; }
 }
 .pj-cover { margin: 0; }
+
+/* ───────── pagine progetto: righe ordinate, player artwork, video grandi, anteprime Instagram ───────── */
+.pj-rows { display: grid; gap: clamp(10px, 1.4vw, 20px); }
+.pj-row { list-style: none; margin: 0; padding: 0; display: flex; gap: clamp(10px, 1.4vw, 20px); align-items: flex-start; }
+.pj-row li { flex: var(--a, 1) 1 0; min-width: 0; }
+.pj-row .pj-zoom, .pj-row img { display: block; width: 100%; height: auto; }
+@media (max-width: 560px) { .pj-row { flex-wrap: wrap; } .pj-row li { flex: 1 1 100%; } }
+
+/* YouTube: due colonne grandi (era auto-fill 360) */
+.pj-ytgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2vw, 28px); }
+.pj-ytgrid p { margin-top: 10px; font-size: clamp(15px, 1.2vw, 18px); }
+.pj-ytgrid.vert { grid-template-columns: repeat(2, minmax(0, min(100%, calc(88vh * 9 / 16)))); justify-content: start; }
+.pj-yt.v { aspect-ratio: 9 / 16; }
+.pj-yt.v > img { object-fit: cover; }
+@media (max-width: 700px) { .pj-ytgrid, .pj-ytgrid.vert { grid-template-columns: minmax(0, 1fr); } .pj-ytgrid.vert { grid-template-columns: minmax(0, min(100%, 340px)); } }
+
+/* player artwork: immagine grande, frecce, anteprime, contatore */
+.pj-player { display: grid; gap: 12px; }
+.pj-pl-stage { position: relative; display: grid; place-items: center; height: min(82vh, 760px); border-radius: 6px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.34); -webkit-backdrop-filter: blur(22px) saturate(1.7); backdrop-filter: blur(22px) saturate(1.7); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55), 0 0 0 1px rgba(26, 26, 26, 0.12); }
+.pj-pl-slide { position: absolute; inset: 0; display: grid; place-items: center; padding: clamp(10px, 2vw, 28px); border: 0; background: none; cursor: zoom-in; }
+.pj-pl-slide[hidden] { display: none; }
+.pj-pl-slide img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 4px; }
+.pj-pl-arrow { position: absolute; top: 50%; translate: 0 -50%; min-width: 56px; min-height: 56px; padding: 0; z-index: 2; }
+.pj-pl-arrow.l { left: 14px; } .pj-pl-arrow.r { right: 14px; }
+.pj-pl-bar { display: flex; align-items: center; gap: 16px; }
+.pj-pl-thumbs { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; overflow-x: auto; flex: 1; scrollbar-width: none; }
+.pj-pl-thumbs::-webkit-scrollbar { display: none; }
+.pj-pl-thumbs button { display: block; width: 84px; aspect-ratio: 1; padding: 0; border: 0; border-radius: 6px; overflow: hidden; cursor: pointer; opacity: 0.55; transition: opacity .3s, box-shadow .3s; }
+.pj-pl-thumbs button[aria-current='true'] { opacity: 1; box-shadow: 0 0 0 2px var(--ink); }
+.pj-pl-thumbs button:hover { opacity: 1; }
+.pj-pl-thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 560px) { .pj-pl-stage { height: 68vh; } .pj-pl-thumbs button { width: 64px; } }
+
+/* Instagram: anteprime reali con tag, al posto dei bottoni */
+.pj-igs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(10px, 1.4vw, 20px); align-items: start; }
+.pj-ig-card { position: relative; display: block; overflow: hidden; border-radius: 6px; box-shadow: 0 0 0 1px rgba(26, 26, 26, 0.12); }
+.pj-ig-card img { width: 100%; height: auto; display: block; transition: transform .9s var(--ease); }
+.pj-ig-card:hover img { transform: scale(1.03); }
+.pj-ig-tag { position: absolute; left: 14px; bottom: 14px; min-height: 40px; padding: 0 16px; }
+.pj-pl-slide img { max-height: calc(min(82vh, 760px) - 2 * clamp(10px, 2vw, 28px)); } @media (max-width: 560px) { .pj-pl-slide img { max-height: calc(68vh - 24px); } }
