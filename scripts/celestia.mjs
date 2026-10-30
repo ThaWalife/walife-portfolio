@@ -89,7 +89,7 @@ const blocks = [
   gal(shots, [[0], [1, 2], [3, 4], [5, 6]]),
 
   label('03 — L’identity', '03 — The identity'),
-  h('Notturno, chrome, orbita', 'Night, chrome, orbit'),
+  h('Moodboard identity', 'Moodboard identity'),
   p('La nuova identity segue la moodboard: luce fredda, ombre profonde e fondo scuro, con logotype e simbolo trattati come oggetti chrome in 3D dentro i mondi VR. Il sistema è costruito su colori piatti e su una griglia in prospettiva desaturata, senza mai ricorrere a neon rosa o viola. Qui sotto la moodboard in quattro tavole: la versione Day, il marchio primario, il marchio secondario e palette e tipografia.',
     'The new identity follows the moodboard: cold light, deep shadows and a dark ground, with the logotype and symbol treated as 3D chrome objects inside the VR worlds. The system is built on flat colors and a desaturated perspective grid, never relying on neon pink or purple. Below, the moodboard in four boards: the Day version, the primary mark, the secondary mark, and palette and typography.'),
   { type: 'player', items: mood },
