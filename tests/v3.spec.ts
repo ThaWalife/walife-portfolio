@@ -514,3 +514,46 @@ test('YouTube: anteprima locale caricata e pulsante play centrato; nessuna richi
   }
   expect(ext).toEqual([]);
 });
+
+test('chi sono: foto nelle colonne 3-4 e indicatori di livello (3 trattini per ognuno dei 10 strumenti)', async ({ page }) => {
+  await page.goto('chi-sono/');
+  await expect.poll(() => page.locator('.about-photo img').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(300);
+  const cells = await page.locator('.guides span').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().left));
+  const fx = (await page.locator('.about-photo').boundingBox())!.x;
+  expect(Math.abs(fx - cells[2])).toBeLessThanOrEqual(2);
+  await expect(page.locator('.tools-grid li .lvl')).toHaveCount(10);
+  const lit = await page.locator('.tools-grid li .lvl').evaluateAll((els) => els.map((e) => [...e.querySelectorAll('i')].filter((i) => getComputedStyle(i).backgroundColor === 'rgb(13, 158, 91)').length));
+  expect(lit.filter((n) => n === 3)).toHaveLength(4); // avanzato: 4 strumenti
+  expect(lit.filter((n) => n === 2)).toHaveLength(6); // intermedio: 6 strumenti
+});
+
+test('libro: due pagine affiancate, avanza di due, e si apre nella lente', async ({ page }) => {
+  await page.goto('progetti/elaborato-conclusivo-del-percorso-scolastico/');
+  const visible = async () => page.locator('.pj-book-track li').evaluateAll((els) => { const t = els[0].parentElement!.getBoundingClientRect(); return els.filter((e) => { const r = e.getBoundingClientRect(); return r.left >= t.left - 2 && r.right <= t.right + 2; }).length; });
+  await expect(page.locator('[data-book-count]')).toHaveText('1 / 62'); // copertina da sola
+  expect(await visible()).toBe(2);   // segnaposto + copertina
+  await page.locator('[data-book-next]').click();
+  await expect(page.locator('[data-book-count]')).toHaveText('2–3 / 62'); // due pagine affiancate
+  await page.waitForTimeout(1200);
+  expect(await visible()).toBe(2);
+  await page.locator('[data-book-next]').click();
+  await expect(page.locator('[data-book-count]')).toHaveText('4–5 / 62');
+  await page.locator('[data-book-prev]').click();
+  await page.locator('[data-book-prev]').click();
+  await expect(page.locator('[data-book-count]')).toHaveText('1 / 62');
+  await page.locator('.pj-book-track .pj-zoom').first().click();
+  await expect(page.locator('dialog[open] [data-dlg-img]')).toBeVisible();
+});
+
+test('foto profilo incorniciata: vetro, due anelli tratteggiati animati, 4 segni d\'angolo, inclinazione col mouse', async ({ page }) => {
+  await page.goto('chi-sono/');
+  await expect(page.locator('.ph-ring')).toHaveCount(2);
+  await expect(page.locator('.ph-c')).toHaveCount(4);
+  expect(await page.locator('.ph-glass').evaluate((e) => getComputedStyle(e).backdropFilter)).toContain('blur');
+  expect(await page.locator('.ph-ring.r1').evaluate((e) => getComputedStyle(e).animationName)).toBe('phA');
+  const box = (await page.locator('.about-photo').boundingBox())!;
+  await page.mouse.move(box.x + box.width * 0.9, box.y + box.height * 0.2);
+  await page.waitForTimeout(600);
+  const m = await page.locator('.ph-glass').evaluate((e) => new DOMMatrix(getComputedStyle(e).transform).m13);
+  expect(m).not.toBe(0);
+});

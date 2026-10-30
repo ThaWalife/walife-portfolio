@@ -109,16 +109,37 @@ document.querySelectorAll<HTMLButtonElement>('[data-yt]').forEach((b) =>
   }),
 );
 
+// libro aperto: la copertina da sola a destra, poi pagine affiancate a coppie (2–3, 4–5, …) come in una stampa fronte/retro.
+// Su schermi stretti una pagina alla volta (la pagina vuota di apertura sparisce).
 document.querySelectorAll<HTMLElement>('[data-book]').forEach((book) => {
   const track = book.querySelector<HTMLElement>('.pj-book-track')!;
   const count = book.querySelector<HTMLElement>('[data-book-count]')!;
-  const n = track.children.length;
-  const w = () => (track.firstElementChild as HTMLElement).offsetWidth;
-  const idx = () => Math.round(track.scrollLeft / w());
-  const go = (i: number) => track.scrollTo({ left: Math.min(Math.max(i, 0), n - 1) * w(), behavior: 'smooth' });
-  book.querySelector('[data-book-prev]')!.addEventListener('click', () => go(idx() - 1));
-  book.querySelector('[data-book-next]')!.addEventListener('click', () => go(idx() + 1));
-  track.addEventListener('scroll', () => { count.textContent = `${idx() + 1} / ${n}`; }, { passive: true });
+  const n = track.children.length - 1; // senza il segnaposto
+  const two = () => !matchMedia('(max-width: 600px)').matches;
+  const step = () => (track.children[1] as HTMLElement).offsetWidth * (two() ? 2 : 1);
+  const spread = () => Math.round(track.scrollLeft / step());
+  const label = () => {
+    const s = spread();
+    if (!two()) { count.textContent = `${Math.min(s + 1, n)} / ${n}`; return; }
+    const a = s * 2, b = Math.min(s * 2 + 1, n);
+    count.textContent = s === 0 ? `1 / ${n}` : `${a === b ? a : `${a}–${b}`} / ${n}`;
+  };
+  const last = () => (two() ? Math.ceil((n + 1) / 2) - 1 : n - 1);
+  // cur = pagina di destinazione: click ravvicinati si sommano anche durante lo scorrimento animato
+  let cur = 0, busy = false, t = 0;
+  const done = () => { busy = false; cur = spread(); label(); };
+  const go = (i: number) => {
+    cur = Math.min(Math.max(i, 0), last());
+    busy = true;
+    clearTimeout(t);
+    t = window.setTimeout(done, 900);
+    track.scrollTo({ left: cur * step(), behavior: 'smooth' });
+  };
+  book.querySelector('[data-book-prev]')!.addEventListener('click', () => go(cur - 1));
+  book.querySelector('[data-book-next]')!.addEventListener('click', () => go(cur + 1));
+  track.addEventListener('scroll', () => { label(); if (!busy) cur = spread(); }, { passive: true });
+  track.addEventListener('scrollend', () => { if (busy) { clearTimeout(t); t = window.setTimeout(done, 120); } });
+  addEventListener('resize', label);
 });
 
 export {};

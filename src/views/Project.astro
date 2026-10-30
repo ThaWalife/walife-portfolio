@@ -57,8 +57,8 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
             ))}</ul>;
           if (b.type === 'book')
             return <div class="pj-book" data-book>
-              <ul class="pj-book-track">{b.pages.map((i: any, k: number) => (
-                <li><img src={url(i.src)} alt={`${title}, ${t(lang, 'pgPage')} ${k + 1} ${t(lang, 'pgOf')} ${b.pages.length}`} width={i.w} height={i.h} loading="lazy" decoding="async" /></li>
+              <ul class="pj-book-track"><li class="pj-spacer" aria-hidden="true"></li>{b.pages.map((i: any, k: number) => (
+                <li><button type="button" class="pj-zoom" data-zoom={url(i.src)} aria-label={`${t(lang, 'pgPage')} ${k + 1} ${t(lang, 'pgOf')} ${b.pages.length}`}><img src={url(i.src)} alt={`${title}, ${t(lang, 'pgPage')} ${k + 1} ${t(lang, 'pgOf')} ${b.pages.length}`} width={i.w} height={i.h} loading={k < 4 ? 'eager' : 'lazy'} decoding="async" /></button></li>
               ))}</ul>
               <div class="pj-book-nav">
                 <button class="btn" type="button" data-book-prev>{t(lang, 'pgBookPrev')}</button>

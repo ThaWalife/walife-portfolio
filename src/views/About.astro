@@ -15,6 +15,14 @@ const email = site.SOCIALS.find((s) => s.name === 'Email')!;
 <Base lang={lang} page="about" title={t(lang, 'docTitleAbout')} description={t(lang, 'abDocDesc')}>
   <section class="inner">
     <div class="wrap about-hero">
+      <figure class="about-photo" data-tilt>
+        <div class="ph-frame">
+          <span class="ph-ring r1" aria-hidden="true"></span><span class="ph-ring r2" aria-hidden="true"></span>
+          <div class="ph-glass"><img src={url('img/walife.webp')} alt={t(lang, 'photoAlt')} width="640" height="640" fetchpriority="high" decoding="async" /></div>
+          <i class="ph-c nw" aria-hidden="true"></i><i class="ph-c ne" aria-hidden="true"></i><i class="ph-c sw" aria-hidden="true"></i><i class="ph-c se" aria-hidden="true"></i>
+        </div>
+        <figcaption class="ph-cap label">WALIFE · GRAPHIC DESIGNER</figcaption>
+      </figure>
       <span class="label">{t(lang, 'abIdx')}</span>
       <h1 data-split style="font-size:clamp(48px,9vw,136px)" set:html={t(lang, 'abTitle')} />
       <p class="bio">{t(lang, 'abBio')}</p>
@@ -28,9 +36,10 @@ const email = site.SOCIALS.find((s) => s.name === 'Email')!;
     <div class="wrap">
       <span class="label">{t(lang, 'abToolsIdx')}</span>
       <h2 data-split style="margin-top:14px" set:html={t(lang, 'abToolsTitle')} />
+      <p class="lv-legend" aria-hidden="true"><span class="lvl l3"><i></i><i></i><i></i></span> {t(lang, 'abLvAdv')} <span class="lvl l2"><i></i><i></i><i></i></span> {t(lang, 'abLvInt')}</p>
       <ul class="tools-grid">
         {A.tools.map((tool: any) => (
-          <li class="rv"><span class="ab" aria-hidden="true">{tool.abbr}</span><span><span class="nm">{tool.name}</span><span class="lv" style="display:block">{lv(tool.level)}</span></span></li>
+          <li class="rv"><span class="ab" aria-hidden="true">{tool.abbr}</span><span><span class="nm">{tool.name}</span><span class="lv" style="display:block">{lv(tool.level)}</span></span><span class={`lvl ${tool.level === 'adv' ? 'l3' : 'l2'}`} aria-hidden="true"><i></i><i></i><i></i></span></li>
         ))}
       </ul>
     </div>
@@ -67,4 +76,7 @@ const email = site.SOCIALS.find((s) => s.name === 'Email')!;
       <div><a class="btn" data-snd href={url(routes.archive[lang])}>{t(lang, 'abWork')}</a></div>
     </div>
   </section>
+  <script>
+    import '../scripts/tilt';
+  </script>
 </Base>
