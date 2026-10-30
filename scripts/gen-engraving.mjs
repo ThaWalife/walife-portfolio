@@ -1,10 +1,11 @@
-// Genera src/assets/engraving.svg: onde "incise" (tratteggio nero, schiuma bianca) con scogli e il simbolo Walife al posto del faro.
+// Genera src/assets/<nome>.svg (default engraving.svg: footer; `node scripts/gen-engraving.mjs waves 3 4 230 0`: striscia della hero): onde "incise" (tratteggio nero, schiuma bianca) con scogli e il simbolo Walife al posto del faro.
 // Deterministico (PRNG con seme). Uso: node scripts/gen-engraving.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const W = 1600, H = 460;
+const [NAME = 'engraving', SEED = '7', BANDS = '8', HEIGHT = '460', ROCK = '1'] = process.argv.slice(2);
+const W = 1600, H = Number(HEIGHT);
 const INK = '#1a1a1a', PAPER = '#f4f4f4', BG = '#0d9e5b';
-let seed = 7;
+let seed = Number(SEED);
 const rnd = () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 const f = (n) => n.toFixed(1);
 
@@ -13,9 +14,10 @@ const logoPaths = [...logo.matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1])
 
 const out = [];
 const defs = [];
-const bands = 8;
+const bands = Number(BANDS);
+const TOP = H - bands * 30 - 15;
 const wave = (i, x) => {
-  const base = 205 + i * 30;
+  const base = TOP + i * 30;
   return base + (12 + i * 4.5) * Math.sin(x * (0.0105 + i * 0.0006) + i * 1.7) + (6 + i * 2) * Math.sin(x * 0.027 + i * 0.9) + 3 * Math.sin(x * 0.07 + i);
 };
 
@@ -59,7 +61,7 @@ for (let i = 0; i < bands; i++) {
     }
   }
   // scogli e simbolo dietro la 5ª banda (sopra le prime, sotto le ultime)
-  if (i === 5) {
+  if (ROCK === '1' && i === 5) {
     const rx = 1215, ry = 345;
     const pts = [[-190, 130], [-150, 40], [-95, 10], [-60, -45], [-10, -85], [40, -70], [85, -20], [140, 20], [200, 130]]
       .map(([dx, dy]) => [rx + dx + (rnd() - 0.5) * 14, ry + dy + (rnd() - 0.5) * 12]);
@@ -77,5 +79,5 @@ for (let i = 0; i < bands; i++) {
 }
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label=""><defs>${defs.join('')}</defs>${out.join('\n')}</svg>`;
-writeFileSync(new URL('../src/assets/engraving.svg', import.meta.url), svg, 'utf8');
-console.log('engraving.svg', Math.round(svg.length / 1024) + ' KB');
+writeFileSync(new URL(`../src/assets/${NAME}.svg`, import.meta.url), svg, 'utf8');
+console.log(NAME + '.svg', Math.round(svg.length / 1024) + ' KB');

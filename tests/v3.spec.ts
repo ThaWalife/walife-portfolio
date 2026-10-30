@@ -207,3 +207,13 @@ test('footer stile tide: 4 colonne, guide tratteggiate, incisione caricata, colo
   const links = await page.locator('.site-footer a').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).textContent));
   expect(links).toEqual(expect.arrayContaining(['Privacy e condizioni', 'Discord', 'Bluesky']));
 });
+
+test('stile tide esteso: onde in hero, linee tratteggiate tra sezioni, card con bordo tratteggiato', async ({ page }) => {
+  await page.goto('');
+  await expect.poll(() => page.locator('.hero-waves').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+  expect(await page.locator('.hero-waves').evaluate((e) => getComputedStyle(e).zIndex)).toBe('2');
+  expect(await page.locator('.about').evaluate((e) => getComputedStyle(e, '::before').borderTopStyle)).toBe('dashed');
+  expect(await page.locator('.pcard').first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe('dashed');
+  await page.goto('archivio/');
+  expect(await page.locator('.card').first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe('dashed');
+});

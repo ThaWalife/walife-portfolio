@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PatternBand from '../components/PatternBand.astro';
 import site from '../content/site.json';
+import waves from '../assets/waves.svg';
 import logoRaw from '../assets/walife-logo.svg?raw';
 import { url } from '../lib/url';
 import { routes, t, loc, type Lang } from '../lib/i18n';
@@ -20,6 +21,7 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
 ---
 <Base lang={lang} page="home" home title={t(lang, 'docTitle')} description={t(lang, 'docDesc')}>
   <section class="hero on-green" id="hero" data-hero>
+    <img class="hero-waves" src={waves.src} alt="" aria-hidden="true" width="1600" height="230" decoding="async" />
     <div class="wrap hero-grid">
       <h1 class="hero-h" data-lang={lang}>{t(lang, 'heroH')}</h1>
       <p class="hero-sub label">{t(lang, 'eyebrow')} · {t(lang, 'abF2')}</p>
