@@ -283,7 +283,7 @@ test('home: logo brand bianco solo in home, CTA hero in vetro come le pillole, l
   // il logo emerge dalla collina: il suo centro sta alla cima della collina (metà superiore visibile)
   const lg = (await page.locator('.hero-logo').boundingBox())!;
   const fld = (await page.locator('.hero-field').boundingBox())!;
-  const centre = lg.y + lg.height / 2;
-  expect(centre).toBeGreaterThan(fld.y);            // il centro è già dentro la fascia del prato
-  expect(centre).toBeLessThan(fld.y + fld.height * 0.5);
+  // la parte bassa del logo sta dietro il prato (il fondo scende dentro la fascia) e la cima resta sotto la barra in alto
+  expect(lg.y + lg.height).toBeGreaterThan(fld.y + fld.height * 0.3);
+  expect(lg.y).toBeGreaterThan(80);
 });

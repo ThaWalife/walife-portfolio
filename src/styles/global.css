@@ -97,7 +97,7 @@ body:not([data-page='home']) main { padding-top: 120px; }
 .hero-h { min-width: 0; font-size: 8vw; line-height: 0.9; letter-spacing: -0.02em; word-spacing: 0.1em; text-transform: uppercase; font-weight: 700; white-space: nowrap; text-align: center; width: 100%; margin-top: clamp(0px, 1.5vw, 20px); }
 .hero-sub { margin-top: 18px; text-align: left; }
 .hero-field { position: absolute; z-index: 5; left: 0; bottom: 0; width: 100%; pointer-events: none; }
-.hero-logo { --lh: calc(min(calc(100svh - 234 / 1600 * 100vw - 84px), 54vh, 540px) * 1.5); position: absolute; z-index: 4; left: 50%; bottom: calc(234 / 1600 * 100vw - var(--lh) / 2); height: var(--lh); aspect-ratio: 269.13 / 414.41; transform: translateX(-50%); pointer-events: none; }
+.hero-logo { --lh: calc(min(calc(100svh - 234 / 1600 * 100vw - 84px), 54vh, 540px) * 1.5); position: absolute; z-index: 4; left: 50%; bottom: calc(234 / 1600 * 100vw - var(--lh) * 0.3); height: var(--lh); aspect-ratio: 269.13 / 414.41; transform: translateX(-50%); pointer-events: none; }
 .hero-logo svg { width: 100%; height: 100%; }
 .hero-logo path { fill: var(--white); stroke: var(--ink); stroke-width: 2.6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; paint-order: stroke; }
 .hero-bar { grid-row: 4; display: flex; justify-content: space-between; align-items: end; gap: 24px; position: relative; z-index: 6; }
