@@ -124,7 +124,7 @@ test('contatti: email e social corretti', async ({ page }) => {
   await page.goto('contatti/');
   await expect(page.locator('a.mail')).toHaveAttribute('href', 'mailto:thawalife@gmail.com');
   for (const s of site.SOCIALS.filter((x: any) => x.name !== 'Email'))
-    await expect(page.locator(`a[href="${s.url}"]`)).toHaveCount(1);
+    await expect(page.locator(`main a[href="${s.url}"]`)).toHaveCount(1);
 });
 
 test('tutti i link interni e gli asset rispondono 200 sotto il base path', async ({ page, request }) => {

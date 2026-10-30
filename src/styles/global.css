@@ -231,11 +231,6 @@ section.inner { padding-block: clamp(48px, 8vw, 110px); }
 .empty { display: none; padding: 48px 0; }
 [hidden] { display: none !important; }
 
-/* footer */
-.site-footer { position: relative; z-index: 1; border-top: 2px solid var(--ink); padding-block: 32px 40px; background: var(--white); }
-.site-footer .wrap { display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; align-items: center; }
-.site-footer a:hover { color: var(--green); }
-@media (max-width: 900px) { .site-footer { padding-bottom: 110px; } }
 
 /* ───────── liquid glass: vetro smerigliato su sfondo verde/bianco in movimento ───────── */
 .brand, .pill, .socials a, .tools-grid li, .facts li, .chip, .card, .peek, .svc-row:hover, .svc-row:focus-within {
@@ -256,10 +251,8 @@ section.inner { padding-block: clamp(48px, 8vw, 110px); }
 .card .img { border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
 [data-view='list'] .card { box-shadow: none; border-top: 1px solid rgba(26, 26, 26, 0.25); background: transparent; backdrop-filter: none; }
 [data-view='list'] .card:hover { background: rgba(255, 255, 255, 0.5); }
-.site-footer { background: rgba(255, 255, 255, 0.34); -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); border-top: 1px solid rgba(255, 255, 255, 0.6); }
 .mobile-nav { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.45); }
-@supports not (backdrop-filter: blur(1px)) { .brand, .pill, .card, .socials a, .tools-grid li, .chip, .site-footer { background: rgba(255, 255, 255, 0.85); } }
-
+@supports not (backdrop-filter: blur(1px)) { .brand, .pill, .card, .socials a, .tools-grid li, .chip { background: rgba(255, 255, 255, 0.85); } }
 /* cursore custom (solo pointer: fine): pallino nero, etichetta nera su cerchio bianco */
 .cursor { position: fixed; z-index: 90; left: 0; top: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 999px; background: var(--ink); pointer-events: none; display: none; place-items: center;
   font: 700 11px/1 var(--font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), background .3s, opacity .3s; will-change: transform; }
@@ -300,3 +293,30 @@ section.inner { padding-block: clamp(48px, 8vw, 110px); }
 .legal-list > div { display: grid; grid-template-columns: 1fr 2fr; gap: 12px 24px; padding: 20px 0; border-top: 1px solid var(--line); }
 .legal-list dd { margin: 0; }
 @media (max-width: 700px) { .legal-list > div { grid-template-columns: 1fr; } }
+
+/* ───────── guide verticali tratteggiate (stile "tide footer") ───────── */
+.guides, .foot-lines { position: fixed; inset: 0 var(--margin); z-index: 1; pointer-events: none; display: grid; grid-template-columns: repeat(4, 1fr); }
+.guides span, .foot-lines span { border-left: 1px dashed rgba(26, 26, 26, 0.14); }
+.guides span:last-child, .foot-lines span:last-child { border-right: 1px dashed rgba(26, 26, 26, 0.14); }
+@media (max-width: 900px) { .guides span:nth-child(2), .guides span:nth-child(3) { border-left: 0; } }
+
+/* ───────── footer: 4 colonne, linee tratteggiate, incisione in basso ───────── */
+.site-footer { position: relative; z-index: 2; overflow: hidden; padding-top: 96px; border-top: 0; background: var(--green); }
+.site-footer::before { content: ''; position: absolute; left: 0; right: 0; top: 44px; border-top: 1px dashed rgba(26, 26, 26, 0.35); }
+.site-footer .foot-lines { position: absolute; inset: 0 var(--margin); z-index: 0; }
+.site-footer .foot-lines span { border-color: rgba(26, 26, 26, 0.35); }
+.foot-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding-inline: var(--margin); }
+.fcol { display: grid; align-content: start; justify-items: center; text-align: center; gap: 10px; padding: 0 16px 56px; }
+.fcol img { width: 150px; height: auto; margin-bottom: 6px; }
+.fcol p { font-size: 15px; line-height: 1.4; max-width: 24ch; }
+.fcol .small { font-size: 13px; }
+.fcol .fh { font: 600 18px/1.2 var(--font-display); margin-bottom: 6px; }
+.fcol a { font-size: 15px; transition: opacity 0.3s; }
+.fcol a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.site-footer .engr { display: block; position: relative; z-index: 1; width: 100%; height: auto; margin-top: -40px; pointer-events: none; }
+@media (max-width: 900px) {
+  .foot-grid { grid-template-columns: 1fr 1fr; row-gap: 8px; }
+  .site-footer .foot-lines span:nth-child(2), .site-footer .foot-lines span:nth-child(3) { display: none; }
+  .site-footer { padding-bottom: 0; }
+  .site-footer .engr { margin-bottom: 70px; }
+}

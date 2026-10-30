@@ -195,3 +195,15 @@ for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
     await ctx.close();
   });
 }
+
+test('footer stile tide: 4 colonne, guide tratteggiate, incisione caricata, colori solo brand', async ({ page }) => {
+  await page.goto('archivio/');
+  await page.locator('.site-footer').scrollIntoViewIfNeeded();
+  await expect(page.locator('.site-footer .fcol')).toHaveCount(4);
+  await expect(page.locator('.site-footer .foot-lines span')).toHaveCount(4);
+  expect(await page.locator('.guides span').first().evaluate((e) => getComputedStyle(e).borderLeftStyle)).toBe('dashed');
+  await expect.poll(() => page.locator('.site-footer .engr').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+  expect(await page.locator('.site-footer').evaluate((e) => getComputedStyle(e).backgroundColor)).toBe('rgb(13, 158, 91)');
+  const links = await page.locator('.site-footer a').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).textContent));
+  expect(links).toEqual(expect.arrayContaining(['Privacy e condizioni', 'Discord', 'Bluesky']));
+});
