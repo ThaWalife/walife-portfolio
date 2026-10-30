@@ -105,7 +105,14 @@ const blocks = [
     'The glitch lives only inside the images: it is the language of the waiting phase. When the new identity arrives the colors go flat again and the logo is never disturbed.'),
   gal([reveal]),
 
-  label('02 — L’identity', '02 — The identity'),
+  label('02 — Il mondo', '02 — The world'),
+  h('Il punto di ritrovo', 'The meeting point'),
+  p('Il mondo è il punto di ritrovo della community di Celestia. La mappa è stata realizzata da Kaira S e la versione mostrata qui è quella di Halloween. Queste immagini servono da contesto per mostrare il resto del mio lavoro, quindi non sono il lavoro principale di questo progetto: sono il posto in cui la community si ritrova e dove poi vivranno logotype, colori e interfacce della nuova identity.',
+    'The world is the meeting point of the Celestia community. The map was made by Kaira S and the version shown here is the Halloween one. These images are context to show the rest of my work, so they are not the main work of this project: they are the place where the community gathers and where the logotype, colors and interfaces of the new identity will live.'),
+  gal(thumbs, [[0, 1]]),
+  gal(shots, [[0], [1, 2], [3, 4], [5, 6]]),
+
+  label('03 — L’identity', '03 — The identity'),
   h('Notturno, chrome, orbita', 'Night, chrome, orbit'),
   p('La nuova identity segue la moodboard: luce fredda, ombre profonde e fondo scuro, con logotype e simbolo trattati come oggetti chrome in 3D dentro i mondi VR. Il sistema è costruito su colori piatti e su una griglia in prospettiva desaturata, senza mai ricorrere a neon rosa o viola. Le otto tavole qui sotto sono la moodboard che ha guidato il progetto: versione notte, versione giorno, logotype, simbolo, colore e tipografia, applicazioni e brand tokens.',
     'The new identity follows the moodboard: cold light, deep shadows and a dark ground, with the logotype and symbol treated as 3D chrome objects inside the VR worlds. The system is built on flat colors and a desaturated perspective grid, never relying on neon pink or purple. The eight boards below are the moodboard that guided the project: night version, day version, logotype, symbol, color and typography, applications and brand tokens.'),
@@ -142,13 +149,6 @@ const blocks = [
     'For the Halloween season the identity lights up in Ember orange, the only moment the color is allowed. Besides the main version I made themed versions of the logotype and symbol, with ghosts, pumpkins and a lantern.'),
   gal([hLogo, hSym], [[0], [1]]),
 
-  label('03 — Il mondo', '03 — The world'),
-  h('Dove vive l’identity', 'Where the identity lives'),
-  p('Il mondo è il punto di ritrovo della community di Celestia. La mappa è stata realizzata da Kaira S e la versione mostrata qui è quella di Halloween. Queste immagini servono da contesto per mostrare il resto del mio lavoro, quindi non sono il lavoro principale di questo progetto: sono il posto in cui logotype, colori e interfacce prendono vita.',
-    'The world is the meeting point of the Celestia community. The map was made by Kaira S and the version shown here is the Halloween one. These images are context to show the rest of my work, so they are not the main work of this project: they are the place where the logotype, colors and interfaces come to life.'),
-  gal(thumbs, [[0, 1]]),
-  gal(shots, [[0], [1, 2], [3, 4], [5, 6]]),
-
   label('04 — Poster e volantini', '04 — Posters and flyers'),
   h('Un layout per riconoscersi', 'A layout to be recognized'),
   p('Poster e volantini seguono un layout specifico per mantenere l’identità: logotype in alto, etichette in JetBrains Mono, titoli in Unbounded, un QR code per entrare nella community e la call to action in Pulsar Cyan. Per l’evento di Halloween il layout resta lo stesso e cambia solo l’accento, che diventa Ember.',
@@ -156,8 +156,7 @@ const blocks = [
   gal(posters, [[0, 1, 2, 3]]),
 
   label('Credits', 'Credits'),
-  p('Mappa: Kaira S. Logotype, simbolo, key visual, campagna, poster e volantini: Federico.',
-    'Map: Kaira S. Logotype, symbol, key visual, campaign, posters and flyers: Federico.'),
+  p('Mappa: Kaira S.', 'Map: Kaira S.'),
 ];
 
 // registrazione nei contenuti (in testa: è il più recente)

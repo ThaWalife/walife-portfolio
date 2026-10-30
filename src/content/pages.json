@@ -1330,8 +1330,101 @@
       },
       {
         "type": "label",
-        "it": "02 — L’identity",
-        "en": "02 — The identity"
+        "it": "02 — Il mondo",
+        "en": "02 — The world"
+      },
+      {
+        "type": "h",
+        "it": "Il punto di ritrovo",
+        "en": "The meeting point"
+      },
+      {
+        "type": "p",
+        "it": "Il mondo è il punto di ritrovo della community di Celestia. La mappa è stata realizzata da Kaira S e la versione mostrata qui è quella di Halloween. Queste immagini servono da contesto per mostrare il resto del mio lavoro, quindi non sono il lavoro principale di questo progetto: sono il posto in cui la community si ritrova e dove poi vivranno logotype, colori e interfacce della nuova identity.",
+        "en": "The world is the meeting point of the Celestia community. The map was made by Kaira S and the version shown here is the Halloween one. These images are context to show the rest of my work, so they are not the main work of this project: they are the place where the community gathers and where the logotype, colors and interfaces of the new identity will live."
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/mondo-miniatura.webp",
+            "w": 1600,
+            "h": 1200
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-miniatura-halloween.webp",
+            "w": 1600,
+            "h": 1200
+          }
+        ],
+        "rows": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/mondo-1.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-2.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-3.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-4.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-5.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-6.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-7.webp",
+            "w": 2560,
+            "h": 1440
+          }
+        ],
+        "rows": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      },
+      {
+        "type": "label",
+        "it": "03 — L’identity",
+        "en": "03 — The identity"
       },
       {
         "type": "h",
@@ -1596,99 +1689,6 @@
       },
       {
         "type": "label",
-        "it": "03 — Il mondo",
-        "en": "03 — The world"
-      },
-      {
-        "type": "h",
-        "it": "Dove vive l’identity",
-        "en": "Where the identity lives"
-      },
-      {
-        "type": "p",
-        "it": "Il mondo è il punto di ritrovo della community di Celestia. La mappa è stata realizzata da Kaira S e la versione mostrata qui è quella di Halloween. Queste immagini servono da contesto per mostrare il resto del mio lavoro, quindi non sono il lavoro principale di questo progetto: sono il posto in cui logotype, colori e interfacce prendono vita.",
-        "en": "The world is the meeting point of the Celestia community. The map was made by Kaira S and the version shown here is the Halloween one. These images are context to show the rest of my work, so they are not the main work of this project: they are the place where the logotype, colors and interfaces come to life."
-      },
-      {
-        "type": "gallery",
-        "items": [
-          {
-            "src": "img/projects/celestia-identity/mondo-miniatura.webp",
-            "w": 1600,
-            "h": 1200
-          },
-          {
-            "src": "img/projects/celestia-identity/mondo-miniatura-halloween.webp",
-            "w": 1600,
-            "h": 1200
-          }
-        ],
-        "rows": [
-          [
-            0,
-            1
-          ]
-        ]
-      },
-      {
-        "type": "gallery",
-        "items": [
-          {
-            "src": "img/projects/celestia-identity/mondo-1.webp",
-            "w": 2560,
-            "h": 1440
-          },
-          {
-            "src": "img/projects/celestia-identity/mondo-2.webp",
-            "w": 2560,
-            "h": 1440
-          },
-          {
-            "src": "img/projects/celestia-identity/mondo-3.webp",
-            "w": 2560,
-            "h": 1440
-          },
-          {
-            "src": "img/projects/celestia-identity/mondo-4.webp",
-            "w": 2560,
-            "h": 1440
-          },
-          {
-            "src": "img/projects/celestia-identity/mondo-5.webp",
-            "w": 2560,
-            "h": 1440
-          },
-          {
-            "src": "img/projects/celestia-identity/mondo-6.webp",
-            "w": 2560,
-            "h": 1440
-          },
-          {
-            "src": "img/projects/celestia-identity/mondo-7.webp",
-            "w": 2560,
-            "h": 1440
-          }
-        ],
-        "rows": [
-          [
-            0
-          ],
-          [
-            1,
-            2
-          ],
-          [
-            3,
-            4
-          ],
-          [
-            5,
-            6
-          ]
-        ]
-      },
-      {
-        "type": "label",
         "it": "04 — Poster e volantini",
         "en": "04 — Posters and flyers"
       },
@@ -1742,8 +1742,8 @@
       },
       {
         "type": "p",
-        "it": "Mappa: Kaira S. Logotype, simbolo, key visual, campagna, poster e volantini: Federico.",
-        "en": "Map: Kaira S. Logotype, symbol, key visual, campaign, posters and flyers: Federico."
+        "it": "Mappa: Kaira S.",
+        "en": "Map: Kaira S."
       }
     ]
   }
