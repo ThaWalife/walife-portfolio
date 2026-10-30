@@ -50,8 +50,8 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
   <body data-page={page}>
     <a class="skip" href="#main">{t(lang, 'skip')}</a>
     <header class="pillbar">
-      <a class="brand" href={url(routes.home[lang])} aria-label="Walife, Home" data-snd>
-        <img src={url('brand/walife-lockup-horizontal-green.svg')} alt="Walife" width="66" height="26" />
+      <a class={home ? 'brand brand-on-green' : 'brand'} href={url(routes.home[lang])} aria-label="Walife, Home" data-snd>
+        <img src={url(home ? 'brand/walife-lockup-horizontal-white.svg' : 'brand/walife-lockup-horizontal-green.svg')} alt="Walife" width="66" height="26" />
       </a>
       <nav class="pill center" aria-label="Main">
         {center.map((k) => (

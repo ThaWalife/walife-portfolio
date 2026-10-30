@@ -267,3 +267,23 @@ test('prato animato: gli strati ondeggiano (non quello della collinetta) e con r
   expect(await p2.locator('.hero-field .l3').evaluate((e) => getComputedStyle(e).animationName)).toBe('none');
   await ctx.close();
 });
+
+test('home: logo brand bianco solo in home, CTA hero in vetro come le pillole, logo senza tratteggio interno', async ({ page }) => {
+  await page.goto('');
+  expect(await page.locator('.brand img').getAttribute('src')).toContain('horizontal-white');
+  await page.goto('archivio/');
+  expect(await page.locator('.brand img').getAttribute('src')).toContain('horizontal-green');
+  await page.goto('');
+  const a = await page.locator('.hero .btn').evaluate((e) => { const s = getComputedStyle(e); return { r: s.borderRadius, bf: s.backdropFilter, clip: s.clipPath }; });
+  const b = await page.locator('.pillbar .pill').first().evaluate((e) => { const s = getComputedStyle(e); return { bf: s.backdropFilter }; });
+  expect(a.clip).toBe('none');
+  expect(a.bf).toBe(b.bf);
+  expect(parseFloat(a.r)).toBeGreaterThan(20);
+  await expect(page.locator('.hero-logo .shade')).toHaveCount(0);
+  // il logo emerge dalla collina: il suo centro sta alla cima della collina (metà superiore visibile)
+  const lg = (await page.locator('.hero-logo').boundingBox())!;
+  const fld = (await page.locator('.hero-field').boundingBox())!;
+  const centre = lg.y + lg.height / 2;
+  expect(centre).toBeGreaterThan(fld.y);            // il centro è già dentro la fascia del prato
+  expect(centre).toBeLessThan(fld.y + fld.height * 0.5);
+});

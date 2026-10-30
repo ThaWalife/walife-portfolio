@@ -97,7 +97,7 @@ body:not([data-page='home']) main { padding-top: 120px; }
 .hero-h { min-width: 0; font-size: 8vw; line-height: 0.9; letter-spacing: -0.02em; word-spacing: 0.1em; text-transform: uppercase; font-weight: 700; white-space: nowrap; text-align: center; width: 100%; margin-top: clamp(0px, 1.5vw, 20px); }
 .hero-sub { margin-top: 18px; text-align: left; }
 .hero-field { position: absolute; z-index: 5; left: 0; bottom: 0; width: 100%; pointer-events: none; }
-.hero-logo { position: absolute; z-index: 4; left: 50%; bottom: calc(234 / 1600 * 100vw - 26px); height: min(calc(100svh - 234 / 1600 * 100vw - 84px), 54vh, 540px); aspect-ratio: 269.13 / 414.41; transform: translateX(-50%); pointer-events: none; }
+.hero-logo { --lh: min(calc(100svh - 234 / 1600 * 100vw - 84px), 54vh, 540px); position: absolute; z-index: 4; left: 50%; bottom: calc(234 / 1600 * 100vw - var(--lh) / 2); height: var(--lh); aspect-ratio: 269.13 / 414.41; transform: translateX(-50%); pointer-events: none; }
 .hero-logo svg { width: 100%; height: 100%; }
 .hero-logo path { fill: var(--white); stroke: var(--ink); stroke-width: 2.6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; paint-order: stroke; }
 .hero-bar { grid-row: 4; display: flex; justify-content: space-between; align-items: end; gap: 24px; position: relative; z-index: 6; }
@@ -108,7 +108,7 @@ body:not([data-page='home']) main { padding-top: 120px; }
   .hero-field { width: 150%; left: -25%; }
   .hero-h { font-size: 15vw; white-space: normal; text-align: left; }
   .hero-sub { text-align: left; }
-  .hero-logo { position: relative; grid-row: 3; justify-self: center; align-self: center; left: auto; bottom: auto; transform: none; height: auto; width: min(40vw, 27vh); margin-bottom: 6px; }
+  .hero-logo { position: relative; grid-row: 3; justify-self: center; align-self: center; left: auto; bottom: auto; transform: none; --lh: auto; height: auto; width: min(40vw, 27vh); margin-bottom: 6px; }
   .hero-bar { flex-direction: column; align-items: flex-start; }
 }
 
@@ -338,5 +338,11 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
 .engr .l2 { animation: sway 7.5s ease-in-out infinite alternate; --a: 0.5deg; }
 .engr .l3 { animation: sway 5.5s ease-in-out -2.5s infinite alternate; --a: 0.9deg; }
 @keyframes sway { from { transform: skewX(calc(var(--a) * -1)) translateX(-3px); } to { transform: skewX(var(--a)) translateX(3px); } }
-.hero-logo .shade { opacity: 0.55; }
-.hero-logo .shade path { fill: url(#hh); stroke: none; }
+
+/* home: logo del brand bianco su vetro verde */
+.brand-on-green { background: rgba(13, 158, 91, 0.55); }
+/* CTA della hero: stessa forma e stesso liquid glass delle pillole in alto */
+.hero .btn { clip-path: none; border-radius: 999px; min-height: 52px; padding: 0 30px; font: 600 13px/1 var(--font-display); letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.34); -webkit-backdrop-filter: blur(22px) saturate(1.7); backdrop-filter: blur(22px) saturate(1.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 -1px 0 rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.45); color: var(--ink); }
+.hero .btn:hover { background: rgba(255, 255, 255, 0.55); color: var(--ink); }
