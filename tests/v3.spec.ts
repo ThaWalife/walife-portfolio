@@ -217,3 +217,17 @@ test('stile tide esteso: onde in hero, linee tratteggiate tra sezioni, card con 
   await page.goto('archivio/');
   expect(await page.locator('.card').first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe('dashed');
 });
+
+test('onde sui bordi delle sezioni verdi: home (servizi e contatti) e chi sono', async ({ page }) => {
+  await page.goto('');
+  const loaded = async (sel: string) => page.locator(sel).evaluateAll((els) => els.map((i) => (i as HTMLImageElement).complete && (i as HTMLImageElement).naturalWidth > 0));
+  await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(800);
+  await page.locator('#services').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(800);
+  expect(await page.locator('.wave-top').count()).toBe(2);
+  expect((await loaded('.wave-top')).every(Boolean)).toBe(true);
+  expect(await page.locator('#services .wave-top').evaluate((e) => getComputedStyle(e).bottom)).not.toBe('auto');
+  await page.goto('chi-sono/');
+  await expect(page.locator('.wave-top')).toHaveCount(1);
+});

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PatternBand from '../components/PatternBand.astro';
+import WaveTop from '../components/WaveTop.astro';
 import site from '../content/site.json';
 import waves from '../assets/waves.svg';
 import logoRaw from '../assets/walife-logo.svg?raw';
@@ -48,7 +49,8 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
     </div>
   </section>
 
-  <section class="services on-green" id="services">
+  <section class="services on-green has-wave" id="services">
+    <WaveTop v={2} />
     <div class="wrap">
       <h2 data-split>{t(lang, 'svcTitle')}</h2>
       <ol class="svc-list">
@@ -85,6 +87,8 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
     <div class="wrap more"><a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'menuAll')}</a></div>
   </section>
 
+  <PatternBand />
+
   <section class="arch" id="archive-cta">
     <div class="wrap">
       <span class="label">{t(lang, 'arIdx')}</span>
@@ -92,9 +96,9 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
       <p>{t(lang, 'arCopy')}</p>
     </div>
   </section>
-  <PatternBand />
 
-  <section class="contact on-green" id="contact">
+  <section class="contact on-green has-wave" id="contact">
+    <WaveTop v={3} />
     <div class="wrap contact-big">
       <span class="label rv">{t(lang, 'ctIdx')}</span>
       <h2 data-split>{t(lang, 'ctLead')} <em>{t(lang, 'ctLink')}</em></h2>

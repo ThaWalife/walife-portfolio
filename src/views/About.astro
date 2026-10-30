@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PatternBand from '../components/PatternBand.astro';
+import WaveTop from '../components/WaveTop.astro';
 import site from '../content/site.json';
 import { url } from '../lib/url';
 import { routes, t, loc, type Lang } from '../lib/i18n';
@@ -58,7 +59,8 @@ const email = site.SOCIALS.find((s) => s.name === 'Email')!;
     </div>
   </section>
 
-  <section class="inner on-green">
+  <section class="inner on-green has-wave">
+    <WaveTop v={3} />
     <div class="wrap contact-big">
       <span class="label">{t(lang, 'abCtIdx')}</span>
       <h2>{t(lang, 'abCtTitle')}</h2>
