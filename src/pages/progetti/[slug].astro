@@ -1,0 +1,9 @@
+---
+import Project from '../../views/Project.astro';
+import site from '../../content/site.json';
+export function getStaticPaths() {
+  return (site.PROJECTS as { slug: string }[]).map((p) => ({ params: { slug: p.slug } }));
+}
+const { slug } = Astro.params;
+---
+<Project lang="it" slug={slug!} />

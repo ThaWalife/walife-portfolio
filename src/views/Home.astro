@@ -6,7 +6,7 @@ import site from '../content/site.json';
 import Field from '../components/Field.astro';
 import logoRaw from '../assets/walife-logo.svg?raw';
 import { url } from '../lib/url';
-import { routes, t, loc, type Lang } from '../lib/i18n';
+import { routes, t, loc, projectPath, type Lang } from '../lib/i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -62,6 +62,8 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
     </div>
   </section>
 
+  <PatternBand />
+
   <section class="projects" id="work">
     <div class="wrap">
       <h2 data-split>{t(lang, 'projectsTitle')}</h2>
@@ -69,7 +71,7 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
     <div class="stack wrap" data-stack>
       {featured.map((p, i) => (
         <div class="stack-slot">
-          <a class="pcard" data-pcard={i} href={`https://thawalife.com/p/${p.slug}.html`} target="_blank" rel="noopener" data-cursor="OPEN" data-snd style={`--top:${i * 28}px`}>
+          <a class="pcard" data-pcard={i} href={url(projectPath(p.slug, lang))} data-cursor="OPEN" data-snd style={`--top:${i * 28}px`}>
             <div class="pc-text">
               <span class="n">0{i + 1}</span>
               <span class="tags">{p.tags[lang]} · {String(p.date).slice(0, 4)}</span>
@@ -85,15 +87,6 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
     <div class="wrap more"><a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'menuAll')}</a></div>
   </section>
 
-  <PatternBand />
-
-  <section class="arch" id="archive-cta">
-    <div class="wrap">
-      <span class="label">{t(lang, 'arIdx')}</span>
-      <h2 data-split set:html={t(lang, 'arTitle')} />
-      <p>{t(lang, 'arCopy')}</p>
-    </div>
-  </section>
 
   <section class="contact on-green has-wave" id="contact">
     <WaveTop v={3} />

@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 
 test('hero: nessuna immagine di sfondo, nav a pillole fissa, hero >= viewport', async ({ page }) => {
@@ -126,11 +127,14 @@ test.describe('suono opt-in', () => {
   });
 });
 
-test('card progetto: link reale /p/<slug>.html', async ({ page }) => {
+test('card progetto: link alle pagine dettaglio interne (IT e EN)', async ({ page }) => {
   await page.goto('archivio/');
   const hrefs = await page.locator('.card').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href));
   expect(hrefs).toHaveLength(11);
-  for (const h of hrefs) expect(h).toMatch(/^https:\/\/thawalife\.com\/p\/[a-z0-9-]+\.html$/);
+  for (const h of hrefs) expect(h).toMatch(/\/walife-portfolio\/progetti\/[a-z0-9-]+\/$/);
+  await page.addInitScript(() => localStorage.setItem('wl-lang', 'en'));
+  await page.goto('en/archive/');
+  for (const h of await page.locator('.card').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href))) expect(h).toMatch(/\/walife-portfolio\/en\/projects\/[a-z0-9-]+\/$/);
 });
 
 test('sfondo foglie: canvas dietro al contenuto, disegna pixel, statico con reduced-motion', async ({ page, browser }) => {
@@ -213,9 +217,9 @@ test('stile tide esteso: prato in hero, linee tratteggiate tra sezioni, card con
   await expect.poll(() => page.locator('.hero-field img').first().evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
   expect(await page.locator('.hero-field').evaluate((e) => getComputedStyle(e).zIndex)).toBe('5');
   expect(await page.locator('.about').evaluate((e) => getComputedStyle(e, '::before').borderTopStyle)).toBe('dashed');
-  expect(await page.locator('.pcard').first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe('dashed');
+  expect(await page.locator('.pcard').first().evaluate((e) => getComputedStyle(e).backdropFilter)).toContain('blur(22px)');
   await page.goto('archivio/');
-  expect(await page.locator('.card').first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe('dashed');
+  expect(await page.locator('.card').first().evaluate((e) => getComputedStyle(e).backdropFilter)).toContain('blur(22px)');
 });
 
 test('prato sui bordi delle sezioni verdi: home (servizi e contatti) e chi sono', async ({ page }) => {
@@ -270,9 +274,14 @@ test('prato animato: gli strati ondeggiano (non quello della collinetta) e con r
 
 test('home: logo brand bianco solo in home, CTA hero in vetro come le pillole, logo senza tratteggio interno', async ({ page }) => {
   await page.goto('');
-  expect(await page.locator('.brand img').getAttribute('src')).toContain('horizontal-white');
+  const shown = () => page.locator('.brand img:visible').evaluateAll((els) => els.map((e) => (e as HTMLImageElement).getAttribute('src')));
+  expect((await shown())[0]).toContain('horizontal-white');
+  await page.evaluate(() => scrollTo({ top: document.querySelector('#about')!.getBoundingClientRect().top + scrollY - 200, behavior: 'instant' }));
+  await page.waitForTimeout(500);
+  expect((await shown())[0]).toContain('horizontal-green'); // sopra la sezione bianca torna verde
   await page.goto('archivio/');
-  expect(await page.locator('.brand img').getAttribute('src')).toContain('horizontal-green');
+  expect(await shown()).toHaveLength(1);
+  expect((await shown())[0]).toContain('horizontal-green');
   await page.goto('');
   const a = await page.locator('.hero .btn').evaluate((e) => { const s = getComputedStyle(e); return { r: s.borderRadius, bf: s.backdropFilter, clip: s.clipPath }; });
   const b = await page.locator('.pillbar .pill').first().evaluate((e) => { const s = getComputedStyle(e); return { bf: s.backdropFilter }; });
@@ -308,3 +317,145 @@ for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080], [2560, 1080], [390
     await ctx.close();
   });
 }
+
+test('tutti i bottoni (.btn, .chip) hanno lo stile delle pillole dell\'header', async ({ page }) => {
+  const style = (sel: string) => page.locator(sel).first().evaluate((e) => { const s = getComputedStyle(e); return { fs: s.fontSize, fw: s.fontWeight, tt: s.textTransform, ls: s.letterSpacing, ff: s.fontFamily, bf: s.backdropFilter, clip: s.clipPath, r: parseFloat(s.borderRadius) > 20 }; });
+  let seen = 0;
+  for (const path of ['', 'chi-sono/', 'archivio/', 'en/']) {
+    await page.goto(path);
+    const ref = { ...(await style('.pill .cta')), bf: await page.locator('.pillbar .pill').first().evaluate((e) => getComputedStyle(e).backdropFilter) };
+    for (const sel of ['.btn', '.chip']) {
+      const n = await page.locator(sel).count();
+      for (let i = 0; i < n; i++) {
+        const s = await page.locator(sel).nth(i).evaluate((e) => { const c = getComputedStyle(e); return { fs: c.fontSize, fw: c.fontWeight, tt: c.textTransform, ls: c.letterSpacing, ff: c.fontFamily, bf: c.backdropFilter, clip: c.clipPath, r: parseFloat(c.borderRadius) > 20 }; });
+        expect(s, `${path} ${sel}[${i}]`).toEqual(ref);
+        seen++;
+      }
+    }
+  }
+  expect(seen).toBeGreaterThan(8);
+});
+
+test('nessuna citazione di "Marini" nelle pagine', async ({ page }) => {
+  for (const path of ['', 'archivio/', 'chi-sono/', 'contatti/', 'privacy/', 'en/', 'en/archive/', 'en/about/', 'en/contact/', 'en/privacy/']) {
+    await page.goto(path);
+    const html = await page.content();
+    expect(html.includes('Marini'), path).toBe(false);
+  }
+});
+
+test('illustrazione animata anche nelle singole parti: stile interno, farfalle, petali; fermo con reduced-motion', async ({ page, request }) => {
+  await page.goto('');
+  const srcs = await page.locator('.hero-field img').evaluateAll((els) => els.map((e) => (e as HTMLImageElement).src));
+  const top = await (await request.get(srcs[2])).text();
+  expect(top).toContain('@keyframes swf');
+  expect(top).toContain('@keyframes flyx');
+  expect((top.match(/class="fw"/g) ?? []).length).toBeGreaterThan(10);
+  expect((top.match(/class="tr"/g) ?? []).length).toBeGreaterThan(2);
+  expect((top.match(/class="fly"/g) ?? []).length).toBe(3);
+  expect(top).toContain('@keyframes gust');   // vento: i livelli si piegano a raffiche
+  expect((top.match(/class="ws"/g) ?? []).length).toBeGreaterThan(3); // tratti di vento
+  expect(top).toContain('class="wob"');         // le api ondeggiano mentre volano
+  expect(top).toContain('prefers-reduced-motion');
+  // il livello del puntatore: parallasse sui tre strati
+  await page.mouse.move(1300, 400);
+  await page.waitForTimeout(1500);
+  const tr = await page.locator('.hero-field .l3').evaluate((e) => getComputedStyle(e).translate);
+  expect(tr).not.toBe('none');
+});
+
+test('chi sono senza i tre badge e home senza la sezione "superficie"', async ({ page }) => {
+  await page.goto('chi-sono/');
+  await expect(page.locator('.facts')).toHaveCount(0);
+  const items = await page.locator('main li, main button, main .btn').allInnerTexts(); // la biografia resta; spariscono solo i badge
+  for (const w of ['21 anni', 'Italia', 'Tecnico grafico']) expect(items.map((x) => x.trim()).includes(w), w).toBe(false);
+  await page.goto('');
+  await expect(page.locator('#archive-cta')).toHaveCount(0);
+  expect((await page.locator('main').innerText()).includes('solo la superficie')).toBe(false);
+  await page.goto('en/');
+  expect((await page.locator('main').innerText()).includes('only the surface')).toBe(false);
+});
+
+test('home: il pattern sta prima della sezione Progetti (non dopo)', async ({ page }) => {
+  await page.goto('');
+  const y = async (s: string) => (await page.locator(s).first().boundingBox())!.y + (await page.evaluate(() => scrollY));
+  expect(await y('.pat')).toBeLessThan(await y('#work'));
+  expect(await y('#services')).toBeLessThan(await y('.pat'));
+  expect(await y('#work')).toBeLessThan(await y('#contact'));
+  // tra Progetti e Contatti non c'è più il pattern
+  const between = await page.evaluate(() => { const w = document.querySelector('#work')!; const c = document.querySelector('#contact')!; let n = w.nextElementSibling; while (n && n !== c) { if (n.querySelector('.pat') || n.classList.contains('pat')) return true; n = n.nextElementSibling; } return false; });
+  expect(between).toBe(false);
+});
+
+for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
+  test(`chi sono ${w}px: box e testi allineati alle celle della griglia di sfondo`, async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, locale: 'it-IT' });
+    const page = await ctx.newPage();
+    await page.goto('chi-sono/');
+    await page.waitForTimeout(600);
+    const cells = await page.locator('.guides span').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().left));
+    expect(cells).toHaveLength(4);
+    const near = (x: number, arr: number[]) => Math.min(...arr.map((a) => Math.abs(a - x)));
+    const lefts = (sel: string) => page.locator(sel).evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().left * 10) / 10));
+    // strumenti: ogni box inizia su una linea della griglia
+    for (const x of await lefts('.tools-grid li')) expect(near(x, cells), `tool ${x}`).toBeLessThanOrEqual(1.5);
+    // formazione/esperienze: la colonna destra parte dalla 2ª linea; anno e testo (con 20px di respiro interno) partono dalla 2ª e 3ª
+    for (const x of await lefts('.two-col > .tl')) expect(Math.abs(x - cells[1])).toBeLessThanOrEqual(1.5);
+    const years = await lefts('.tl .y');
+    for (const x of years) expect(Math.abs(x - cells[1])).toBeLessThanOrEqual(2);
+    const body = await lefts('.tl li > div');
+    for (const x of body) expect(Math.abs(x - cells[2]), `testo ${x}`).toBeLessThanOrEqual(2);
+    await ctx.close();
+  });
+}
+
+const SLUGS = JSON.parse(readFileSync(new URL('../src/content/site.json', import.meta.url), 'utf8')).PROJECTS.map((p: any) => p.slug) as string[];
+for (const slug of SLUGS) {
+  for (const [lang, path] of [['it', `progetti/${slug}/`], ['en', `en/projects/${slug}/`]] as const) {
+    test(`pagina dettaglio ${lang}/${slug}: carica, immagini ok, nessuna richiesta esterna prima del click`, async ({ page }) => {
+      const errs: string[] = [];
+      const ext: string[] = [];
+      page.on('console', (m) => { if (m.type() === 'error') errs.push(m.text()); });
+      page.on('pageerror', (e) => errs.push(String(e)));
+      page.on('request', (r) => { const u = r.url(); if (!u.startsWith('http://localhost') && !u.startsWith('data:') && !u.startsWith('blob:')) ext.push(u); });
+      await page.addInitScript((v) => localStorage.setItem('wl-lang', v), lang);
+      await page.goto(path);
+      await expect(page.locator('html')).toHaveAttribute('lang', lang);
+      await expect(page.locator('h1')).toHaveCount(1);
+      await expect(page.locator('link[rel=alternate][hreflang=it]')).toHaveAttribute('href', new RegExp(`/progetti/${slug}/$`));
+      await expect(page.locator('link[rel=alternate][hreflang=en]')).toHaveAttribute('href', new RegExp(`/en/projects/${slug}/$`));
+      // scorre tutta la pagina per far caricare le immagini lazy, poi verifica che nessuna sia rotta
+      await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
+      await page.waitForTimeout(600);
+      const broken = await page.locator('main img:not([data-dlg-img])').evaluateAll((els) => els.filter((e) => { const i = e as HTMLImageElement; return i.complete && i.naturalWidth === 0; }).map((e) => (e as HTMLImageElement).src));
+      expect(broken).toEqual([]);
+      expect(ext, 'richieste esterne').toEqual([]);
+      expect(errs).toEqual([]);
+      expect(await page.locator('.pj-title').innerText()).toBeTruthy();
+    });
+  }
+}
+
+test('dettaglio: lightbox, YouTube solo al click, libro sfogliabile', async ({ page }) => {
+  await page.goto('progetti/club-italia-flyers/');
+  await page.locator('.pj-zoom').first().click();
+  await expect(page.locator('dialog[open] img')).toBeVisible();
+  await page.keyboard.press('ArrowRight');
+  expect(await page.locator('dialog img').getAttribute('src')).toContain('02.webp');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('dialog[open]')).toHaveCount(0);
+  await page.goto('progetti/dragone7-identity/');
+  expect(await page.locator('iframe').count()).toBe(0);
+  await page.locator('[data-yt]').first().click();
+  await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/"]')).toHaveCount(1);
+  await page.goto('progetti/elaborato-conclusivo-del-percorso-scolastico/');
+  const c0 = await page.locator('[data-book-count]').innerText();
+  await page.locator('[data-book-next]').click();
+  await expect.poll(() => page.locator('[data-book-count]').innerText()).not.toBe(c0);
+});
+
+test('archivio: miniature in 4:3', async ({ page }) => {
+  await page.goto('archivio/');
+  const r = await page.locator('.card .img').first().evaluate((e) => { const b = e.getBoundingClientRect(); return b.width / b.height; });
+  expect(Math.abs(r - 4 / 3)).toBeLessThan(0.02);
+});

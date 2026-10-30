@@ -71,4 +71,21 @@ if (cards.length && !reduced && !stack) {
   frame();
 }
 
+// logo dell'header: bianco sopra le sezioni verdi, verde sopra le bianche (si legge sempre)
+const brand = document.querySelector<HTMLElement>('.brand-home');
+if (brand) {
+  const skip = '.pillbar, .leaf-bg, .guides, .cursor, .wipe, .skip';
+  let tick = false;
+  const upd = () => {
+    tick = false;
+    const r = brand.getBoundingClientRect();
+    const hit = document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2).find((e) => !e.closest(skip));
+    brand.dataset.tone = hit?.closest('.on-green') ? 'light' : 'dark';
+  };
+  const req = () => { if (!tick) { tick = true; requestAnimationFrame(upd); } };
+  addEventListener('scroll', req, { passive: true });
+  addEventListener('resize', req);
+  upd();
+}
+
 export {};

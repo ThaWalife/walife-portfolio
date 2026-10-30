@@ -5,8 +5,9 @@ import site from '../content/site.json';
 import { ROOT, url } from '../lib/url';
 import { routes, t, type Lang, type PageKey } from '../lib/i18n';
 
-interface Props { lang: Lang; page: PageKey; title: string; description: string; home?: boolean }
-const { lang, page, title, description, home = false } = Astro.props;
+interface Props { lang: Lang; page: PageKey; title: string; description: string; home?: boolean; paths?: { it: string; en: string } }
+const { lang, page, title, description, home = false, paths } = Astro.props;
+const P = paths ?? routes[page];
 const abs = (p: string) => new URL(url(p), Astro.site).href;
 const label = (k: PageKey) => (k === 'privacy' ? t(lang, 'privacy') : k === 'home' ? t(lang, 'home') : k === 'archive' ? t(lang, 'navArchive') : k === 'about' ? t(lang, 'navAbout') : t(lang, 'navContact'));
 const center: PageKey[] = ['home', 'archive', 'about'];
@@ -20,10 +21,10 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#F4F4F4" />
-    <link rel="canonical" href={abs(routes[page][lang])} />
-    <link rel="alternate" hreflang="it" href={abs(routes[page].it)} />
-    <link rel="alternate" hreflang="en" href={abs(routes[page].en)} />
-    <link rel="alternate" hreflang="x-default" href={abs(routes[page].it)} />
+    <link rel="canonical" href={abs(P[lang])} />
+    <link rel="alternate" hreflang="it" href={abs(P.it)} />
+    <link rel="alternate" hreflang="en" href={abs(P.en)} />
+    <link rel="alternate" hreflang="x-default" href={abs(P.it)} />
     <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -50,8 +51,9 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
   <body data-page={page}>
     <a class="skip" href="#main">{t(lang, 'skip')}</a>
     <header class="pillbar">
-      <a class={home ? 'brand brand-on-green' : 'brand'} href={url(routes.home[lang])} aria-label="Walife, Home" data-snd>
-        <img src={url(home ? 'brand/walife-lockup-horizontal-white.svg' : 'brand/walife-lockup-horizontal-green.svg')} alt="Walife" width="66" height="26" />
+      <a class={home ? 'brand brand-home' : 'brand'} href={url(routes.home[lang])} aria-label="Walife, Home" data-snd>
+        {home && <img class="lw" src={url('brand/walife-lockup-horizontal-white.svg')} alt="Walife" width="66" height="26" />}
+        <img class="lg" src={url('brand/walife-lockup-horizontal-green.svg')} alt={home ? '' : 'Walife'} width="66" height="26" />
       </a>
       <nav class="pill center" aria-label="Main">
         {center.map((k) => (
@@ -62,8 +64,8 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
         <div class="pill">
           <a class="cta" href={url(routes.contact[lang])} aria-current={page === 'contact' ? 'page' : undefined} data-snd>{label('contact')}</a>
           <div class="lang" role="group" aria-label={t(lang, 'lang')}>
-            <a href={url(routes[page].it)} hreflang="it" lang="it" data-lang-switch="it" aria-current={lang === 'it' ? 'true' : undefined}>IT</a>
-            <a href={url(routes[page].en)} hreflang="en" lang="en" data-lang-switch="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+            <a href={url(P.it)} hreflang="it" lang="it" data-lang-switch="it" aria-current={lang === 'it' ? 'true' : undefined}>IT</a>
+            <a href={url(P.en)} hreflang="en" lang="en" data-lang-switch="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
           </div>
           <button type="button" data-sound-toggle aria-pressed="false" title={t(lang, 'sound')}>{t(lang, 'sound')}</button>
         </div>
@@ -85,7 +87,7 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
         <div class="fcol">
           <img src={url('brand/walife-lockup-horizontal-white.svg')} alt="Walife" width="150" height="59" loading="lazy" />
           <p>{t(lang, 'tagline')}</p>
-          <p class="small">© 2026 Walife · Federico Marini</p>
+          <p class="small">© 2026 Walife · Federico</p>
         </div>
         <nav class="fcol" aria-label={t(lang, 'fPages')}>
           <p class="fh">{t(lang, 'fPages')}</p>

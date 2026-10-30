@@ -11,6 +11,8 @@ export const routes: Record<PageKey, Record<Lang, string>> = {
   privacy: { it: 'privacy/', en: 'en/privacy/' },
 };
 
+export const projectPath = (slug: string, lang: Lang) => (lang === 'it' ? `progetti/${slug}/` : `en/projects/${slug}/`);
+
 export const dict = site.DICT as unknown as Record<Lang, Record<string, any>>;
 
 // Stringhe del nuovo sito che il data.js del sito attuale non ha.
@@ -26,6 +28,8 @@ const extra: Record<Lang, Record<string, string>> = {
     lang: 'Lingua',
     skip: 'Vai al contenuto',
     sound: 'Suono',
+    openIG: 'Apri su Instagram',
+    docTitleProject: 'Walife',
     fPages: 'Pagine',
     fChannels: 'Canali',
     fInfo: 'Info',
@@ -41,7 +45,7 @@ const extra: Record<Lang, Record<string, string>> = {
     docTitleArchive: 'Archivio progetti – Walife',
     docTitleAbout: 'Chi sono – Federico, graphic designer | Walife',
     docTitleContact: 'Contattami – Walife',
-    docDescContact: 'Contatta Walife (Federico Marini): email, Discord, TikTok e Bluesky.',
+    docDescContact: 'Contatta Walife (Federico): email, Discord, TikTok e Bluesky.',
     home: 'Home',
   },
   en: {
@@ -55,6 +59,8 @@ const extra: Record<Lang, Record<string, string>> = {
     lang: 'Language',
     skip: 'Skip to content',
     sound: 'Sound',
+    openIG: 'Open on Instagram',
+    docTitleProject: 'Walife',
     fPages: 'Pages',
     fChannels: 'Channels',
     fInfo: 'Info',
@@ -70,7 +76,7 @@ const extra: Record<Lang, Record<string, string>> = {
     docTitleArchive: 'Project archive – Walife',
     docTitleAbout: 'About – Federico, graphic designer | Walife',
     docTitleContact: 'Contact me – Walife',
-    docDescContact: 'Get in touch with Walife (Federico Marini): email, Discord, TikTok and Bluesky.',
+    docDescContact: 'Get in touch with Walife (Federico): email, Discord, TikTok and Bluesky.',
     home: 'Home',
   },
 };

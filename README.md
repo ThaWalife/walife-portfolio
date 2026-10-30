@@ -1,6 +1,6 @@
 # Walife Portfolio
 
-Sito portfolio di Federico "Wally" Marini (Walife) — identità Renewal 2026.
+Sito portfolio di Federico "Wally" (Walife) — identità Renewal 2026.
 Astro (static) + TypeScript + Three.js. IT/EN, tema scuro di default.
 
 ## Comandi
