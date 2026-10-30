@@ -33,4 +33,15 @@ const work = async () => {
   }
 };
 await Promise.all([work(), work(), work(), work(), work(), work()]);
+const ids = new Set();
+for (const v of Object.values(PAGES)) for (const b of v.blocks) { if (b.type === 'youtube') ids.add(b.id); if (b.type === 'ytgrid') b.items.forEach((i) => ids.add(i.id)); }
+mkdirSync(new URL('../public/img/yt/', import.meta.url), { recursive: true });
+for (const id of ids) {
+  const out = new URL(`../public/img/yt/${id}.jpg`, import.meta.url);
+  if (existsSync(out)) continue;
+  for (const q of ['maxresdefault', 'hqdefault']) {
+    const r = await fetch(`https://i.ytimg.com/vi/${id}/${q}.jpg`, { headers: H });
+    if (r.ok) { writeFileSync(out, Buffer.from(await r.arrayBuffer())); break; }
+  }
+}
 console.log('pages', Object.keys(PAGES).length, 'assets scaricati', n, Math.round(bytes / 1e6) + ' MB');

@@ -68,9 +68,9 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
             </div>;
           if (b.type === 'video')
             return <video class="pj-video" controls playsinline preload="none" poster={url(b.poster)} width={b.w} height={b.h} loop={b.loop} style={`aspect-ratio:${b.w} / ${b.h}`}><source src={url(b.src)} type="video/mp4" /></video>;
-          if (b.type === 'youtube') return <div class="pj-yt"><button class="btn" type="button" data-yt={b.id}>{t(lang, 'pgPlay')} ▶ YouTube</button></div>;
+          if (b.type === 'youtube') return <div class="pj-yt"><img src={url(`img/yt/${b.id}.jpg`)} alt="" width="1280" height="720" loading="lazy" decoding="async" /><button class="btn pj-play" type="button" data-yt={b.id} aria-label={`${t(lang, 'pgPlay')} (YouTube)`}>▶ {t(lang, 'pgPlay')}</button></div>;
           if (b.type === 'ytgrid')
-            return <ul class="pj-ytgrid">{b.items.map((i: any) => <li><div class="pj-yt"><button class="btn" type="button" data-yt={i.id}>{t(lang, 'pgPlay')} ▶</button></div><p>{i.title}</p></li>)}</ul>;
+            return <ul class="pj-ytgrid">{b.items.map((i: any) => <li><div class="pj-yt"><img src={url(`img/yt/${i.id}.jpg`)} alt="" width="1280" height="720" loading="lazy" decoding="async" /><button class="btn pj-play" type="button" data-yt={i.id} aria-label={`${t(lang, 'pgPlay')}: ${i.title}`}>▶</button></div><p>{i.title}</p></li>)}</ul>;
           if (b.type === 'instagram')
             return <div class="pj-ig">{b.ids.map((id: string, k: number) => <a class="btn" href={ig(id)} target="_blank" rel="noopener" data-snd>{t(lang, 'openIG')} {k + 1} ↗</a>)}</div>;
           return null;
@@ -85,8 +85,15 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
   </section>
 
   <dialog class="pj-dlg" data-dlg aria-label={title}>
-    <button class="btn" type="button" data-dlg-close>{t(lang, 'pgClose')}</button>
-    <img alt="" data-dlg-img />
+    <div class="pj-dlg-bar">
+      <div class="pj-dlg-zoom" role="group" aria-label={t(lang, 'zoomLabel')}>
+        <button class="btn" type="button" data-zoom-out aria-label={t(lang, 'zoomOut')}>−</button>
+        <button class="btn" type="button" data-zoom-reset aria-label={t(lang, 'zoomReset')}><span data-zoom-level>100%</span></button>
+        <button class="btn" type="button" data-zoom-in aria-label={t(lang, 'zoomIn')}>+</button>
+      </div>
+      <button class="btn" type="button" data-dlg-close>{t(lang, 'pgClose')}</button>
+    </div>
+    <div class="pj-stage" data-stage><img alt="" data-dlg-img draggable="false" /></div>
     <div class="pj-dlg-nav">
       <button class="btn" type="button" data-dlg-prev aria-label={t(lang, 'pgPrevImg')}>←</button>
       <button class="btn" type="button" data-dlg-next aria-label={t(lang, 'pgNextImg')}>→</button>

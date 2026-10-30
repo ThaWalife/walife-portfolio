@@ -459,3 +459,58 @@ test('archivio: miniature in 4:3', async ({ page }) => {
   const r = await page.locator('.card .img').first().evaluate((e) => { const b = e.getBoundingClientRect(); return b.width / b.height; });
   expect(Math.abs(r - 4 / 3)).toBeLessThan(0.02);
 });
+
+test('lightbox con lente: click zoom 2,5x, rotella fino a 6x, pan limitato, bottoni, tasti, reset al cambio immagine', async ({ page }) => {
+  await page.goto('progetti/club-italia-flyers/');
+  await page.locator('.pj-zoom').first().click();
+  const img = page.locator('[data-dlg-img]');
+  const scale = async () => img.evaluate((e) => new DOMMatrix(getComputedStyle(e).transform).a);
+  expect(Math.abs((await scale()) - 1)).toBeLessThan(0.01);
+  const box = (await page.locator('[data-stage]').boundingBox())!;
+  const cx = box.x + box.width / 2, cy = box.y + box.height / 2;
+  await page.mouse.click(cx, cy);
+  expect(await scale()).toBeCloseTo(2.5, 1);
+  await expect(page.locator('[data-zoom-level]')).toHaveText('250%');
+  await page.mouse.click(cx, cy);
+  expect(Math.abs((await scale()) - 1)).toBeLessThan(0.01);
+  await page.mouse.move(cx, cy);
+  for (let i = 0; i < 12; i++) await page.mouse.wheel(0, -300);
+  await page.waitForTimeout(200);
+  expect(await scale()).toBeCloseTo(6, 1);
+  const t0 = await img.evaluate((e) => new DOMMatrix(getComputedStyle(e).transform).e);
+  await page.mouse.down();
+  await page.mouse.move(cx + 120, cy + 60, { steps: 5 });
+  await page.mouse.up();
+  const t1 = await img.evaluate((e) => new DOMMatrix(getComputedStyle(e).transform).e);
+  expect(t1).not.toBe(t0);
+  const lim = await img.evaluate((e) => ((e as HTMLElement).offsetWidth * 6 - (e.parentElement as HTMLElement).clientWidth) / 2);
+  expect(Math.abs(t1)).toBeLessThanOrEqual(lim + 1);
+  await page.locator('[data-zoom-reset]').click();
+  expect(Math.abs((await scale()) - 1)).toBeLessThan(0.01);
+  await page.locator('[data-zoom-in]').click();
+  expect(await scale()).toBeGreaterThan(1.5);
+  await page.keyboard.press('ArrowRight');
+  expect(Math.abs((await scale()) - 1)).toBeLessThan(0.01);
+  await page.keyboard.press('+');
+  expect(await scale()).toBeGreaterThan(1.3);
+  await page.keyboard.press('0');
+  expect(Math.abs((await scale()) - 1)).toBeLessThan(0.01);
+  await page.keyboard.press('Escape');
+});
+
+test('YouTube: anteprima locale caricata e pulsante play centrato; nessuna richiesta esterna prima del click', async ({ page }) => {
+  const ext: string[] = [];
+  page.on('request', (r) => { const u = r.url(); if (!u.startsWith('http://localhost') && !u.startsWith('data:')) ext.push(u); });
+  for (const slug of ['dragone7-identity', 'edits']) {
+    await page.goto(`progetti/${slug}/`);
+    await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
+    await page.waitForTimeout(500);
+    const boxes = await page.locator('.pj-yt').evaluateAll((els) => els.map((e) => {
+      const r = e.getBoundingClientRect(); const b = e.querySelector('.pj-play')!.getBoundingClientRect(); const im = e.querySelector('img') as HTMLImageElement;
+      return { dx: Math.abs(b.left + b.width / 2 - (r.left + r.width / 2)), dy: Math.abs(b.top + b.height / 2 - (r.top + r.height / 2)), nw: im.naturalWidth };
+    }));
+    expect(boxes.length).toBeGreaterThan(0);
+    for (const b of boxes) { expect(b.dx).toBeLessThanOrEqual(1.5); expect(b.dy).toBeLessThanOrEqual(1.5); expect(b.nw).toBeGreaterThan(300); }
+  }
+  expect(ext).toEqual([]);
+});
