@@ -202,34 +202,34 @@ test('footer stile tide: 4 colonne, guide tratteggiate, incisione caricata, colo
   await expect(page.locator('.site-footer .fcol')).toHaveCount(4);
   await expect(page.locator('.site-footer .foot-lines span')).toHaveCount(4);
   expect(await page.locator('.guides span').first().evaluate((e) => getComputedStyle(e).borderLeftStyle)).toBe('dashed');
-  await expect.poll(() => page.locator('.site-footer .engr').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+  await expect.poll(() => page.locator('.site-footer .engr img').first().evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
   expect(await page.locator('.site-footer').evaluate((e) => getComputedStyle(e).backgroundColor)).toBe('rgb(13, 158, 91)');
   const links = await page.locator('.site-footer a').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).textContent));
   expect(links).toEqual(expect.arrayContaining(['Privacy e condizioni', 'Discord', 'Bluesky']));
 });
 
-test('stile tide esteso: onde in hero, linee tratteggiate tra sezioni, card con bordo tratteggiato', async ({ page }) => {
+test('stile tide esteso: prato in hero, linee tratteggiate tra sezioni, card con bordo tratteggiato', async ({ page }) => {
   await page.goto('');
-  await expect.poll(() => page.locator('.hero-waves').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
-  expect(await page.locator('.hero-waves').evaluate((e) => getComputedStyle(e).zIndex)).toBe('5');
+  await expect.poll(() => page.locator('.hero-field img').first().evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+  expect(await page.locator('.hero-field').evaluate((e) => getComputedStyle(e).zIndex)).toBe('5');
   expect(await page.locator('.about').evaluate((e) => getComputedStyle(e, '::before').borderTopStyle)).toBe('dashed');
   expect(await page.locator('.pcard').first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe('dashed');
   await page.goto('archivio/');
   expect(await page.locator('.card').first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe('dashed');
 });
 
-test('onde sui bordi delle sezioni verdi: home (servizi e contatti) e chi sono', async ({ page }) => {
+test('prato sui bordi delle sezioni verdi: home (servizi e contatti) e chi sono', async ({ page }) => {
   await page.goto('');
-  const loaded = async (sel: string) => page.locator(sel).evaluateAll((els) => els.map((i) => (i as HTMLImageElement).complete && (i as HTMLImageElement).naturalWidth > 0));
+  const loaded = async (sel: string) => page.locator(sel + ' img').evaluateAll((els) => els.map((i) => (i as HTMLImageElement).complete && (i as HTMLImageElement).naturalWidth > 0));
   await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
   await page.waitForTimeout(800);
   await page.locator('#services').scrollIntoViewIfNeeded();
   await page.waitForTimeout(800);
-  expect(await page.locator('.wave-top').count()).toBe(2);
-  expect((await loaded('.wave-top')).every(Boolean)).toBe(true);
-  expect(await page.locator('#services .wave-top').evaluate((e) => getComputedStyle(e).bottom)).not.toBe('auto');
+  expect(await page.locator('.field-top').count()).toBe(2);
+  expect((await loaded('.field-top')).every(Boolean)).toBe(true);
+  expect(await page.locator('#services .field-top').evaluate((e) => getComputedStyle(e).bottom)).not.toBe('auto');
   await page.goto('chi-sono/');
-  await expect(page.locator('.wave-top')).toHaveCount(1);
+  await expect(page.locator('.field-top')).toHaveCount(1);
 });
 
 for (const [w, h] of [[1440, 900], [1280, 640], [1920, 1080], [1024, 768], [2560, 1080]]) {
@@ -251,3 +251,19 @@ for (const [w, h] of [[1440, 900], [1280, 640], [1920, 1080], [1024, 768], [2560
     await ctx.close();
   });
 }
+
+test('prato animato: gli strati ondeggiano (non quello della collinetta) e con reduced-motion restano fermi', async ({ page, browser }) => {
+  await page.goto('');
+  await page.waitForTimeout(500);
+  const names = await page.locator('.hero-field img').evaluateAll((els) => els.map((e) => getComputedStyle(e).animationName));
+  expect(names).toEqual(['none', 'sway', 'sway']);
+  const tf = async () => page.locator('.hero-field .l3').evaluate((e) => getComputedStyle(e).transform);
+  const a = await tf();
+  await page.waitForTimeout(1500);
+  expect(await tf()).not.toBe(a); // si muove davvero
+  const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+  const p2 = await ctx.newPage();
+  await p2.goto('');
+  expect(await p2.locator('.hero-field .l3').evaluate((e) => getComputedStyle(e).animationName)).toBe('none');
+  await ctx.close();
+});

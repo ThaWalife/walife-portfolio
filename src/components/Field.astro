@@ -1,0 +1,10 @@
+---
+// Illustrazione a strati (dal fondo al primo piano): ogni strato è un <img> animato a parte (vedi .fl in global.css).
+interface Props { name: string; layers: number; w: number; h: number; class?: string; eager?: boolean }
+const { name, layers, w, h, class: cls = '', eager = false } = Astro.props;
+const all = import.meta.glob('../assets/meadow-*.svg', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
+const urls = Array.from({ length: layers }, (_, i) => all[`../assets/${name}-${i + 1}.svg`]);
+---
+<div class:list={['field', cls]} style={`aspect-ratio:${w} / ${h}`} aria-hidden="true">
+  {urls.map((u, i) => <img class={`fl l${i + 1}`} src={u} alt="" width={w} height={h} loading={eager ? 'eager' : 'lazy'} decoding="async" />)}
+</div>

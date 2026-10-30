@@ -1,9 +1,7 @@
 ---
-// Onde incise lungo il bordo superiore di una sezione verde: il mare "sale" dentro la sezione precedente.
-import w2 from '../assets/waves2.svg';
-import w3 from '../assets/waves3.svg';
+// Prato inciso lungo il bordo superiore di una sezione verde: il prato "sale" dentro la sezione precedente.
+import Field from './Field.astro';
 interface Props { v?: 2 | 3 }
 const { v = 2 } = Astro.props;
-const src = (v === 3 ? w3 : w2).src;
 ---
-<img class="wave-top" src={src} alt="" aria-hidden="true" width="1600" height={v === 3 ? 210 : 190} loading="lazy" decoding="async" />
+<Field class="field-top" name={v === 3 ? 'meadow-edge-b' : 'meadow-edge-a'} layers={2} w={1600} h={v === 3 ? 240 : 220} />

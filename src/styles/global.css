@@ -93,20 +93,22 @@ body:not([data-page='home']) main { padding-top: 120px; }
 
 /* ───────── hero: titolo enorme a tutta larghezza, logo piatto che lo sovrappone ───────── */
 .hero { min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; }
-.hero-grid { min-width: 0; position: relative; z-index: 3; width: 100%; min-height: 100svh; display: grid; grid-template-rows: auto auto 1fr auto; padding-block: 120px 15.5vw; }
+.hero-grid { min-width: 0; position: relative; z-index: 3; width: 100%; min-height: 100svh; display: grid; grid-template-rows: auto auto 1fr auto; padding-block: 120px 19vw; }
 .hero-h { min-width: 0; font-size: 8vw; line-height: 0.9; letter-spacing: -0.02em; word-spacing: 0.1em; text-transform: uppercase; font-weight: 700; white-space: nowrap; text-align: center; width: 100%; margin-top: clamp(0px, 1.5vw, 20px); }
 .hero-sub { margin-top: 18px; text-align: left; }
-.hero-waves { position: absolute; z-index: 5; left: 0; bottom: 0; width: 100%; height: auto; pointer-events: none; }
-.hero-logo { position: absolute; z-index: 4; left: 50%; bottom: calc(130 / 1600 * 100vw - 3px); height: min(calc(100svh - 130 / 1600 * 100vw - 84px), 66vh, 640px); aspect-ratio: 269.13 / 414.41; transform: translateX(-50%); pointer-events: none; }
+.hero-field { position: absolute; z-index: 5; left: 0; bottom: 0; width: 100%; pointer-events: none; }
+.hero-logo { position: absolute; z-index: 4; left: 50%; bottom: calc(234 / 1600 * 100vw - 26px); height: min(calc(100svh - 234 / 1600 * 100vw - 84px), 54vh, 540px); aspect-ratio: 269.13 / 414.41; transform: translateX(-50%); pointer-events: none; }
 .hero-logo svg { width: 100%; height: 100%; }
 .hero-logo path { fill: var(--white); stroke: var(--ink); stroke-width: 2.6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; paint-order: stroke; }
 .hero-bar { grid-row: 4; display: flex; justify-content: space-between; align-items: end; gap: 24px; position: relative; z-index: 6; }
 .hero .lead { max-width: 24ch; font: 600 clamp(14px, 1.3vw, 20px)/1.25 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
 @media (max-width: 900px) {
-  .hero-grid { padding-block: 96px 128px; }
-  .hero-h { font-size: 17vw; white-space: normal; text-align: left; }
+  .hero, .hero-grid { min-height: calc(100svh + 96px); }
+  .hero-grid { padding-block: 88px 150px; }
+  .hero-field { width: 150%; left: -25%; }
+  .hero-h { font-size: 15vw; white-space: normal; text-align: left; }
   .hero-sub { text-align: left; }
-  .hero-logo { position: relative; grid-row: 3; justify-self: center; align-self: center; left: auto; bottom: auto; transform: none; height: auto; width: min(46vw, 34vh); margin-bottom: 28px; }
+  .hero-logo { position: relative; grid-row: 3; justify-self: center; align-self: center; left: auto; bottom: auto; transform: none; height: auto; width: min(40vw, 27vh); margin-bottom: 6px; }
   .hero-bar { flex-direction: column; align-items: flex-start; }
 }
 
@@ -307,7 +309,7 @@ section.inner { padding-block: clamp(48px, 8vw, 110px); }
 .fcol .fh { font: 600 18px/1.2 var(--font-display); margin-bottom: 6px; }
 .fcol a { font-size: 15px; transition: opacity 0.3s; }
 .fcol a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.site-footer .engr { display: block; position: relative; z-index: 1; width: 100%; height: auto; margin-top: -40px; pointer-events: none; }
+.site-footer .engr { position: relative; z-index: 1; width: 100%; margin-top: -40px; pointer-events: none; }
 @media (max-width: 900px) {
   .foot-grid { grid-template-columns: 1fr 1fr; row-gap: 8px; }
   .site-footer .foot-lines span:nth-child(2), .site-footer .foot-lines span:nth-child(3) { display: none; }
@@ -318,8 +320,23 @@ section.inner { padding-block: clamp(48px, 8vw, 110px); }
 /* linee orizzontali tratteggiate tra le sezioni (stesso linguaggio del footer) */
 main > section:not(.hero)::before { content: ''; position: absolute; z-index: 2; left: 0; right: 0; top: 0; border-top: 1px dashed rgba(26, 26, 26, 0.35); pointer-events: none; }
 
-/* onde lungo il bordo superiore delle sezioni verdi */
-.wave-top { position: absolute; z-index: 2; left: 0; bottom: 100%; width: 100%; height: auto; pointer-events: none; }
+/* prato lungo il bordo superiore delle sezioni verdi */
+.field-top { position: absolute; z-index: 2; left: 0; bottom: 100%; width: 100%; pointer-events: none; }
 main > section.has-wave::before { display: none; }
-.about, .arch { padding-bottom: calc(clamp(72px, 10vw, 150px) + 13vw); }
-body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc(clamp(48px, 8vw, 110px) + 13vw); }
+.about, .arch { padding-bottom: calc(clamp(72px, 10vw, 150px) + 16vw); }
+body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc(clamp(48px, 8vw, 110px) + 16vw); }
+
+/* prato animato: ogni strato ondeggia piano (vento), più forte verso il primo piano */
+.field { overflow: visible; }
+.field .fl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; transform-origin: 50% 100%; will-change: transform; }
+.field .l1 { animation: none; }
+.field .l2 { animation: sway 7s ease-in-out infinite alternate; --a: 0.5deg; }
+.field .l3 { animation: sway 5.2s ease-in-out -2s infinite alternate; --a: 1.1deg; }
+.field-top .l1 { animation: sway 8s ease-in-out infinite alternate; --a: 0.4deg; }
+.field-top .l2 { animation: sway 6s ease-in-out -1.5s infinite alternate; --a: 0.9deg; }
+.engr .l1 { animation: none; }
+.engr .l2 { animation: sway 7.5s ease-in-out infinite alternate; --a: 0.5deg; }
+.engr .l3 { animation: sway 5.5s ease-in-out -2.5s infinite alternate; --a: 0.9deg; }
+@keyframes sway { from { transform: skewX(calc(var(--a) * -1)) translateX(-3px); } to { transform: skewX(var(--a)) translateX(3px); } }
+.hero-logo .shade { opacity: 0.55; }
+.hero-logo .shade path { fill: url(#hh); stroke: none; }

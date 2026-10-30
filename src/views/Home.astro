@@ -3,14 +3,17 @@ import Base from '../layouts/Base.astro';
 import PatternBand from '../components/PatternBand.astro';
 import WaveTop from '../components/WaveTop.astro';
 import site from '../content/site.json';
-import waves from '../assets/waves.svg';
+import Field from '../components/Field.astro';
 import logoRaw from '../assets/walife-logo.svg?raw';
 import { url } from '../lib/url';
 import { routes, t, loc, type Lang } from '../lib/i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const logoSvg = logoRaw.replace(/<style>[\s\S]*?<\/style>/, '').replace(/<defs>\s*<\/defs>/, '').replace(/class="cls-1"/g, '');
+const base = logoRaw.replace(/<style>[\s\S]*?<\/style>/, '').replace(/<defs>\s*<\/defs>/, '').replace(/class="cls-1"/g, '');
+const dp = [...base.matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]);
+// ombreggiatura: tratteggio a 43° sul lato destro/basso, come le colline
+const logoSvg = base.replace('</svg>', `<defs><pattern id="hh" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(43)"><line x1="0" y1="0" x2="0" y2="9" stroke="#1a1a1a" stroke-width="1.4"/></pattern><clipPath id="hs"><polygon points="150,0 269,0 269,414 105,414"/></clipPath></defs><g clip-path="url(#hs)" class="shade">${dp.map((d) => `<path d="${d}" fill="url(#hh)" stroke="none"/>`).join('')}</g></svg>`);
 const all = site.PROJECTS as any[];
 const featured = all.slice(0, 4);
 // due righe di anteprime che scorrono in senso opposto con lo scroll
@@ -22,7 +25,7 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
 ---
 <Base lang={lang} page="home" home title={t(lang, 'docTitle')} description={t(lang, 'docDesc')}>
   <section class="hero on-green" id="hero" data-hero>
-    <img class="hero-waves" src={waves.src} alt="" aria-hidden="true" width="1600" height="260" decoding="async" />
+    <Field class="hero-field" name="meadow-hero" layers={3} w={1600} h={300} eager />
     <div class="wrap hero-grid">
       <h1 class="hero-h" data-lang={lang}>{t(lang, 'heroH')}</h1>
       <p class="hero-sub label">{t(lang, 'eyebrow')} · {t(lang, 'abF2')}</p>

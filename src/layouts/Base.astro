@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import engraving from '../assets/engraving.svg';
+import Field from '../components/Field.astro';
 import site from '../content/site.json';
 import { ROOT, url } from '../lib/url';
 import { routes, t, type Lang, type PageKey } from '../lib/i18n';
@@ -102,7 +102,7 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
           <p class="small">{t(lang, 'ctTime')} <span data-clock>--:--</span> CET</p>
         </div>
       </div>
-      <img class="engr" src={engraving.src} alt="" aria-hidden="true" width="1600" height="460" loading="lazy" decoding="async" />
+      <Field class="engr" name="meadow-footer" layers={3} w={1600} h={560} />
     </footer>
     <div class="cursor" aria-hidden="true"><span data-cursor-label></span></div>
     <div class="wipe" aria-hidden="true"></div>
