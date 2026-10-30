@@ -16,6 +16,8 @@ const next = all[(idx + 1) % all.length];
 const title = loc(p.title, lang);
 const cats = (p.cats as string[]).map((c) => (site.CATEGORIES as any)[c][lang]).join(' · ');
 const paths = { it: projectPath(slug, 'it'), en: projectPath(slug, 'en') };
+// testo scuro o chiaro sul campione, a seconda della luminanza
+const ink = (hex: string) => { const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)); return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? '#071218' : '#F2F4F7'; };
 const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
 ---
 <Base lang={lang} page="archive" paths={paths} title={`${title} | Walife`} description={p.desc[lang]}>
@@ -101,6 +103,10 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
               {vs.length > 0 && <ul class="pj-ytgrid vert">{vs.map(cell)}</ul>}
             </>;
           }
+          if (b.type === 'swatches')
+            return <ul class="pj-sw">{b.items.map((i: any) => (
+              <li style={`--bg:${i.hex};--fg:${ink(i.hex)}`}><strong>{i.name}</strong><span class="label">{i.hex}</span><em>{i.role[lang]}</em></li>
+            ))}</ul>;
           if (b.type === 'instagram')
             return <ul class={`pj-igs${b.ids.length === 1 ? ' one' : ''}`}>{b.ids.map((id: string, k: number) => (
               <li><a class="pj-ig-card" href={ig(id)} target="_blank" rel="noopener" data-snd aria-label={`${t(lang, 'openIG')} ${k + 1}`}>

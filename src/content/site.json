@@ -1,6 +1,25 @@
 {
   "PROJECTS": [
     {
+      "slug": "celestia-identity",
+      "cats": [
+        "identity",
+        "vr",
+        "events"
+      ],
+      "title": "Celestia Identity",
+      "date": "2026-10-30",
+      "img": "img/projects/celestia-identity.webp",
+      "tags": {
+        "it": "Identità / VR Integrated Works",
+        "en": "Identity / VR Integrated Works"
+      },
+      "desc": {
+        "it": "Dalla campagna di attesa con identità glitchata alla nuova identità visiva della community italiana di VRChat: logotype, simbolo, palette, versioni 3D, Halloween e poster.",
+        "en": "From the anticipation campaign with a glitched identity to the new visual identity of the Italian VRChat community: logotype, symbol, palette, 3D versions, Halloween and posters."
+      }
+    },
+    {
       "slug": "edits",
       "cats": [
         "motion",

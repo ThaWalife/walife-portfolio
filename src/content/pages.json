@@ -1250,5 +1250,501 @@
         ]
       }
     ]
+  },
+  "celestia-identity": {
+    "links": [
+      {
+        "it": "Sito di Celestia",
+        "en": "Celestia website",
+        "url": "https://celestiaita.it"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "p",
+        "it": "Celestia è la community italiana di VRChat: serate, mondi da esplorare e nuove persone ogni notte. Per il rilascio della sua nuova mappa ho seguito tutto il percorso di comunicazione, dalla campagna che ne ha costruito l’attesa fino all’identità visiva con cui Celestia si presenta oggi.",
+        "en": "Celestia is the Italian VRChat community: nights out, worlds to explore and new people every evening. For the release of its new map I followed the whole communication path, from the campaign that built the anticipation to the visual identity Celestia presents today."
+      },
+      {
+        "type": "label",
+        "it": "01 — La campagna",
+        "en": "01 — The campaign"
+      },
+      {
+        "type": "h",
+        "it": "Prima l’attesa",
+        "en": "Anticipation first"
+      },
+      {
+        "type": "p",
+        "it": "Prima del rilascio della mappa serviva creare attesa e hype. L’idea è stata partire da un’identità volutamente confusionaria e glitchata, con frame disturbati, il simbolo che si scompone e messaggi come “Restate in attesa”, per poi presentare la nuova identity e subito dopo rilasciare la mappa nuova. Il teaser dura 15 secondi e chiude annunciando il trailer di lancio del 18 settembre 2026 e il sito celestiaita.it.",
+        "en": "Before the map release the goal was to build anticipation and hype. The idea was to start from a deliberately confusing, glitched identity, with disturbed frames, the symbol breaking apart and messages like “Stay tuned”, and then reveal the new identity and release the new map right after. The teaser runs 15 seconds and ends by announcing the launch trailer on 18 September 2026 and the celestiaita.it website."
+      },
+      {
+        "type": "youtube",
+        "id": "Ay9u3JlOiCM"
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/campagna-banner.webp",
+            "w": 2400,
+            "h": 1350
+          },
+          {
+            "src": "img/projects/celestia-identity/campagna-glitch.webp",
+            "w": 1600,
+            "h": 1600
+          },
+          {
+            "src": "img/projects/celestia-identity/campagna-griglia.webp",
+            "w": 1920,
+            "h": 1080
+          }
+        ],
+        "rows": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "it": "Il glitch vive solo dentro le immagini: è un linguaggio della fase di attesa. Con l’arrivo della nuova identity i colori tornano piatti e il logo non viene più disturbato.",
+        "en": "The glitch lives only inside the images: it is the language of the waiting phase. When the new identity arrives the colors go flat again and the logo is never disturbed."
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/campagna-svelata.webp",
+            "w": 2400,
+            "h": 1350
+          }
+        ]
+      },
+      {
+        "type": "label",
+        "it": "02 — L’identity",
+        "en": "02 — The identity"
+      },
+      {
+        "type": "h",
+        "it": "Notturno, chrome, orbita",
+        "en": "Night, chrome, orbit"
+      },
+      {
+        "type": "p",
+        "it": "La nuova identity segue la moodboard: luce fredda, ombre profonde e fondo scuro, con logotype e simbolo trattati come oggetti chrome in 3D dentro i mondi VR. Il sistema è costruito su colori piatti e su una griglia in prospettiva desaturata, senza mai ricorrere a neon rosa o viola. Le otto tavole qui sotto sono la moodboard che ha guidato il progetto: versione notte, versione giorno, logotype, simbolo, colore e tipografia, applicazioni e brand tokens.",
+        "en": "The new identity follows the moodboard: cold light, deep shadows and a dark ground, with the logotype and symbol treated as 3D chrome objects inside the VR worlds. The system is built on flat colors and a desaturated perspective grid, never relying on neon pink or purple. The eight boards below are the moodboard that guided the project: night version, day version, logotype, symbol, color and typography, applications and brand tokens."
+      },
+      {
+        "type": "player",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/moodboard-1.webp",
+            "w": 2400,
+            "h": 1350
+          },
+          {
+            "src": "img/projects/celestia-identity/moodboard-2.webp",
+            "w": 2400,
+            "h": 1350
+          },
+          {
+            "src": "img/projects/celestia-identity/moodboard-3.webp",
+            "w": 2400,
+            "h": 1575
+          },
+          {
+            "src": "img/projects/celestia-identity/moodboard-4.webp",
+            "w": 2400,
+            "h": 1350
+          },
+          {
+            "src": "img/projects/celestia-identity/moodboard-5.webp",
+            "w": 2400,
+            "h": 1350
+          },
+          {
+            "src": "img/projects/celestia-identity/moodboard-6.webp",
+            "w": 2400,
+            "h": 1350
+          },
+          {
+            "src": "img/projects/celestia-identity/moodboard-7.webp",
+            "w": 2400,
+            "h": 1350
+          },
+          {
+            "src": "img/projects/celestia-identity/moodboard-8.webp",
+            "w": 2400,
+            "h": 563
+          }
+        ]
+      },
+      {
+        "type": "h",
+        "it": "Logotype e simbolo",
+        "en": "Logotype and symbol"
+      },
+      {
+        "type": "p",
+        "it": "Il logotype è un lettering corsivo e pesante, con un doppio contorno. Sopra la “s” compare il razzo, lo stesso del simbolo, e lo swoosh disegna la sua traiettoria. Il simbolo da solo è la versione compatta per gli spazi quadrati e tondi, come l’avatar del server Discord o le icone dei social, e non compare mai insieme al logotype.",
+        "en": "The logotype is a heavy italic lettering with a double outline. Above the “s” sits the rocket, the same one as in the symbol, and the swoosh draws its trajectory. The symbol alone is the compact version for square and round spaces, like the Discord server avatar or social icons, and it never appears together with the logotype."
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/logotype-chrome.webp",
+            "w": 1600,
+            "h": 1000
+          },
+          {
+            "src": "img/projects/celestia-identity/logotype-bianco.webp",
+            "w": 1600,
+            "h": 1000
+          },
+          {
+            "src": "img/projects/celestia-identity/logotype-nero.webp",
+            "w": 1600,
+            "h": 1000
+          }
+        ],
+        "rows": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/simbolo-chrome.webp",
+            "w": 1200,
+            "h": 1200
+          },
+          {
+            "src": "img/projects/celestia-identity/simbolo-bianco.webp",
+            "w": 1200,
+            "h": 1200
+          },
+          {
+            "src": "img/projects/celestia-identity/simbolo-nero.webp",
+            "w": 1200,
+            "h": 1200
+          }
+        ],
+        "rows": [
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "it": "Le regole d’uso sono semplici: area di rispetto pari a 1x (la x è l’altezza della “c”), logotype minimo 120 px (30 mm in stampa) e sotto quella misura si passa al simbolo. Mai il logotype su Chrome Silver o grigi medi, perché lo swoosh si confonde, e mai ridisegnarlo, ruotarlo, deformarlo o ricolorarlo fuori palette. Le versioni sono quattro: su Abyss, su Starlight, bianca per le immagini scure e nera solo per stampa e monocromia.",
+        "en": "The usage rules are simple: clear space of 1x (x being the height of the “c”), logotype minimum 120 px (30 mm in print), and below that size you switch to the symbol. Never the logotype on Chrome Silver or mid greys, because the swoosh gets lost, and never redraw, rotate, distort or recolor it outside the palette. There are four versions: on Abyss, on Starlight, white for dark images and black only for print and monochrome."
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/logo-3d.webp",
+            "w": 2400,
+            "h": 1266
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "it": "Per VRChat e YouTube il simbolo e il logotype diventano render 3D chrome, mentre per Discord e social si usano le versioni piatte. Il 3D resta riservato a key visual, miniature e campagne.",
+        "en": "For VRChat and YouTube the symbol and logotype become 3D chrome renders, while the flat versions are used for Discord and social. 3D is reserved for key visuals, thumbnails and campaigns."
+      },
+      {
+        "type": "h",
+        "it": "Colore e tipografia",
+        "en": "Color and typography"
+      },
+      {
+        "type": "swatches",
+        "items": [
+          {
+            "name": "Abyss",
+            "hex": "#071218",
+            "role": {
+              "it": "Ground principale",
+              "en": "Main ground"
+            }
+          },
+          {
+            "name": "Deep Orbit",
+            "hex": "#0F2129",
+            "role": {
+              "it": "Superfici, pannelli",
+              "en": "Surfaces, panels"
+            }
+          },
+          {
+            "name": "Orbit Teal",
+            "hex": "#1F3946",
+            "role": {
+              "it": "Griglia, bordi",
+              "en": "Grid, borders"
+            }
+          },
+          {
+            "name": "Signal Haze",
+            "hex": "#567481",
+            "role": {
+              "it": "Haze, guide",
+              "en": "Haze, guides"
+            }
+          },
+          {
+            "name": "Chrome Silver",
+            "hex": "#C2C7D0",
+            "role": {
+              "it": "Simbolo, swoosh",
+              "en": "Symbol, swoosh"
+            }
+          },
+          {
+            "name": "Starlight",
+            "hex": "#F2F4F7",
+            "role": {
+              "it": "Testo, versione Day",
+              "en": "Text, Day version"
+            }
+          },
+          {
+            "name": "Nebula Indigo",
+            "hex": "#3E3B53",
+            "role": {
+              "it": "Fill del logotype",
+              "en": "Logotype fill"
+            }
+          },
+          {
+            "name": "Pulsar Cyan",
+            "hex": "#7FE3F0",
+            "role": {
+              "it": "Accento, CTA",
+              "en": "Accent, CTA"
+            }
+          },
+          {
+            "name": "Ember",
+            "hex": "#FF6A1A",
+            "role": {
+              "it": "Solo Halloween",
+              "en": "Halloween only"
+            }
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "it": "La palette segue una proporzione 70 / 25 / 5: il 70% è fondo scuro, il 25% toni, silver e testo, e il 5% è l’accento Pulsar Cyan per call to action e stati live. L’arancio Ember esiste soltanto nella stagione di Halloween. Per la tipografia ho scelto Unbounded per i titoli, largo e geometrico, così fa contrasto con il corsivo del logo invece di competere; Manrope per testi, didascalie e interfacce; JetBrains Mono per le etichette in stile HUD, le date e gli orari. Il lettering del logotype resta unico e nessun font lo imita.",
+        "en": "The palette follows a 70 / 25 / 5 ratio: 70% is dark ground, 25% tones, silver and text, and 5% is the Pulsar Cyan accent for calls to action and live states. The Ember orange exists only during the Halloween season. For typography I chose Unbounded for titles, wide and geometric, so it contrasts with the italic logo instead of competing with it; Manrope for texts, captions and interfaces; JetBrains Mono for HUD-style labels, dates and times. The logotype lettering stays unique and no typeface imitates it."
+      },
+      {
+        "type": "h",
+        "it": "La versione di Halloween",
+        "en": "The Halloween version"
+      },
+      {
+        "type": "p",
+        "it": "Per la stagione di Halloween l’identità si accende di arancio Ember, l’unico momento in cui il colore è ammesso. Oltre alla versione principale ho realizzato logotype e simbolo a tema, con fantasmi, zucche e lanterna.",
+        "en": "For the Halloween season the identity lights up in Ember orange, the only moment the color is allowed. Besides the main version I made themed versions of the logotype and symbol, with ghosts, pumpkins and a lantern."
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/halloween-logotype.webp",
+            "w": 2000,
+            "h": 1055
+          },
+          {
+            "src": "img/projects/celestia-identity/halloween-simbolo.webp",
+            "w": 1600,
+            "h": 1600
+          }
+        ],
+        "rows": [
+          [
+            0
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "type": "label",
+        "it": "03 — Il mondo",
+        "en": "03 — The world"
+      },
+      {
+        "type": "h",
+        "it": "Dove vive l’identity",
+        "en": "Where the identity lives"
+      },
+      {
+        "type": "p",
+        "it": "Il mondo è il punto di ritrovo della community di Celestia. La mappa è stata realizzata da Kaira S e la versione mostrata qui è quella di Halloween. Queste immagini servono da contesto per mostrare il resto del mio lavoro, quindi non sono il lavoro principale di questo progetto: sono il posto in cui logotype, colori e interfacce prendono vita.",
+        "en": "The world is the meeting point of the Celestia community. The map was made by Kaira S and the version shown here is the Halloween one. These images are context to show the rest of my work, so they are not the main work of this project: they are the place where the logotype, colors and interfaces come to life."
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/mondo-miniatura.webp",
+            "w": 1600,
+            "h": 1200
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-miniatura-halloween.webp",
+            "w": 1600,
+            "h": 1200
+          }
+        ],
+        "rows": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/mondo-1.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-2.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-3.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-4.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-5.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-6.webp",
+            "w": 2560,
+            "h": 1440
+          },
+          {
+            "src": "img/projects/celestia-identity/mondo-7.webp",
+            "w": 2560,
+            "h": 1440
+          }
+        ],
+        "rows": [
+          [
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      },
+      {
+        "type": "label",
+        "it": "04 — Poster e volantini",
+        "en": "04 — Posters and flyers"
+      },
+      {
+        "type": "h",
+        "it": "Un layout per riconoscersi",
+        "en": "A layout to be recognized"
+      },
+      {
+        "type": "p",
+        "it": "Poster e volantini seguono un layout specifico per mantenere l’identità: logotype in alto, etichette in JetBrains Mono, titoli in Unbounded, un QR code per entrare nella community e la call to action in Pulsar Cyan. Per l’evento di Halloween il layout resta lo stesso e cambia solo l’accento, che diventa Ember.",
+        "en": "Posters and flyers follow a specific layout to keep the identity consistent: logotype at the top, JetBrains Mono labels, Unbounded titles, a QR code to join the community and the call to action in Pulsar Cyan. For the Halloween event the layout stays the same and only the accent changes, becoming Ember."
+      },
+      {
+        "type": "gallery",
+        "items": [
+          {
+            "src": "img/projects/celestia-identity/poster-1.webp",
+            "w": 1546,
+            "h": 2048
+          },
+          {
+            "src": "img/projects/celestia-identity/poster-2.webp",
+            "w": 1024,
+            "h": 1536
+          },
+          {
+            "src": "img/projects/celestia-identity/poster-3.webp",
+            "w": 1024,
+            "h": 1536
+          },
+          {
+            "src": "img/projects/celestia-identity/poster-4.webp",
+            "w": 1024,
+            "h": 1536
+          }
+        ],
+        "rows": [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "type": "label",
+        "it": "Credits",
+        "en": "Credits"
+      },
+      {
+        "type": "p",
+        "it": "Mappa: Kaira S. Logotype, simbolo, key visual, campagna, poster e volantini: Federico.",
+        "en": "Map: Kaira S. Logotype, symbol, key visual, campaign, posters and flyers: Federico."
+      }
+    ]
   }
 }

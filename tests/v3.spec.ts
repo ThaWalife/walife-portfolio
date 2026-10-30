@@ -130,7 +130,7 @@ test.describe('suono opt-in', () => {
 test('card progetto: link alle pagine dettaglio interne (IT e EN)', async ({ page }) => {
   await page.goto('archivio/');
   const hrefs = await page.locator('.card').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href));
-  expect(hrefs).toHaveLength(11);
+  expect(hrefs).toHaveLength(12);
   for (const h of hrefs) expect(h).toMatch(/\/walife-portfolio\/progetti\/[a-z0-9-]+\/$/);
   await page.addInitScript(() => localStorage.setItem('wl-lang', 'en'));
   await page.goto('en/archive/');
@@ -735,4 +735,14 @@ test('mobile: hero come desktop (titolo adattato a 2 righe a tutta larghezza, lo
   expect(Math.abs(logo.x + logo.width / 2 - 195)).toBeLessThanOrEqual(2);     // centrato
   expect(await page.locator('.pcard').first().evaluate((e) => getComputedStyle(e).position)).toBe('sticky');
   await ctx.close();
+});
+
+test('Celestia Identity: campagna (teaser), moodboard player, palette, screenshot del mondo, poster', async ({ page }) => {
+  await page.goto('progetti/celestia-identity/');
+  await expect(page.locator('h1')).toHaveText('Celestia Identity');
+  await expect(page.locator('[data-yt="Ay9u3JlOiCM"]')).toHaveCount(1);
+  await expect(page.locator('.pj-pl-slide')).toHaveCount(8);
+  await expect(page.locator('.pj-sw li')).toHaveCount(9);
+  await expect(page.locator('.pj-row')).not.toHaveCount(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

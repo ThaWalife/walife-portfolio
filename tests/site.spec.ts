@@ -88,7 +88,7 @@ test.describe('AC3b redirect lingua sotto il base path', () => {
   });
 });
 
-test('archivio: 11 progetti, filtri per categoria coerenti con data.js, vista lista', async ({ page }) => {
+test('archivio: 12 progetti, filtri per categoria coerenti con data.js, vista lista', async ({ page }) => {
   await page.goto('archivio/');
   const cards = page.locator('.card');
   await expect(cards).toHaveCount(site.PROJECTS.length);
@@ -104,7 +104,7 @@ test('archivio: 11 progetti, filtri per categoria coerenti con data.js, vista li
   await expect(page.locator('[data-archive]')).toHaveAttribute('data-view', 'list');
 });
 
-test('archivio EN: stessi 11 progetti con testi EN', async ({ page }) => {
+test('archivio EN: stessi 12 progetti con testi EN', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('wl-lang', 'en'));
   await page.goto('en/archive/');
   await expect(page.locator('.card')).toHaveCount(site.PROJECTS.length);
