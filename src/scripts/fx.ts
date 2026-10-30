@@ -67,7 +67,7 @@ if (fine && !reduced) {
 const wipe = document.querySelector<HTMLElement>('.wipe')!;
 const sheet = wipe.querySelector<HTMLElement>('.wp-sheet')!;
 const glass = wipe.querySelector<HTMLElement>('.wp-glass')!;
-const SHOW = 'translateY(-13.75vw)'; // il foglio copre tutto lo schermo
+const SHOW = 'translateY(-17vh)';     // il foglio copre tutto lo schermo (il bordo irregolare resta sopra)
 const HIDE = 'translateY(100vh)';    // il foglio è sotto lo schermo
 const play = (from: string, to: string, ms: number, g0: number, g1: number) => {
   wipe.style.visibility = 'visible';
@@ -75,6 +75,19 @@ const play = (from: string, to: string, ms: number, g0: number, g1: number) => {
   glass.animate([{ opacity: g0 }, { opacity: g1 }], { ...o, easing: 'ease-out' });
   return sheet.animate([{ transform: from }, { transform: to }], { ...o, easing: 'cubic-bezier(0.65, 0, 0.25, 1)' }).finished;
 };
+// le illustrazioni del foglio si caricano a riposo (o subito se la pagina nasce coperta): niente peso sul primo caricamento
+const field = wipe.querySelector<HTMLElement>('.wp-field')!;
+let loaded = false;
+const loadField = () => {
+  if (loaded) return;
+  loaded = true;
+  (field.dataset.wipeSrcs ?? '').split(',').filter(Boolean).forEach((src) => {
+    const im = new Image();
+    im.className = 'fl'; im.alt = ''; im.decoding = 'async'; im.src = src;
+    field.append(im);
+  });
+};
+const idle = (window as any).requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1200));
 const clear = () => {
   sheet.getAnimations().concat(glass.getAnimations()).forEach((a) => a.cancel());
   html.classList.remove('wl-in');
@@ -82,6 +95,7 @@ const clear = () => {
 };
 let cameFrom = false;
 try { cameFrom = sessionStorage.getItem('wl-wipe') === '1'; sessionStorage.removeItem('wl-wipe'); } catch { /* sessionStorage non disponibile */ }
+if (!reduced) { if (cameFrom) loadField(); else idle(loadField); }
 if (cameFrom && !reduced) {
   // la pagina nasce già coperta (classe .wl-in); parte da lì e riscende
   requestAnimationFrame(() => { html.classList.remove('wl-in'); play(SHOW, HIDE, 460, 1, 0).then(clear); });
@@ -96,6 +110,7 @@ if (!reduced) {
     if (a.hasAttribute('data-lang-switch') && u.pathname === location.pathname) return;
     e.preventDefault();
     try { sessionStorage.setItem('wl-wipe', '1'); } catch { /* ok */ }
+    loadField();
     play(HIDE, SHOW, 360, 0, 1).then(() => { location.href = a.href; });
   });
   addEventListener('pageshow', (e) => { if ((e as PageTransitionEvent).persisted) clear(); });

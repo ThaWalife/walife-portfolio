@@ -6,7 +6,7 @@
 // Deterministico (PRNG con seme). Colori: verde del brand (sfondo), bianco (fiori), nero (tratto).
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const [NAME = 'meadow', SEED = '5', HEIGHT = '460', BANDS = '5', MOUND = '0', LAYERS = '1', FLY = '0'] = process.argv.slice(2);
+const [NAME = 'meadow', SEED = '5', HEIGHT = '460', BANDS = '5', MOUND = '0', LAYERS = '1', FLY = '0', TOPF = '0.34'] = process.argv.slice(2);
 const W = 1600, H = Number(HEIGHT), N = Number(BANDS);
 const INK = '#1a1a1a', PAPER = '#f4f4f4', BG = '#0d9e5b';
 let seed = Number(SEED);
@@ -17,7 +17,7 @@ const f = (n) => n.toFixed(1);
 const logo = readFileSync(new URL('../src/assets/walife-logo.svg', import.meta.url), 'utf8');
 const logoPaths = [...logo.matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]);
 
-const TOP = H * 0.34;
+const TOP = H * Number(TOPF);
 const GAP = (H - TOP - 30) / N;
 const MX = MOUND === 'c' ? 800 : 1215;
 const MOUND_BAND = Math.min(1, N - 1);

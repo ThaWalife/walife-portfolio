@@ -1,18 +1,23 @@
 // Home: titolo adattato, righe di anteprime guidate dallo scroll, testo che si rivela scrollando, card progetti impilate.
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const stack = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
 const clamp = (v: number, a = 0, b = 1) => Math.min(Math.max(v, a), b);
 
 // titolo hero: font-size calcolato perché il testo occupi esattamente la larghezza della zona sicura
 const heroH = document.querySelector<HTMLElement>('.hero-h');
 if (heroH) {
+  const lines = [...heroH.querySelectorAll<HTMLElement>('.ln')];
+  const measure = (el: HTMLElement) => { const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; };
   const fit = () => {
-    if (innerWidth <= 900) { heroH.style.fontSize = ''; return; }
-    heroH.style.fontSize = '100px';
-    const r = document.createRange();
-    r.selectNodeContents(heroH);
-    const w = r.getBoundingClientRect().width;
-    heroH.style.fontSize = `${(100 * heroH.clientWidth / w * 0.998).toFixed(2)}px`;
+    const W = heroH.clientWidth;
+    if (innerWidth <= 900) {
+      // mobile: ogni riga occupa tutta la larghezza della zona sicura
+      heroH.style.fontSize = '';
+      lines.forEach((l) => { l.style.fontSize = '100px'; l.style.fontSize = `${(100 * W / measure(l) * 0.998).toFixed(2)}px`; });
+    } else {
+      lines.forEach((l) => { l.style.fontSize = ''; });
+      heroH.style.fontSize = '100px';
+      heroH.style.fontSize = `${(100 * W / measure(heroH) * 0.998).toFixed(2)}px`;
+    }
   };
   fit();
   document.fonts?.ready.then(fit);
@@ -56,7 +61,7 @@ if (scrub && !reduced) {
 
 // card progetti impilate: ogni card, mentre la successiva sale, si rimpicciolisce (1 → 1 - 0.03·(n-1-i))
 const cards = [...document.querySelectorAll<HTMLElement>('[data-pcard]')];
-if (cards.length && !reduced && !stack) {
+if (cards.length && !reduced) {
   const n = cards.length;
   const frame = () => {
     cards.forEach((c, i) => {

@@ -52,7 +52,8 @@ const PAGES = ctx.window.WALIFE.PAGES;
 {
   const rowsOf = (slug, rows) => { const g = PAGES[slug].blocks.find((b) => b.type === 'gallery'); g.rows = rows; };
   rowsOf('visual-experiments-2', [[0], [1, 2]]);                 // banner largo, poi i due quadrati; il video segue
-  rowsOf('cloud-paradise', [[0], [1, 2], [3, 4], [5, 6]]);       // banner, due coppie di verticali, poi la riga finale
+  rowsOf('cloud-paradise', [[0], [1, 2], [3, 4], [5, 6]]);
+  rowsOf('gdt-identity', [[0], [1, 2, 3]]);                        // banner largo, poi i tre verticali affiancati (più piccoli)       // banner, due coppie di verticali, poi la riga finale
   // Octopus: "Altri artwork" diventa un player (immagine grande + anteprime + frecce)
   const oc = PAGES['octopus-brand-collab'].blocks;
   const sl = oc.find((b) => b.type === 'slider');

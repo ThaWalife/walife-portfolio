@@ -92,23 +92,27 @@ body:not([data-page='home']) main { padding-top: 120px; }
 
 /* ───────── hero: titolo enorme a tutta larghezza, logo piatto che lo sovrappone ───────── */
 .hero { min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; }
-.hero-grid { min-width: 0; position: relative; z-index: 3; width: 100%; min-height: 100svh; display: grid; grid-template-rows: auto auto 1fr auto; padding-block: 120px 19vw; }
+.hero-grid { min-width: 0; position: relative; z-index: 3; width: 100%; min-height: 100svh; display: grid; grid-template-rows: auto auto 1fr auto; padding-block: 120px calc(var(--fw) * 19vw); }
 .hero-h { min-width: 0; font-size: 8vw; line-height: 0.9; letter-spacing: -0.02em; word-spacing: 0.1em; text-transform: uppercase; font-weight: 700; white-space: nowrap; text-align: center; width: 100%; margin-top: clamp(0px, 1.5vw, 20px); }
 .hero-sub { margin-top: 18px; text-align: left; }
 .hero-field { position: absolute; z-index: 5; left: 0; bottom: 0; width: 100%; pointer-events: none; }
+.hero { --fw: 1; }
 .hero-logo { --lh: calc(min(calc(100svh - 234 / 1600 * 100vw - 84px), 54vh, 540px) * 1.5); position: absolute; z-index: 4; left: 50%; bottom: calc(234 / 1600 * 100vw - var(--lh) * 0.3); height: var(--lh); aspect-ratio: 269.13 / 414.41; transform: translateX(-50%); pointer-events: none; }
 .hero-logo svg { width: 100%; height: 100%; }
 .hero-logo path { fill: var(--white); stroke: var(--ink); stroke-width: 2.6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; paint-order: stroke; }
 .hero-bar { grid-row: 4; display: flex; justify-content: space-between; align-items: end; gap: 24px; position: relative; z-index: 6; }
 .hero .lead { max-width: 24ch; font: 600 clamp(14px, 1.3vw, 20px)/1.25 var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
 @media (max-width: 900px) {
-  .hero, .hero-grid { min-height: calc(100svh + 96px); }
-  .hero-grid { padding-block: 88px 150px; }
-  .hero-field { width: 150%; left: -25%; }
-  .hero-h { font-size: 15vw; white-space: normal; text-align: left; }
+  /* mobile = stessa scena del desktop: titolo a tutta larghezza (2 righe adattate), logo che esce dalla collina, prato grande, CTA in basso */
+  .hero { --fw: 2.3; }
+  .hero-grid { padding-block: 86px calc(var(--fw) * 19vw); }
+  .hero-field { width: calc(var(--fw) * 100%); left: calc((1 - var(--fw)) * 50%); }
+  .hero-h { white-space: normal; text-align: left; font-size: 20vw; letter-spacing: -0.03em; }
+  .hero-h .ln { display: block; white-space: nowrap; }
   .hero-sub { text-align: left; }
-  .hero-logo { position: relative; grid-row: 3; justify-self: center; align-self: center; left: auto; bottom: auto; transform: none; --lh: auto; height: auto; width: min(40vw, 27vh); margin-bottom: 6px; }
-  .hero-bar { flex-direction: column; align-items: flex-start; }
+  .hero-logo { --lh: min(calc(var(--fw) * 36vw), 46vh); bottom: calc(var(--fw) * 234 / 1600 * 100vw - var(--lh) * 0.22); }
+  .hero-bar { grid-row: 3; align-self: start; flex-direction: column; align-items: flex-start; gap: 18px; margin-top: 28px; }
+  .hero .lead { max-width: 22ch; font-size: 14px; }
 }
 
 /* ───────── righe di anteprime guidate dallo scroll ───────── */
@@ -140,10 +144,14 @@ body:not([data-page='home']) main { padding-top: 120px; }
 .pc-img { min-height: 0; overflow: hidden; border-radius: 4px; }
 .pc-img img { width: 100%; height: 100%; object-fit: cover; }
 .more { padding-top: clamp(24px, 4vw, 48px); }
-@media (max-width: 900px), (pointer: coarse) {
-  .stack-slot { height: auto; margin-bottom: 16px; }
-  .pcard { position: static; height: auto; grid-template-columns: 1fr; transform: none !important; }
-  .pc-img { aspect-ratio: 4 / 3; }
+@media (max-width: 900px) {
+  .stack-slot { height: 74svh; }
+  .pcard { top: calc(84px + var(--top, 0px)); height: min(60svh, 520px); grid-template-columns: 1fr; grid-template-rows: 46% 1fr; gap: 12px; padding: 12px; }
+  .pc-text { order: 2; grid-template-rows: auto auto auto; align-content: start; gap: 6px; }
+  .pc-text .n { font-size: 52px; }
+  .pc-text h3 { font-size: 24px; }
+  .pc-text p { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: 14px; }
+  .pc-img { order: 1; }
 }
 
 /* ───────── servizi (verde): numeri enormi + nome e descrizione ───────── */
@@ -474,20 +482,23 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
 @media (prefers-reduced-motion: reduce) { .ph-ring { animation: none; } .ph-glass { transform: none; } }
 @media (max-width: 860px) { .about-photo { max-width: 420px; margin-inline: auto; } }
 
-/* transizione di pagina: il prato inciso sale su un foglio di vetro (la pagina si sfoca), poi riscende e svela la nuova pagina */
+/* transizione di pagina: un foglio di vetro e un intero prato inciso (colline, alberi, fiori, api, vento) sale e copre lo schermo, poi riscende */
 .wipe { position: fixed; inset: 0; z-index: 120; pointer-events: none; visibility: hidden; overflow: hidden; }
 .wp-glass { position: absolute; inset: 0; opacity: 0; background: rgba(244, 244, 244, 0.28); -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); }
-.wp-sheet { position: absolute; left: 0; right: 0; top: 0; height: calc(100vh + 13.75vw); transform: translateY(100vh); will-change: transform; }
-.wp-edge { display: block; width: 100%; height: auto; }
-.wp-fill { position: absolute; left: 0; right: 0; top: calc(13.75vw - 1px); bottom: 0; background: var(--green); }
-.wp-badge { position: absolute; left: 50%; top: calc(13.75vw + 50vh); translate: -50% -50%; width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center;
+.wp-sheet { position: absolute; left: 0; right: 0; top: 0; height: 122vh; transform: translateY(100vh); will-change: transform; }
+.wp-field { position: absolute; inset: 0; }
+.wp-field::before { content: ''; position: absolute; left: 0; right: 0; top: 12vh; bottom: 0; background: var(--green); }
+.wp-field .fl { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; display: block; transform-origin: 50% 100%; will-change: transform; }
+.wp-field .fl:nth-child(2) { animation: sway 5.5s ease-in-out infinite alternate; --a: 1deg; }
+.wp-field .fl:nth-child(3) { animation: sway 4.2s ease-in-out -2s infinite alternate; --a: 1.8deg; }
+.wp-badge { position: absolute; left: 50%; top: calc(61vh); translate: -50% -50%; width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center;
   background: rgba(255, 255, 255, 0.3); -webkit-backdrop-filter: blur(22px) saturate(1.7); backdrop-filter: blur(22px) saturate(1.7);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.55); }
 .wp-badge svg { width: 30px; height: auto; }
 .wp-badge path { fill: var(--white); }
 .wl-in .wipe { visibility: visible; animation: wlFail 0s linear 3s forwards; }
 .wl-in .wp-glass { opacity: 1; }
-.wl-in .wp-sheet { transform: translateY(-13.75vw); }
+.wl-in .wp-sheet { transform: translateY(-17vh); }
 @keyframes wlFail { to { visibility: hidden; } }
 @media (prefers-reduced-motion: reduce) { .wipe { display: none; } }
 
@@ -563,3 +574,9 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
 .pj-ig-card:hover img { transform: scale(1.03); }
 .pj-ig-tag { position: absolute; left: 14px; bottom: 14px; min-height: 40px; padding: 0 16px; }
 .pj-pl-slide img { max-height: calc(min(82vh, 760px) - 2 * clamp(10px, 2vw, 28px)); } @media (max-width: 560px) { .pj-pl-slide img { max-height: calc(68vh - 24px); } }
+
+/* dimensioni richieste: post singolo (Diario Be You) -50%, video promozionali -40% */
+.pj-igs.one { grid-template-columns: minmax(0, 50%); }
+.pj-video.promo { width: 60%; justify-self: start; }
+@media (max-width: 700px) { .pj-igs.one { grid-template-columns: minmax(0, 70%); } .pj-video.promo { width: 100%; } }
+@media (min-width: 701px) { .pj-row:has(li:nth-child(3)) { max-width: 72%; } }

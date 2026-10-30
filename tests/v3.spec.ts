@@ -564,7 +564,7 @@ test('transizione di pagina: foglio di vetro + prato, veloce (<1,6 s), la nuova 
   // struttura: vetro sfocato, bordo con l'illustrazione, simbolo
   await expect(page.locator('.wipe .wp-glass')).toHaveCount(1);
   expect(await page.locator('.wp-glass').evaluate((e) => getComputedStyle(e).backdropFilter)).toContain('blur');
-  await expect(page.locator('.wp-edge')).toHaveCount(1);
+  await expect(page.locator('.wp-field')).toHaveCount(1);
   await expect(page.locator('.wp-badge svg')).toHaveCount(1);
   expect(await page.locator('.wipe').evaluate((e) => getComputedStyle(e).visibility)).toBe('hidden');
   const t0 = Date.now();
@@ -689,3 +689,50 @@ for (const slug of ['cloud-paradise', 'visual-experiments-2']) {
     expect(ys).toEqual([...ys].sort((a, b) => a - b));
   });
 }
+
+test('dimensioni richieste: Diario Be You 50% della larghezza, video promo 60%, verticali GDT affiancati e piccoli', async ({ page }) => {
+  await page.goto('progetti/octopus-brand-collab/');
+  const body = await page.locator('.pj-body').evaluate((e) => e.getBoundingClientRect().width);
+  const one = await page.locator('.pj-igs.one .pj-ig-card').evaluate((e) => e.getBoundingClientRect().width);
+  expect(Math.abs(one / body - 0.5)).toBeLessThan(0.03);
+  await page.goto('progetti/the-tower-official-merch-design/');
+  const bw = await page.locator('.pj-body').evaluate((e) => e.getBoundingClientRect().width);
+  const vw = await page.locator('.pj-video.promo').evaluate((e) => e.getBoundingClientRect().width);
+  expect(Math.abs(vw / bw - 0.6)).toBeLessThan(0.03);
+  await page.goto('progetti/gdt-identity/');
+  await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 500) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
+  await page.waitForTimeout(500);
+  const rows = await page.locator('.pj-row').evaluateAll((els) => els.map((r) => [...r.querySelectorAll('img')].map((i) => Math.round(i.getBoundingClientRect().height))));
+  expect(rows[1]).toHaveLength(3);                       // i tre verticali in riga
+  expect(Math.max(...rows[1])).toBeLessThanOrEqual(560); // prima ~1140 px di altezza ciascuno
+});
+
+test('transizione: foglio con prato a tutto schermo (3 strati animati, caricati a riposo) che copre l\'intero viewport', async ({ page }) => {
+  await page.goto('archivio/');
+  await expect.poll(() => page.locator('.wp-field .fl').count(), { timeout: 8000 }).toBe(3);
+  const names = await page.locator('.wp-field .fl').evaluateAll((els) => els.map((e) => getComputedStyle(e).animationName));
+  expect(names).toEqual(['none', 'sway', 'sway']);
+  await expect.poll(() => page.locator('.wp-field .fl').evaluateAll((els) => els.every((e) => (e as HTMLImageElement).naturalWidth > 0))).toBe(true);
+  await page.locator('.pill a', { hasText: 'Chi sono' }).first().click();
+  await page.waitForTimeout(450);
+  const r = await page.evaluate(() => { const s = document.querySelector('.wp-sheet')!.getBoundingClientRect(); return { top: s.top, bottom: s.bottom, vh: innerHeight }; });
+  expect(r.top).toBeLessThan(-30);              // il bordo irregolare è sopra lo schermo
+  expect(r.bottom).toBeGreaterThanOrEqual(r.vh); // il foglio arriva sotto il fondo: nessun buco
+  await page.waitForURL(/chi-sono\/$/);
+});
+
+test('mobile: hero come desktop (titolo adattato a 2 righe a tutta larghezza, logo che esce dalla collina) e card progetto in pila sticky', async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 800 }, hasTouch: true, isMobile: true, locale: 'it-IT' });
+  const page = await ctx.newPage();
+  await page.goto('');
+  await page.waitForTimeout(1500);
+  const lines = await page.locator('.hero-h .ln').evaluateAll((els) => els.map((e) => { const r = document.createRange(); r.selectNodeContents(e); const b = r.getBoundingClientRect(); return { l: b.left, r: b.right }; }));
+  expect(lines).toHaveLength(2);
+  const m = 390 * 0.05 > 20 ? 390 * 0.05 : 20;
+  for (const l of lines) { expect(l.l).toBeGreaterThanOrEqual(m - 3); expect(l.r).toBeLessThanOrEqual(390 - m + 3); expect(l.r - l.l).toBeGreaterThan(390 - 2 * m - 12); }
+  const logo = (await page.locator('.hero-logo').boundingBox())!;
+  expect(logo.height).toBeGreaterThan(200);                                   // grande come su desktop
+  expect(Math.abs(logo.x + logo.width / 2 - 195)).toBeLessThanOrEqual(2);     // centrato
+  expect(await page.locator('.pcard').first().evaluate((e) => getComputedStyle(e).position)).toBe('sticky');
+  await ctx.close();
+});

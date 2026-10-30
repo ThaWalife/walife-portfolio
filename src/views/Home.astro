@@ -20,13 +20,16 @@ const row1 = [...all.slice(0, 6), ...all.slice(0, 6)];
 const row2 = [...all.slice(6), ...all.slice(6), ...all.slice(6)];
 const services = [1, 2, 3, 4].map((n) => ({ t: t(lang, `s${n}t`), p: t(lang, `s${n}p`) }));
 const email = site.SOCIALS.find((s) => s.name === 'Email')!;
+const heroText = t(lang, 'heroH');
+const cut = heroText.lastIndexOf(' ');
+const heroLines = [heroText.slice(0, cut), heroText.slice(cut + 1)];
 const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
 ---
 <Base lang={lang} page="home" home title={t(lang, 'docTitle')} description={t(lang, 'docDesc')}>
   <section class="hero on-green" id="hero" data-hero>
     <Field class="hero-field" name="meadow-hero" layers={3} w={1600} h={300} eager />
     <div class="wrap hero-grid">
-      <h1 class="hero-h" data-lang={lang}>{t(lang, 'heroH')}</h1>
+      <h1 class="hero-h" data-lang={lang}><span class="ln">{heroLines[0]}</span> <span class="ln">{heroLines[1]}</span></h1>
       <p class="hero-sub label">{t(lang, 'eyebrow')} · {t(lang, 'abF2')}</p>
       <div class="hero-logo" aria-hidden="true" set:html={logoSvg} />
       <div class="hero-bar">
