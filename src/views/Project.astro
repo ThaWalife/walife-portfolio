@@ -26,7 +26,7 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
       <h1 class="pj-title" data-split>{title}</h1>
     </div>
 
-    <div class="wrap pj-grid">
+    <div class="wrap">
       <aside class="pj-meta">
         <dl>
           <div><dt class="label">{t(lang, 'pgYear')}</dt><dd>{String(p.date).slice(0, 4)}</dd></div>
@@ -38,7 +38,9 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
           )}
         </dl>
       </aside>
+    </div>
 
+    <div class="wrap pj-main">
       <div class="pj-body">
         <figure class="pj-cover"><img src={url(p.img)} alt={`${title}, ${p.tags[lang]}`} width="800" height="600" fetchpriority="high" decoding="async" /></figure>
         {content.blocks.map((b: any) => {
@@ -48,7 +50,7 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
           if (b.type === 'label') return <p class="label pj-label">{b[lang]}</p>;
           if (b.type === 'cta') return <a class="btn pj-cta" href={b.url} target="_blank" rel="noopener" data-snd>{b[lang]} ↗</a>;
           if (b.type === 'gallery')
-            return <ul class="pj-gal">{b.items.map((i: any, k: number) => (
+            return <ul class="pj-gal" data-cols={b.cols ?? (b.items.length === 1 ? 1 : b.items[0].w >= b.items[0].h ? 2 : 3)}>{b.items.map((i: any, k: number) => (
               <li><button type="button" class="pj-zoom" data-zoom={url(i.src)} aria-label={`${title} ${k + 1}`}><img src={url(i.src)} alt={`${title}, ${k + 1}`} width={i.w} height={i.h} loading="lazy" decoding="async" style={`aspect-ratio:${i.w} / ${i.h}`} /></button></li>
             ))}</ul>;
           if (b.type === 'slider')

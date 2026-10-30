@@ -6,11 +6,11 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const BASE = 'http://localhost:4321/walife-portfolio/';
-const PAGES = ['', 'archivio/', 'chi-sono/', 'contatti/', 'progetti/the-tower-official-merch-design/', 'progetti/edits/', 'en/', 'privacy/'];
+const PAGES = process.env.LH_PAGES ? process.env.LH_PAGES.split(',') : ['', 'archivio/', 'chi-sono/', 'contatti/', 'progetti/the-tower-official-merch-design/', 'progetti/edits/', 'en/', 'privacy/'];
 const dir = mkdtempSync(join(tmpdir(), 'wl-lh-'));
 const med = (a) => [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)];
 const rows = [];
-for (const form of ['desktop', 'mobile']) {
+for (const form of (process.env.LH_FORMS ?? 'desktop,mobile').split(',')) {
   for (const path of PAGES) {
     const runs = [];
     for (let i = 0; i < 3; i++) {

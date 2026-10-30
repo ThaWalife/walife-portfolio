@@ -69,6 +69,16 @@
             "src": "img/projects/club-italia-flyers/12.webp",
             "w": 1400,
             "h": 2000
+          },
+          {
+            "src": "img/projects/club-italia-flyers/13.webp",
+            "w": 1434,
+            "h": 2048
+          },
+          {
+            "src": "img/projects/club-italia-flyers/14.webp",
+            "w": 1400,
+            "h": 2000
           }
         ]
       }
@@ -190,11 +200,27 @@
       },
       {
         "type": "gallery",
+        "cols": 2,
         "items": [
           {
-            "src": "img/projects/the-tower-official-merch-design/17.webp",
+            "src": "img/projects/the-tower-official-merch-design/a1.webp",
             "w": 2000,
-            "h": 500
+            "h": 2000
+          },
+          {
+            "src": "img/projects/the-tower-official-merch-design/a2.webp",
+            "w": 2000,
+            "h": 2000
+          },
+          {
+            "src": "img/projects/the-tower-official-merch-design/a3.webp",
+            "w": 2000,
+            "h": 2000
+          },
+          {
+            "src": "img/projects/the-tower-official-merch-design/a4.webp",
+            "w": 2000,
+            "h": 2000
           }
         ]
       },
@@ -230,11 +256,27 @@
       },
       {
         "type": "gallery",
+        "cols": 2,
         "items": [
           {
-            "src": "img/projects/the-tower-official-merch-design/18.webp",
+            "src": "img/projects/the-tower-official-merch-design/b1.webp",
             "w": 2000,
-            "h": 500
+            "h": 2000
+          },
+          {
+            "src": "img/projects/the-tower-official-merch-design/b2.webp",
+            "w": 2000,
+            "h": 2000
+          },
+          {
+            "src": "img/projects/the-tower-official-merch-design/b3.webp",
+            "w": 2000,
+            "h": 2000
+          },
+          {
+            "src": "img/projects/the-tower-official-merch-design/b4.webp",
+            "w": 2000,
+            "h": 2000
           }
         ]
       },
@@ -318,6 +360,22 @@
             "src": "img/projects/the-tower-official-merch-design/22.webp",
             "w": 1125,
             "h": 2000
+          }
+        ]
+      },
+      {
+        "type": "h",
+        "it": "Poster evento",
+        "en": "Event poster"
+      },
+      {
+        "type": "gallery",
+        "cols": 1,
+        "items": [
+          {
+            "src": "img/projects/the-tower-official-merch-design/23.webp",
+            "w": 1546,
+            "h": 2048
           }
         ]
       }

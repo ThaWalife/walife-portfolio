@@ -622,3 +622,15 @@ for (const w of [360, 412]) {
     await ctx.close();
   });
 }
+
+for (const [slug, n] of [['club-italia-flyers', 0], ['club-italia-flyers', 13], ['the-tower-official-merch-design', 0]] as const) {
+  test(`lightbox ${slug}#${n}: l'immagine intera entra nel riquadro (proporzioni corrette, nessun taglio)`, async ({ page }) => {
+    await page.goto(`progetti/${slug}/`);
+    await page.locator('.pj-zoom').nth(n).scrollIntoViewIfNeeded();
+    await page.locator('.pj-zoom').nth(n).click();
+    await page.waitForTimeout(600);
+    const r = await page.evaluate(() => { const i = document.querySelector('[data-dlg-img]') as HTMLImageElement; const s = document.querySelector('[data-stage]')!.getBoundingClientRect(); const b = i.getBoundingClientRect(); return { ar: b.width / b.height, nat: i.naturalWidth / i.naturalHeight, inside: b.top >= s.top - 1 && b.bottom <= s.bottom + 1 && b.left >= s.left - 1 && b.right <= s.right + 1 }; });
+    expect(Math.abs(r.ar - r.nat)).toBeLessThan(0.02);
+    expect(r.inside).toBe(true);
+  });
+}

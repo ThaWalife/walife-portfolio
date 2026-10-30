@@ -28,6 +28,26 @@ const PAGES = ctx.window.WALIFE.PAGES;
   const p0 = PAGES.edits.blocks[0];
   if (p0.type === 'p' && p0.it === p0.en) p0.it = 'Un’immersione nella manipolazione video, negli effetti e negli studi sul movimento.';
 }
+// ── The Tower: pannelli dei capi in alta qualità (4 riquadri da 2000×2000 per edizione) + poster evento in fondo.
+// Le immagini nuove sono in public/img/projects/ (a1–a4 standard, b1–b4 limited, 23 poster); qui si aggiorna solo il contenuto.
+{
+  const tw = PAGES['the-tower-official-merch-design'].blocks;
+  const tile = (n) => ({ src: `img/projects/the-tower-official-merch-design/${n}.webp`, w: 2000, h: 2000 });
+  const std = tw.findIndex((b) => b.type === 'gallery' && b.items.some((i) => i.src.endsWith('/17.webp')));
+  const lim = tw.findIndex((b) => b.type === 'gallery' && b.items.some((i) => i.src.endsWith('/18.webp')));
+  if (std >= 0) tw[std] = { type: 'gallery', cols: 2, items: ['a1', 'a2', 'a3', 'a4'].map(tile) };
+  if (lim >= 0) tw[lim] = { type: 'gallery', cols: 2, items: ['b1', 'b2', 'b3', 'b4'].map(tile) };
+  if (!tw.some((b) => b.type === 'gallery' && b.items.some((i) => i.src.endsWith('/23.webp')))) {
+    tw.push({ type: 'h', it: 'Poster evento', en: 'Event poster' });
+    tw.push({ type: 'gallery', cols: 1, items: [{ src: 'img/projects/the-tower-official-merch-design/23.webp', w: 1546, h: 2048 }] });
+  }
+}
+// ── Club Italia: due poster in più in fondo alla galleria.
+{
+  const g = PAGES['club-italia-flyers'].blocks.find((b) => b.type === 'gallery');
+  for (const [n, w, h] of [['13', 1434, 2048], ['14', 1400, 2000]])
+    if (!g.items.some((i) => i.src.endsWith(`/${n}.webp`))) g.items.push({ src: `img/projects/club-italia-flyers/${n}.webp`, w, h });
+}
 writeFileSync(new URL('../src/content/pages.json', import.meta.url), JSON.stringify(PAGES, null, 2), 'utf8');
 
 const assets = new Set();
