@@ -52,7 +52,7 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
           if (b.type === 'label') return <p class="label pj-label">{b[lang]}</p>;
           if (b.type === 'cta') return <a class="btn pj-cta" href={b.url} target="_blank" rel="noopener" data-snd>{b[lang]} ↗</a>;
           if (b.type === 'gallery' && b.rows)
-            return <div class="pj-rows">{b.rows.map((row: number[]) => (
+            return <div class="pj-rows" style={b.max ? `--mw:${b.max}%` : undefined}>{b.rows.map((row: number[]) => (
               <ul class="pj-row">{row.map((n: number) => { const i = b.items[n]; return (
                 <li style={`--a:${(i.w / i.h).toFixed(4)}`}><button type="button" class="pj-zoom" data-zoom={url(i.src)} aria-label={`${title} ${n + 1}`}><img src={url(i.src)} alt={`${title}, ${n + 1}`} width={i.w} height={i.h} loading="lazy" decoding="async" /></button></li>
               ); })}</ul>

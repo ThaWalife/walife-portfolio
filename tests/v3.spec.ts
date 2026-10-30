@@ -741,7 +741,7 @@ test('Celestia Identity: campagna (teaser), moodboard player, palette, screensho
   await page.goto('progetti/celestia-identity/');
   await expect(page.locator('h1')).toHaveText('Celestia Identity');
   await expect(page.locator('[data-yt="Ay9u3JlOiCM"]')).toHaveCount(1);
-  await expect(page.locator('.pj-pl-slide')).toHaveCount(8);
+  await expect(page.locator('.pj-pl-slide')).toHaveCount(4);
   await expect(page.locator('.pj-sw li')).toHaveCount(9);
   await expect(page.locator('.pj-row')).not.toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

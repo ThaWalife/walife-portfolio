@@ -1262,8 +1262,8 @@
     "blocks": [
       {
         "type": "p",
-        "it": "Celestia è la community italiana di VRChat: serate, mondi da esplorare e nuove persone ogni notte. Per il rilascio della sua nuova mappa ho seguito tutto il percorso di comunicazione, dalla campagna che ne ha costruito l’attesa fino all’identità visiva con cui Celestia si presenta oggi.",
-        "en": "Celestia is the Italian VRChat community: nights out, worlds to explore and new people every evening. For the release of its new map I followed the whole communication path, from the campaign that built the anticipation to the visual identity Celestia presents today."
+        "it": "Celestia è una community italiana di VRChat: serate, mondi da esplorare e nuove persone da conoscere. Per il rilascio della sua nuova mappa ho seguito tutto il percorso di comunicazione, dalla campagna che ne ha costruito l’attesa fino all’identità visiva con cui Celestia si presenta oggi.",
+        "en": "Celestia is an Italian VRChat community: nights out, worlds to explore and new people to meet. For the release of its new map I followed the whole communication path, from the campaign that built the anticipation to the visual identity Celestia presents today."
       },
       {
         "type": "label",
@@ -1314,11 +1314,6 @@
         ]
       },
       {
-        "type": "p",
-        "it": "Il glitch vive solo dentro le immagini: è un linguaggio della fase di attesa. Con l’arrivo della nuova identity i colori tornano piatti e il logo non viene più disturbato.",
-        "en": "The glitch lives only inside the images: it is the language of the waiting phase. When the new identity arrives the colors go flat again and the logo is never disturbed."
-      },
-      {
         "type": "gallery",
         "items": [
           {
@@ -1340,8 +1335,8 @@
       },
       {
         "type": "p",
-        "it": "Il mondo è il punto di ritrovo della community di Celestia. La mappa è stata realizzata da Kaira S e la versione mostrata qui è quella di Halloween. Queste immagini servono da contesto per mostrare il resto del mio lavoro, quindi non sono il lavoro principale di questo progetto: sono il posto in cui la community si ritrova e dove poi vivranno logotype, colori e interfacce della nuova identity.",
-        "en": "The world is the meeting point of the Celestia community. The map was made by Kaira S and the version shown here is the Halloween one. These images are context to show the rest of my work, so they are not the main work of this project: they are the place where the community gathers and where the logotype, colors and interfaces of the new identity will live."
+        "it": "La mappa è stata progettata da Kaira S, la versione mostrata qui è quella di Halloween. Io mi sono occupato delle risorse grafiche.",
+        "en": "The map was designed by Kaira S and the version shown here is the Halloween one. I took care of the graphic resources."
       },
       {
         "type": "gallery",
@@ -1433,17 +1428,12 @@
       },
       {
         "type": "p",
-        "it": "La nuova identity segue la moodboard: luce fredda, ombre profonde e fondo scuro, con logotype e simbolo trattati come oggetti chrome in 3D dentro i mondi VR. Il sistema è costruito su colori piatti e su una griglia in prospettiva desaturata, senza mai ricorrere a neon rosa o viola. Le otto tavole qui sotto sono la moodboard che ha guidato il progetto: versione notte, versione giorno, logotype, simbolo, colore e tipografia, applicazioni e brand tokens.",
-        "en": "The new identity follows the moodboard: cold light, deep shadows and a dark ground, with the logotype and symbol treated as 3D chrome objects inside the VR worlds. The system is built on flat colors and a desaturated perspective grid, never relying on neon pink or purple. The eight boards below are the moodboard that guided the project: night version, day version, logotype, symbol, color and typography, applications and brand tokens."
+        "it": "La nuova identity segue la moodboard: luce fredda, ombre profonde e fondo scuro, con logotype e simbolo trattati come oggetti chrome in 3D dentro i mondi VR. Il sistema è costruito su colori piatti e su una griglia in prospettiva desaturata, senza mai ricorrere a neon rosa o viola. Qui sotto la moodboard in quattro tavole: la versione Day, il marchio primario, il marchio secondario e palette e tipografia.",
+        "en": "The new identity follows the moodboard: cold light, deep shadows and a dark ground, with the logotype and symbol treated as 3D chrome objects inside the VR worlds. The system is built on flat colors and a desaturated perspective grid, never relying on neon pink or purple. Below, the moodboard in four boards: the Day version, the primary mark, the secondary mark, and palette and typography."
       },
       {
         "type": "player",
         "items": [
-          {
-            "src": "img/projects/celestia-identity/moodboard-1.webp",
-            "w": 2400,
-            "h": 1350
-          },
           {
             "src": "img/projects/celestia-identity/moodboard-2.webp",
             "w": 2400,
@@ -1455,11 +1445,6 @@
             "h": 1575
           },
           {
-            "src": "img/projects/celestia-identity/moodboard-4.webp",
-            "w": 2400,
-            "h": 1350
-          },
-          {
             "src": "img/projects/celestia-identity/moodboard-5.webp",
             "w": 2400,
             "h": 1350
@@ -1468,104 +1453,8 @@
             "src": "img/projects/celestia-identity/moodboard-6.webp",
             "w": 2400,
             "h": 1350
-          },
-          {
-            "src": "img/projects/celestia-identity/moodboard-7.webp",
-            "w": 2400,
-            "h": 1350
-          },
-          {
-            "src": "img/projects/celestia-identity/moodboard-8.webp",
-            "w": 2400,
-            "h": 563
           }
         ]
-      },
-      {
-        "type": "h",
-        "it": "Logotype e simbolo",
-        "en": "Logotype and symbol"
-      },
-      {
-        "type": "p",
-        "it": "Il logotype è un lettering corsivo e pesante, con un doppio contorno. Sopra la “s” compare il razzo, lo stesso del simbolo, e lo swoosh disegna la sua traiettoria. Il simbolo da solo è la versione compatta per gli spazi quadrati e tondi, come l’avatar del server Discord o le icone dei social, e non compare mai insieme al logotype.",
-        "en": "The logotype is a heavy italic lettering with a double outline. Above the “s” sits the rocket, the same one as in the symbol, and the swoosh draws its trajectory. The symbol alone is the compact version for square and round spaces, like the Discord server avatar or social icons, and it never appears together with the logotype."
-      },
-      {
-        "type": "gallery",
-        "items": [
-          {
-            "src": "img/projects/celestia-identity/logotype-chrome.webp",
-            "w": 1600,
-            "h": 1000
-          },
-          {
-            "src": "img/projects/celestia-identity/logotype-bianco.webp",
-            "w": 1600,
-            "h": 1000
-          },
-          {
-            "src": "img/projects/celestia-identity/logotype-nero.webp",
-            "w": 1600,
-            "h": 1000
-          }
-        ],
-        "rows": [
-          [
-            0
-          ],
-          [
-            1,
-            2
-          ]
-        ]
-      },
-      {
-        "type": "gallery",
-        "items": [
-          {
-            "src": "img/projects/celestia-identity/simbolo-chrome.webp",
-            "w": 1200,
-            "h": 1200
-          },
-          {
-            "src": "img/projects/celestia-identity/simbolo-bianco.webp",
-            "w": 1200,
-            "h": 1200
-          },
-          {
-            "src": "img/projects/celestia-identity/simbolo-nero.webp",
-            "w": 1200,
-            "h": 1200
-          }
-        ],
-        "rows": [
-          [
-            0,
-            1,
-            2
-          ]
-        ]
-      },
-      {
-        "type": "p",
-        "it": "Le regole d’uso sono semplici: area di rispetto pari a 1x (la x è l’altezza della “c”), logotype minimo 120 px (30 mm in stampa) e sotto quella misura si passa al simbolo. Mai il logotype su Chrome Silver o grigi medi, perché lo swoosh si confonde, e mai ridisegnarlo, ruotarlo, deformarlo o ricolorarlo fuori palette. Le versioni sono quattro: su Abyss, su Starlight, bianca per le immagini scure e nera solo per stampa e monocromia.",
-        "en": "The usage rules are simple: clear space of 1x (x being the height of the “c”), logotype minimum 120 px (30 mm in print), and below that size you switch to the symbol. Never the logotype on Chrome Silver or mid greys, because the swoosh gets lost, and never redraw, rotate, distort or recolor it outside the palette. There are four versions: on Abyss, on Starlight, white for dark images and black only for print and monochrome."
-      },
-      {
-        "type": "gallery",
-        "items": [
-          {
-            "src": "img/projects/celestia-identity/logo-3d.webp",
-            "w": 2400,
-            "h": 1266
-          }
-        ]
-      },
-      {
-        "type": "p",
-        "it": "Per VRChat e YouTube il simbolo e il logotype diventano render 3D chrome, mentre per Discord e social si usano le versioni piatte. Il 3D resta riservato a key visual, miniature e campagne.",
-        "en": "For VRChat and YouTube the symbol and logotype become 3D chrome renders, while the flat versions are used for Discord and social. 3D is reserved for key visuals, thumbnails and campaigns."
       },
       {
         "type": "h",
@@ -1668,9 +1557,9 @@
         "type": "gallery",
         "items": [
           {
-            "src": "img/projects/celestia-identity/halloween-logotype.webp",
-            "w": 2000,
-            "h": 1055
+            "src": "img/projects/celestia-identity/mondo-miniatura-halloween.webp",
+            "w": 1600,
+            "h": 1200
           },
           {
             "src": "img/projects/celestia-identity/halloween-simbolo.webp",
@@ -1729,11 +1618,20 @@
         "rows": [
           [
             0,
-            1,
+            1
+          ],
+          [
             2,
             3
           ]
-        ]
+        ],
+        "max": 50
+      },
+      {
+        "type": "cta",
+        "it": "Visita il sito di Celestia",
+        "en": "Visit the Celestia website",
+        "url": "https://celestiaita.it"
       },
       {
         "type": "label",

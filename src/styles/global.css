@@ -589,3 +589,6 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
 .pj-sw strong { font-family: var(--font-display); font-size: 1.05rem; }
 .pj-sw .label { opacity: 0.85; }
 .pj-sw em { margin-top: auto; font-style: normal; font-size: 0.9rem; }
+
+/* gruppo di righe con larghezza massima propria (es. poster in 2×2) */
+@media (min-width: 701px) { .pj-rows[style*='--mw'] { max-width: var(--mw); } }

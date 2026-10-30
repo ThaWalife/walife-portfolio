@@ -16,22 +16,13 @@ const OUT = join(ROOT, 'public/img/projects', SLUG);
 const YT = 'Ay9u3JlOiCM';
 mkdirSync(OUT, { recursive: true });
 
-const C = { abyss: '#071218', orbit: '#0F2129', starlight: '#F2F4F7' };
+const C = { abyss: '#071218' };
 const rel = (f) => `img/projects/${SLUG}/${f}`;
 const save = async (img, name, q = 84) => {
   const { info } = await img.webp({ quality: q, effort: 5 }).toFile(join(OUT, name)).then((i) => ({ info: i }));
   return { src: rel(name), w: info.width, h: info.height };
 };
 const photo = async (p, name, w, q = 84) => save(sharp(join(SRC, p), { limitInputPixels: false }).flatten({ background: C.abyss }).resize({ width: w, withoutEnlargement: true }), name, q);
-
-// tavola: logo trasparente centrato su un colore (tile W×H, il logo occupa `fill` della larghezza/altezza)
-const tile = async (p, name, bg, W, H, fill = 0.72) => {
-  const logo = await sharp(join(SRC, p), { limitInputPixels: false }).trim().toBuffer();
-  const fit = await sharp(logo).resize({ width: Math.round(W * fill), height: Math.round(H * fill), fit: 'inside' }).toBuffer();
-  // filetto interno: la tavola chiara non si perde sullo sfondo della pagina
-  const edge = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><rect x="1" y="1" width="${W - 2}" height="${H - 2}" fill="none" stroke="rgba(7,18,24,0.18)" stroke-width="2"/></svg>`);
-  return save(sharp({ create: { width: W, height: H, channels: 3, background: bg } }).composite([{ input: fit, gravity: 'centre' }, ...(bg === C.starlight ? [{ input: edge }] : [])]), name, 90);
-};
 
 const D = 'Identità', M = 'Mondo', K = 'Campagna pre rilascio mappa', V = 'Volantini', R = 'Risorse varie';
 
@@ -50,7 +41,8 @@ const tmp = join(tmpdir(), 'celestia-mb');
 mkdirSync(tmp, { recursive: true });
 spawnSync('pdftoppm', ['-png', '-scale-to-x', '2400', '-scale-to-y', '-1', join(SRC, D, 'Celestia Moodboard-selection.pdf'), join(tmp, 'p')], { stdio: 'inherit' });
 const mood = [];
-for (let i = 1; i <= 8; i++) mood.push(await save(sharp(join(tmp, `p-${i}.png`)), `moodboard-${i}.webp`, 86));
+// tavole: 2 versione Day, 3 marchio primario, 5 marchio secondario, 6 colore e tipografia
+for (const i of [2, 3, 5, 6]) mood.push(await save(sharp(join(tmp, `p-${i}.png`)), `moodboard-${i}.webp`, 86));
 
 // campagna
 const banner = await photo(`${K}/banner.png`, 'campagna-banner.webp', 2400);
@@ -58,21 +50,7 @@ const glitch = await photo(`${K}/LOGO_GLITCH.png`, 'campagna-glitch.webp', 1600)
 const frame = await photo(`${R}/16-9.png`, 'campagna-griglia.webp', 1920);
 const reveal = await photo(`${R}/logo&community.png`, 'campagna-svelata.webp', 2400);
 
-// versioni del logo: tavole su Abyss / Deep Orbit / Starlight
-const lt = [
-  await tile(`${D}/l_N.png`, 'logotype-chrome.webp', C.abyss, 1600, 1000),
-  await tile(`${D}/L_W.png`, 'logotype-bianco.webp', C.orbit, 1600, 1000),
-  await tile(`${D}/L_B.png`, 'logotype-nero.webp', C.starlight, 1600, 1000),
-];
-const sy = [
-  await tile(`${D}/Simbolo@4096x.png`, 'simbolo-chrome.webp', C.abyss, 1200, 1200, 0.6),
-  await tile(`${D}/S_B@4096x.png`, 'simbolo-bianco.webp', C.orbit, 1200, 1200, 0.6),
-  await tile(`${D}/S_N@4096x.png`, 'simbolo-nero.webp', C.starlight, 1200, 1200, 0.6),
-];
-const render = await photo(`${D}/render_logo.png`, 'logo-3d.webp', 2400, 88);
-
 // halloween
-const hLogo = await tile(`${D}/logo_halloween.png`, 'halloween-logotype.webp', C.abyss, 2000, 1055, 0.9);
 const hSym = await photo(`${D}/simbolo_halloween__p.png`, 'halloween-simbolo.webp', 1600, 86);
 
 // mondo: miniature + screenshot a 2K (numerati: Principale, 2…7)
@@ -92,8 +70,8 @@ const label = (it, en) => ({ type: 'label', ...L(it, en) });
 const gal = (items, rows) => ({ type: 'gallery', items, ...(rows ? { rows } : {}) });
 
 const blocks = [
-  p('Celestia è la community italiana di VRChat: serate, mondi da esplorare e nuove persone ogni notte. Per il rilascio della sua nuova mappa ho seguito tutto il percorso di comunicazione, dalla campagna che ne ha costruito l’attesa fino all’identità visiva con cui Celestia si presenta oggi.',
-    'Celestia is the Italian VRChat community: nights out, worlds to explore and new people every evening. For the release of its new map I followed the whole communication path, from the campaign that built the anticipation to the visual identity Celestia presents today.'),
+  p('Celestia è una community italiana di VRChat: serate, mondi da esplorare e nuove persone da conoscere. Per il rilascio della sua nuova mappa ho seguito tutto il percorso di comunicazione, dalla campagna che ne ha costruito l’attesa fino all’identità visiva con cui Celestia si presenta oggi.',
+    'Celestia is an Italian VRChat community: nights out, worlds to explore and new people to meet. For the release of its new map I followed the whole communication path, from the campaign that built the anticipation to the visual identity Celestia presents today.'),
 
   label('01 — La campagna', '01 — The campaign'),
   h('Prima l’attesa', 'Anticipation first'),
@@ -101,33 +79,20 @@ const blocks = [
     'Before the map release the goal was to build anticipation and hype. The idea was to start from a deliberately confusing, glitched identity, with disturbed frames, the symbol breaking apart and messages like “Stay tuned”, and then reveal the new identity and release the new map right after. The teaser runs 15 seconds and ends by announcing the launch trailer on 18 September 2026 and the celestiaita.it website.'),
   { type: 'youtube', id: YT },
   gal([banner, glitch, frame], [[0], [1, 2]]),
-  p('Il glitch vive solo dentro le immagini: è un linguaggio della fase di attesa. Con l’arrivo della nuova identity i colori tornano piatti e il logo non viene più disturbato.',
-    'The glitch lives only inside the images: it is the language of the waiting phase. When the new identity arrives the colors go flat again and the logo is never disturbed.'),
   gal([reveal]),
 
   label('02 — Il mondo', '02 — The world'),
   h('Il punto di ritrovo', 'The meeting point'),
-  p('Il mondo è il punto di ritrovo della community di Celestia. La mappa è stata realizzata da Kaira S e la versione mostrata qui è quella di Halloween. Queste immagini servono da contesto per mostrare il resto del mio lavoro, quindi non sono il lavoro principale di questo progetto: sono il posto in cui la community si ritrova e dove poi vivranno logotype, colori e interfacce della nuova identity.',
-    'The world is the meeting point of the Celestia community. The map was made by Kaira S and the version shown here is the Halloween one. These images are context to show the rest of my work, so they are not the main work of this project: they are the place where the community gathers and where the logotype, colors and interfaces of the new identity will live.'),
+  p('La mappa è stata progettata da Kaira S, la versione mostrata qui è quella di Halloween. Io mi sono occupato delle risorse grafiche.',
+    'The map was designed by Kaira S and the version shown here is the Halloween one. I took care of the graphic resources.'),
   gal(thumbs, [[0, 1]]),
   gal(shots, [[0], [1, 2], [3, 4], [5, 6]]),
 
   label('03 — L’identity', '03 — The identity'),
   h('Notturno, chrome, orbita', 'Night, chrome, orbit'),
-  p('La nuova identity segue la moodboard: luce fredda, ombre profonde e fondo scuro, con logotype e simbolo trattati come oggetti chrome in 3D dentro i mondi VR. Il sistema è costruito su colori piatti e su una griglia in prospettiva desaturata, senza mai ricorrere a neon rosa o viola. Le otto tavole qui sotto sono la moodboard che ha guidato il progetto: versione notte, versione giorno, logotype, simbolo, colore e tipografia, applicazioni e brand tokens.',
-    'The new identity follows the moodboard: cold light, deep shadows and a dark ground, with the logotype and symbol treated as 3D chrome objects inside the VR worlds. The system is built on flat colors and a desaturated perspective grid, never relying on neon pink or purple. The eight boards below are the moodboard that guided the project: night version, day version, logotype, symbol, color and typography, applications and brand tokens.'),
+  p('La nuova identity segue la moodboard: luce fredda, ombre profonde e fondo scuro, con logotype e simbolo trattati come oggetti chrome in 3D dentro i mondi VR. Il sistema è costruito su colori piatti e su una griglia in prospettiva desaturata, senza mai ricorrere a neon rosa o viola. Qui sotto la moodboard in quattro tavole: la versione Day, il marchio primario, il marchio secondario e palette e tipografia.',
+    'The new identity follows the moodboard: cold light, deep shadows and a dark ground, with the logotype and symbol treated as 3D chrome objects inside the VR worlds. The system is built on flat colors and a desaturated perspective grid, never relying on neon pink or purple. Below, the moodboard in four boards: the Day version, the primary mark, the secondary mark, and palette and typography.'),
   { type: 'player', items: mood },
-
-  h('Logotype e simbolo', 'Logotype and symbol'),
-  p('Il logotype è un lettering corsivo e pesante, con un doppio contorno. Sopra la “s” compare il razzo, lo stesso del simbolo, e lo swoosh disegna la sua traiettoria. Il simbolo da solo è la versione compatta per gli spazi quadrati e tondi, come l’avatar del server Discord o le icone dei social, e non compare mai insieme al logotype.',
-    'The logotype is a heavy italic lettering with a double outline. Above the “s” sits the rocket, the same one as in the symbol, and the swoosh draws its trajectory. The symbol alone is the compact version for square and round spaces, like the Discord server avatar or social icons, and it never appears together with the logotype.'),
-  gal(lt, [[0], [1, 2]]),
-  gal(sy, [[0, 1, 2]]),
-  p('Le regole d’uso sono semplici: area di rispetto pari a 1x (la x è l’altezza della “c”), logotype minimo 120 px (30 mm in stampa) e sotto quella misura si passa al simbolo. Mai il logotype su Chrome Silver o grigi medi, perché lo swoosh si confonde, e mai ridisegnarlo, ruotarlo, deformarlo o ricolorarlo fuori palette. Le versioni sono quattro: su Abyss, su Starlight, bianca per le immagini scure e nera solo per stampa e monocromia.',
-    'The usage rules are simple: clear space of 1x (x being the height of the “c”), logotype minimum 120 px (30 mm in print), and below that size you switch to the symbol. Never the logotype on Chrome Silver or mid greys, because the swoosh gets lost, and never redraw, rotate, distort or recolor it outside the palette. There are four versions: on Abyss, on Starlight, white for dark images and black only for print and monochrome.'),
-  gal([render]),
-  p('Per VRChat e YouTube il simbolo e il logotype diventano render 3D chrome, mentre per Discord e social si usano le versioni piatte. Il 3D resta riservato a key visual, miniature e campagne.',
-    'For VRChat and YouTube the symbol and logotype become 3D chrome renders, while the flat versions are used for Discord and social. 3D is reserved for key visuals, thumbnails and campaigns.'),
 
   h('Colore e tipografia', 'Color and typography'),
   { type: 'swatches', items: [
@@ -147,13 +112,15 @@ const blocks = [
   h('La versione di Halloween', 'The Halloween version'),
   p('Per la stagione di Halloween l’identità si accende di arancio Ember, l’unico momento in cui il colore è ammesso. Oltre alla versione principale ho realizzato logotype e simbolo a tema, con fantasmi, zucche e lanterna.',
     'For the Halloween season the identity lights up in Ember orange, the only moment the color is allowed. Besides the main version I made themed versions of the logotype and symbol, with ghosts, pumpkins and a lantern.'),
-  gal([hLogo, hSym], [[0], [1]]),
+  gal([thumbs[1], hSym], [[0], [1]]),
 
   label('04 — Poster e volantini', '04 — Posters and flyers'),
   h('Un layout per riconoscersi', 'A layout to be recognized'),
   p('Poster e volantini seguono un layout specifico per mantenere l’identità: logotype in alto, etichette in JetBrains Mono, titoli in Unbounded, un QR code per entrare nella community e la call to action in Pulsar Cyan. Per l’evento di Halloween il layout resta lo stesso e cambia solo l’accento, che diventa Ember.',
     'Posters and flyers follow a specific layout to keep the identity consistent: logotype at the top, JetBrains Mono labels, Unbounded titles, a QR code to join the community and the call to action in Pulsar Cyan. For the Halloween event the layout stays the same and only the accent changes, becoming Ember.'),
-  gal(posters, [[0, 1, 2, 3]]),
+  { ...gal(posters, [[0, 1], [2, 3]]), max: 50 },
+
+  { type: 'cta', ...L('Visita il sito di Celestia', 'Visit the Celestia website'), url: 'https://celestiaita.it' },
 
   label('Credits', 'Credits'),
   p('Mappa: Kaira S.', 'Map: Kaira S.'),
