@@ -557,3 +557,68 @@ test('foto profilo incorniciata: vetro, due anelli tratteggiati animati, 4 segni
   const m = await page.locator('.ph-glass').evaluate((e) => new DOMMatrix(getComputedStyle(e).transform).m13);
   expect(m).not.toBe(0);
 });
+
+test('transizione di pagina: foglio di vetro + prato, veloce (<1,6 s), la nuova pagina nasce coperta e poi si scopre', async ({ page }) => {
+  await page.goto('archivio/');
+  await page.waitForTimeout(800);
+  // struttura: vetro sfocato, bordo con l'illustrazione, simbolo
+  await expect(page.locator('.wipe .wp-glass')).toHaveCount(1);
+  expect(await page.locator('.wp-glass').evaluate((e) => getComputedStyle(e).backdropFilter)).toContain('blur');
+  await expect(page.locator('.wp-edge')).toHaveCount(1);
+  await expect(page.locator('.wp-badge svg')).toHaveCount(1);
+  expect(await page.locator('.wipe').evaluate((e) => getComputedStyle(e).visibility)).toBe('hidden');
+  const t0 = Date.now();
+  const seen: boolean[] = [];
+  page.on('framenavigated', () => {});
+  await page.locator('.pill a', { hasText: 'Chi sono' }).first().click();
+  await page.waitForTimeout(120);
+  seen.push((await page.locator('.wipe').evaluate((e) => getComputedStyle(e).visibility)) === 'visible'); // in uscita è visibile
+  await page.waitForURL(/chi-sono\/$/);
+  const covered = await page.evaluate(() => document.documentElement.classList.contains('wl-in') || getComputedStyle(document.querySelector('.wipe')!).visibility === 'visible');
+  seen.push(covered);                                            // la nuova pagina parte coperta
+  await expect.poll(() => page.locator('.wipe').evaluate((e) => getComputedStyle(e).visibility), { timeout: 3000 }).toBe('hidden');
+  expect(Date.now() - t0).toBeLessThan(1600);
+  expect(seen).toEqual([true, true]);
+  expect(await page.evaluate(() => document.documentElement.classList.contains('wl-in'))).toBe(false);
+});
+
+test('transizione: nessuna con reduced-motion', async ({ browser }) => {
+  const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+  const p = await ctx.newPage();
+  await p.goto('archivio/');
+  expect(await p.locator('.wipe').evaluate((e) => getComputedStyle(e).display)).toBe('none');
+  const t0 = Date.now();
+  await p.locator('.pill a', { hasText: 'Chi sono' }).first().click();
+  await p.waitForURL(/chi-sono\/$/);
+  expect(Date.now() - t0).toBeLessThan(900);
+  await ctx.close();
+});
+
+test('home: progetti in evidenza = Tower, Octopus, Club Italia, elaborato conclusivo (in quest\'ordine); edits: video fissato sostituito', async ({ page }) => {
+  await page.goto('');
+  const hrefs = await page.locator('[data-pcard]').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).getAttribute('href')));
+  expect(hrefs.map((h) => h!.split('/').filter(Boolean).pop())).toEqual(['the-tower-official-merch-design', 'octopus-brand-collab', 'club-italia-flyers', 'elaborato-conclusivo-del-percorso-scolastico']);
+  await page.goto('progetti/edits/');
+  const ids = await page.locator('[data-yt]').evaluateAll((els) => els.map((e) => e.getAttribute('data-yt')));
+  expect(ids.slice(0, 3)).toEqual(['pbYsQ5UtWS4', 'ISTYdVXpEP8', 'U9tj412zsnU']);   // i tre fissati
+  expect(ids).toContain('5jSXj0SQZP0');                                              // il vecchio è tra gli altri edit
+  expect(ids.indexOf('5jSXj0SQZP0')).toBeGreaterThan(2);
+  const html = await page.content();
+  expect(html.includes('David Martinez')).toBe(true);
+});
+
+const ALL_PATHS = ['', 'archivio/', 'chi-sono/', 'contatti/', 'privacy/', 'en/', 'en/archive/', 'en/about/', 'en/contact/', ...SLUGS.map((s) => `progetti/${s}/`)];
+for (const w of [360, 412]) {
+  test(`telefono ${w}px: nessun overflow orizzontale su tutte le pagine (anche dopo lo scroll)`, async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width: w, height: 800 }, hasTouch: true, isMobile: true, locale: 'it-IT' });
+    const page = await ctx.newPage();
+    for (const path of ALL_PATHS) {
+      await page.goto(path);
+      await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 700) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 25)); } });
+      await page.waitForTimeout(250);
+      const o = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(o, `${path} @${w}`).toBeLessThanOrEqual(0);
+    }
+    await ctx.close();
+  });
+}

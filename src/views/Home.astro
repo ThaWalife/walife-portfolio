@@ -12,7 +12,9 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const logoSvg = logoRaw.replace(/<style>[\s\S]*?<\/style>/, '').replace(/<defs>\s*<\/defs>/, '').replace(/class="cls-1"/g, '');
 const all = site.PROJECTS as any[];
-const featured = all.slice(0, 4);
+// progetti in evidenza, nell'ordine scelto
+const FEATURED = ['the-tower-official-merch-design', 'octopus-brand-collab', 'club-italia-flyers', 'elaborato-conclusivo-del-percorso-scolastico'];
+const featured = FEATURED.map((s) => all.find((p) => p.slug === s)!);
 // due righe di anteprime che scorrono in senso opposto con lo scroll
 const row1 = [...all.slice(0, 6), ...all.slice(0, 6)];
 const row2 = [...all.slice(6), ...all.slice(6), ...all.slice(6)];

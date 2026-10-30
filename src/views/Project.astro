@@ -61,9 +61,9 @@ const ig = (id: string) => `https://www.instagram.com/p/${id}/`;
                 <li><button type="button" class="pj-zoom" data-zoom={url(i.src)} aria-label={`${t(lang, 'pgPage')} ${k + 1} ${t(lang, 'pgOf')} ${b.pages.length}`}><img src={url(i.src)} alt={`${title}, ${t(lang, 'pgPage')} ${k + 1} ${t(lang, 'pgOf')} ${b.pages.length}`} width={i.w} height={i.h} loading={k < 4 ? 'eager' : 'lazy'} decoding="async" /></button></li>
               ))}</ul>
               <div class="pj-book-nav">
-                <button class="btn" type="button" data-book-prev>{t(lang, 'pgBookPrev')}</button>
+                <button class="btn" type="button" data-book-prev aria-label={t(lang, 'pgBookPrev')}><span aria-hidden="true">←</span><span class="txt">{t(lang, 'pgBookPrev')}</span></button>
                 <span class="label" data-book-count>1 / {b.pages.length}</span>
-                <button class="btn" type="button" data-book-next>{t(lang, 'pgBookNext')}</button>
+                <button class="btn" type="button" data-book-next aria-label={t(lang, 'pgBookNext')}><span class="txt">{t(lang, 'pgBookNext')}</span><span aria-hidden="true">→</span></button>
               </div>
             </div>;
           if (b.type === 'video')

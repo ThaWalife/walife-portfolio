@@ -1,4 +1,4 @@
-// Effetti "Framer": smooth scroll, cursore custom, bottoni magnetici, reveal per riga, wipe di pagina a 43°.
+// Effetti "Framer": smooth scroll, cursore custom, reveal per riga, transizione di pagina in vetro + prato.
 import Lenis from 'lenis';
 
 const html = document.documentElement;
@@ -63,38 +63,29 @@ if (fine && !reduced) {
   });
 }
 
-// ── wipe di pagina a 43° (uscita: copre; ingresso: scopre)
+// ── transizione di pagina: foglio di vetro con il prato che sale (uscita) e riscende (ingresso). ~0,35 s + ~0,45 s.
 const wipe = document.querySelector<HTMLElement>('.wipe')!;
-const SLANT = 1 / Math.tan((43 * Math.PI) / 180); // dx per dy
-const EMPTY = 'polygon(0 0, 0 0, 0 100%, 0 100%)';
-// cover(p): 0 → nulla, 1 → copre tutto (bordo destro inclinato a 43° che avanza da sinistra)
-const cover = (p: number) => {
-  const h = innerHeight, w = innerWidth, run = h * SLANT;
-  const edge = -run + p * (w + run * 2);
-  wipe.style.clipPath = `polygon(0 0, ${edge + run}px 0, ${edge}px 100%, 0 100%)`;
+const sheet = wipe.querySelector<HTMLElement>('.wp-sheet')!;
+const glass = wipe.querySelector<HTMLElement>('.wp-glass')!;
+const SHOW = 'translateY(-13.75vw)'; // il foglio copre tutto lo schermo
+const HIDE = 'translateY(100vh)';    // il foglio è sotto lo schermo
+const play = (from: string, to: string, ms: number, g0: number, g1: number) => {
+  wipe.style.visibility = 'visible';
+  const o = { duration: ms, fill: 'forwards' as const };
+  glass.animate([{ opacity: g0 }, { opacity: g1 }], { ...o, easing: 'ease-out' });
+  return sheet.animate([{ transform: from }, { transform: to }], { ...o, easing: 'cubic-bezier(0.65, 0, 0.25, 1)' }).finished;
 };
-// uncover(q): 0 → copre tutto, 1 → nulla (bordo sinistro inclinato che avanza verso destra)
-const uncover = (q: number) => {
-  const h = innerHeight, w = innerWidth, run = h * SLANT;
-  const e = -run + q * (w + run * 2);
-  wipe.style.clipPath = `polygon(${e + run}px 0, 100% 0, 100% 100%, ${e}px 100%)`;
+const clear = () => {
+  sheet.getAnimations().concat(glass.getAnimations()).forEach((a) => a.cancel());
+  html.classList.remove('wl-in');
+  wipe.style.visibility = 'hidden';
 };
-const ease = (t: number) => 1 - Math.pow(1 - t, 4);
-function animate(fn: (v: number) => void, ms: number, done?: () => void) {
-  const t0 = performance.now();
-  const step = (now: number) => {
-    const k = Math.min((now - t0) / ms, 1);
-    fn(ease(k));
-    if (k < 1) requestAnimationFrame(step); else done?.();
-  };
-  requestAnimationFrame(step);
-}
 let cameFrom = false;
 try { cameFrom = sessionStorage.getItem('wl-wipe') === '1'; sessionStorage.removeItem('wl-wipe'); } catch { /* sessionStorage non disponibile */ }
 if (cameFrom && !reduced) {
-  uncover(0);
-  requestAnimationFrame(() => animate(uncover, 750, () => { wipe.style.clipPath = EMPTY; }));
-}
+  // la pagina nasce già coperta (classe .wl-in); parte da lì e riscende
+  requestAnimationFrame(() => { html.classList.remove('wl-in'); play(SHOW, HIDE, 460, 1, 0).then(clear); });
+} else clear();
 if (!reduced) {
   document.addEventListener('click', (e) => {
     const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href]');
@@ -105,7 +96,7 @@ if (!reduced) {
     if (a.hasAttribute('data-lang-switch') && u.pathname === location.pathname) return;
     e.preventDefault();
     try { sessionStorage.setItem('wl-wipe', '1'); } catch { /* ok */ }
-    animate(cover, 550, () => { location.href = a.href; });
+    play(HIDE, SHOW, 360, 0, 1).then(() => { location.href = a.href; });
   });
-  addEventListener('pageshow', (e) => { if ((e as PageTransitionEvent).persisted) wipe.style.clipPath = EMPTY; });
+  addEventListener('pageshow', (e) => { if ((e as PageTransitionEvent).persisted) clear(); });
 }

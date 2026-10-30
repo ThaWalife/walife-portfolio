@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import Field from '../components/Field.astro';
+import edge from '../assets/meadow-edge-a-2.svg';
+import logoRaw from '../assets/walife-logo.svg?raw';
 import site from '../content/site.json';
 import { ROOT, url } from '../lib/url';
 import { routes, t, type Lang, type PageKey } from '../lib/i18n';
@@ -9,6 +11,7 @@ interface Props { lang: Lang; page: PageKey; title: string; description: string;
 const { lang, page, title, description, home = false, paths } = Astro.props;
 const P = paths ?? routes[page];
 const abs = (p: string) => new URL(url(p), Astro.site).href;
+const mark = logoRaw.replace(/<style>[\s\S]*?<\/style>/, '').replace(/<defs>\s*<\/defs>/, '').replace(/class="cls-1"/g, '');
 const label = (k: PageKey) => (k === 'privacy' ? t(lang, 'privacy') : k === 'home' ? t(lang, 'home') : k === 'archive' ? t(lang, 'navArchive') : k === 'about' ? t(lang, 'navAbout') : t(lang, 'navContact'));
 const center: PageKey[] = ['home', 'archive', 'about'];
 const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
@@ -33,6 +36,7 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
       (function () {
         var d = document.documentElement;
         d.classList.remove('no-js');
+        try { if (sessionStorage.getItem('wl-wipe') === '1') d.classList.add('wl-in'); } catch (e) {}
         var pref = null;
         try { pref = localStorage.getItem('wl-lang'); } catch (e) {}
         // Redirect lingua: solo alla radice del sito (dopo il base path), mai per i bot.
@@ -107,7 +111,14 @@ const mobile: PageKey[] = ['home', 'archive', 'about', 'contact'];
       <Field class="engr" name="meadow-footer" layers={3} w={1600} h={560} />
     </footer>
     <div class="cursor" aria-hidden="true"><span data-cursor-label></span></div>
-    <div class="wipe" aria-hidden="true"></div>
+    <div class="wipe" aria-hidden="true">
+      <div class="wp-glass"></div>
+      <div class="wp-sheet">
+        <img class="wp-edge" src={edge.src} alt="" width="1600" height="220" decoding="async" />
+        <div class="wp-fill"></div>
+        <div class="wp-badge" set:html={mark}></div>
+      </div>
+    </div>
     <script>
       import '../scripts/ui';
     </script>

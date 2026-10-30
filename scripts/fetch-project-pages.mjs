@@ -9,6 +9,25 @@ const src = await (await fetch('https://thawalife.com/project-pages.js', { heade
 const ctx = { window: { WALIFE: {} } };
 vm.runInNewContext(src, ctx);
 const PAGES = ctx.window.WALIFE.PAGES;
+// Modifiche richieste: nella pagina "Edits" il video fissato 5jSXj0SQZP0 è sostituito da U9tj412zsnU
+// (titolo da YouTube oEmbed) e il precedente passa tra gli "Altri edit".
+{
+  const bl = PAGES.edits.blocks;
+  const i = bl.findIndex((b) => b.type === 'youtube' && b.id === '5jSXj0SQZP0');
+  if (i > 0) {
+    const old = bl[i - 1];
+    const grid = bl.find((b) => b.type === 'ytgrid');
+    grid.items.unshift({ id: '5jSXj0SQZP0', title: old.it });
+    const title = 'David Martinez | Cyberpunk: Edgerunners Edit';
+    bl[i - 1] = { type: 'h', it: title, en: title };
+    bl[i] = { type: 'youtube', id: 'U9tj412zsnU' };
+  }
+}
+// il testo italiano della pagina "Edits" sul sito originale è in inglese: uso la descrizione italiana già presente nei dati
+{
+  const p0 = PAGES.edits.blocks[0];
+  if (p0.type === 'p' && p0.it === p0.en) p0.it = 'Un’immersione nella manipolazione video, negli effetti e negli studi sul movimento.';
+}
 writeFileSync(new URL('../src/content/pages.json', import.meta.url), JSON.stringify(PAGES, null, 2), 'utf8');
 
 const assets = new Set();

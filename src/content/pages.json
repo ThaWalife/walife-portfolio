@@ -967,7 +967,7 @@
     "blocks": [
       {
         "type": "p",
-        "it": "A deep dive into video manipulation, effects, and motion studies.",
+        "it": "Un’immersione nella manipolazione video, negli effetti e negli studi sul movimento.",
         "en": "A deep dive into video manipulation, effects, and motion studies."
       },
       {
@@ -995,12 +995,12 @@
       },
       {
         "type": "h",
-        "it": "The Price of a Miracle — Code Geass Edit",
-        "en": "The Price of a Miracle — Code Geass Edit"
+        "it": "David Martinez | Cyberpunk: Edgerunners Edit",
+        "en": "David Martinez | Cyberpunk: Edgerunners Edit"
       },
       {
         "type": "youtube",
-        "id": "5jSXj0SQZP0"
+        "id": "U9tj412zsnU"
       },
       {
         "type": "h",
@@ -1010,6 +1010,10 @@
       {
         "type": "ytgrid",
         "items": [
+          {
+            "id": "5jSXj0SQZP0",
+            "title": "The Price of a Miracle — Code Geass Edit"
+          },
           {
             "id": "cug9cf6yOVg",
             "title": "Silent Hill 2 – “Could Mary really be here?”"
