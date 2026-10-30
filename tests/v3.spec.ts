@@ -287,3 +287,24 @@ test('home: logo brand bianco solo in home, CTA hero in vetro come le pillole, l
   expect(lg.y + lg.height).toBeGreaterThan(fld.y + fld.height * 0.3);
   expect(lg.y).toBeGreaterThan(80);
 });
+
+for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080], [2560, 1080], [390, 844]]) {
+  test(`footer ${w}px: testo centrato nelle celle della griglia, nessun simbolo bianco`, async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, locale: 'it-IT' });
+    const page = await ctx.newPage();
+    await page.goto('archivio/');
+    await page.locator('.site-footer').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
+    const cells = await page.locator('.site-footer .foot-lines span:visible').evaluateAll((els) => els.map((e) => { const b = e.getBoundingClientRect(); return { l: b.left, r: b.right }; }));
+    const cols = await page.locator('.site-footer .fcol').evaluateAll((els) => els.map((e) => { const b = e.getBoundingClientRect(); return { l: b.left, r: b.right }; }));
+    const n = w < 900 ? 2 : 4;
+    expect(cells).toHaveLength(n);
+    for (let i = 0; i < cols.length; i++) {
+      const cell = cells[i % n];
+      expect(Math.abs((cols[i].l + cols[i].r) / 2 - (cell.l + cell.r) / 2), `colonna ${i}`).toBeLessThanOrEqual(2);
+    }
+    const imgs = await page.locator('.site-footer .engr img').evaluateAll((els) => els.map((e) => (e as HTMLImageElement).src));
+    expect(imgs).toHaveLength(3);
+    await ctx.close();
+  });
+}
