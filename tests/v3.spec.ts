@@ -187,7 +187,7 @@ for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080]]) {
     expect(Math.abs(range.l - (w - range.r))).toBeLessThanOrEqual(6); // margini sx/dx uguali
     const logo = await box('.hero-logo svg');
     expect(Math.abs(logo.x + logo.width / 2 - w / 2)).toBeLessThanOrEqual(2);
-    for (const sel of ['.hero-bar .lead', '.hero-bar .glass-slot', '.hero-bar .btn, .hero-bar .glass-container', '.hero-sub']) {
+    for (const sel of ['.hero-bar .lead', '.hero-bar .btn', '.hero-sub']) {
       const b = await box(sel);
       expect(b.x, sel).toBeGreaterThanOrEqual(m - 2);
       expect(b.x + b.width, sel).toBeLessThanOrEqual(w - m + 2);
@@ -211,7 +211,7 @@ test('footer stile tide: 4 colonne, guide tratteggiate, incisione caricata, colo
 test('stile tide esteso: onde in hero, linee tratteggiate tra sezioni, card con bordo tratteggiato', async ({ page }) => {
   await page.goto('');
   await expect.poll(() => page.locator('.hero-waves').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
-  expect(await page.locator('.hero-waves').evaluate((e) => getComputedStyle(e).zIndex)).toBe('2');
+  expect(await page.locator('.hero-waves').evaluate((e) => getComputedStyle(e).zIndex)).toBe('5');
   expect(await page.locator('.about').evaluate((e) => getComputedStyle(e, '::before').borderTopStyle)).toBe('dashed');
   expect(await page.locator('.pcard').first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe('dashed');
   await page.goto('archivio/');
@@ -231,3 +231,23 @@ test('onde sui bordi delle sezioni verdi: home (servizi e contatti) e chi sono',
   await page.goto('chi-sono/');
   await expect(page.locator('.wave-top')).toHaveCount(1);
 });
+
+for (const [w, h] of [[1440, 900], [1280, 640], [1920, 1080], [1024, 768], [2560, 1080]]) {
+  test(`logo hero ${w}x${h}: centrato, sotto la barra, senza coprire testi o CTA`, async ({ browser }) => {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, locale: 'it-IT' });
+    const page = await ctx.newPage();
+    await page.goto('');
+    await page.waitForTimeout(1500);
+    const r = async (s: string) => (await page.locator(s).first().boundingBox())!;
+    const logo = await r('.hero-logo svg');
+    expect(Math.abs(logo.x + logo.width / 2 - w / 2)).toBeLessThanOrEqual(1);
+    const bar = await r('.pillbar .center');
+    expect(logo.y).toBeGreaterThanOrEqual(bar.y + bar.height + 8);
+    const hit = (a: any, b: any) => a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
+    const text = async (s: string) => page.locator(s).first().evaluate((e) => { const g = document.createRange(); g.selectNodeContents(e); const b = g.getBoundingClientRect(); return { x: b.x, y: b.y, width: b.width, height: b.height }; });
+    for (const s of ['.hero-sub', '.hero-bar .lead']) expect(hit(logo, await text(s)), s).toBe(false);
+    expect(hit(logo, await r('.hero-bar .btn')), '.btn').toBe(false);
+    await expect(page.locator('.glass-container')).toHaveCount(0);
+    await ctx.close();
+  });
+}

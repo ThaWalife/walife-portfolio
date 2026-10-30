@@ -22,16 +22,14 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
 ---
 <Base lang={lang} page="home" home title={t(lang, 'docTitle')} description={t(lang, 'docDesc')}>
   <section class="hero on-green" id="hero" data-hero>
-    <img class="hero-waves" src={waves.src} alt="" aria-hidden="true" width="1600" height="230" decoding="async" />
+    <img class="hero-waves" src={waves.src} alt="" aria-hidden="true" width="1600" height="260" decoding="async" />
     <div class="wrap hero-grid">
       <h1 class="hero-h" data-lang={lang}>{t(lang, 'heroH')}</h1>
       <p class="hero-sub label">{t(lang, 'eyebrow')} · {t(lang, 'abF2')}</p>
       <div class="hero-logo" aria-hidden="true" set:html={logoSvg} />
       <div class="hero-bar">
         <p class="lead">{t(lang, 'tagline')}</p>
-        <div class="glass-slot" data-glass data-glass-base={url('vendor/liquid-glass/')} data-glass-text={t(lang, 'open')}>
-          <a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'open')}</a>
-        </div>
+        <a class="btn" href={url(routes.archive[lang])} data-snd>{t(lang, 'open')}</a>
       </div>
     </div>
   </section>

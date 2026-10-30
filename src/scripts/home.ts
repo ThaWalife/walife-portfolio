@@ -1,14 +1,7 @@
-// Home: CTA in vetro, righe di anteprime guidate dallo scroll, testo che si rivela scrollando, card progetti impilate.
+// Home: titolo adattato, righe di anteprime guidate dallo scroll, testo che si rivela scrollando, card progetti impilate.
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const fine = matchMedia('(pointer: fine)').matches;
 const stack = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
 const clamp = (v: number, a = 0, b = 1) => Math.min(Math.max(v, a), b);
-
-// CTA hero in liquid glass: solo mouse, senza reduced-motion
-const glassSlot = document.querySelector<HTMLElement>('[data-glass]');
-if (glassSlot && fine && !reduced && !stack) {
-  setTimeout(() => import('./glass').then((m) => m.mountGlass(glassSlot)).catch(() => { /* resta il bottone normale */ }), 1800);
-}
 
 // titolo hero: font-size calcolato perché il testo occupi esattamente la larghezza della zona sicura
 const heroH = document.querySelector<HTMLElement>('.hero-h');

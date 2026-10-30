@@ -61,17 +61,19 @@ for (let i = 0; i < bands; i++) {
     }
   }
   // scogli e simbolo dietro la 5ª banda (sopra le prime, sotto le ultime)
-  if (ROCK === '1' && i === 5) {
-    const rx = 1215, ry = 345;
+  if ((ROCK === '1' && i === 5) || (ROCK === 'c' && i === 2)) {
+    const rx = ROCK === 'c' ? 800 : 1215, ry = ROCK === 'c' ? TOP + 2 * 30 + 34 : 345;
     const pts = [[-190, 130], [-150, 40], [-95, 10], [-60, -45], [-10, -85], [40, -70], [85, -20], [140, 20], [200, 130]]
       .map(([dx, dy]) => [rx + dx + (rnd() - 0.5) * 14, ry + dy + (rnd() - 0.5) * 12]);
     const poly = pts.map(([x, y]) => `${f(x)} ${f(y)}`).join(' ');
+    if (ROCK === 'c') console.log('ROCKTOP', Math.round(Math.min(...pts.map(([, y]) => y))), 'H', H);
     defs.push(`<clipPath id="rock"><polygon points="${poly}"/></clipPath>`);
     out.push(`<polygon points="${poly}" fill="${BG}" stroke="${INK}" stroke-width="2.6" stroke-linejoin="round"/>`);
     let h = '';
     const k = Math.tan((43 * Math.PI) / 180);
     for (let x = rx - 260; x < rx + 260; x += 9) h += `M${x} ${ry + 140} L${f(x + 230 / k)} ${ry - 90} `;
     out.push(`<path d="${h}" clip-path="url(#rock)" stroke="${INK}" stroke-width="1.1" fill="none"/>`);
+    if (ROCK === 'c') continue;
     // simbolo Walife (il "faro")
     const s = 0.62;
     out.push(`<g transform="translate(${f(rx - 135 * s)} ${f(ry - 90 - 414 * s + 22)}) scale(${s})" fill="${PAPER}" stroke="${INK}" stroke-width="${f(3.4 / s)}" stroke-linejoin="round">${logoPaths.map((d) => `<path d="${d}"/>`).join('')}</g>`);

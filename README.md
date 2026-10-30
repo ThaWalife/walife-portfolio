@@ -24,5 +24,4 @@ node scripts/verify-content.mjs   # confronta site.json con data.js live di thaw
 
 ## Librerie di terze parti
 
-- `public/vendor/liquid-glass/` — [dashersw/liquid-glass-js](https://github.com/dashersw/liquid-glass-js) (MIT, file originali `container.js`, `button.js`, `glass.css`, `LICENSE`) per la CTA in vetro; `html2canvas` da npm.
-- `lenis` (smooth scroll), `html2canvas` (richiesta dalla CTA in vetro).
+- `lenis` (smooth scroll).
