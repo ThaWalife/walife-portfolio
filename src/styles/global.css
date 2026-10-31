@@ -323,7 +323,7 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
 
 /* prato animato: ogni strato ondeggia piano (vento), più forte verso il primo piano */
 .field { overflow: visible; }
-.field .fl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; transform-origin: 50% 100%; will-change: transform; }
+.field .fl { position: absolute; top: 0; left: -10px; width: calc(100% + 20px); max-width: none; height: 100%; display: block; transform-origin: 50% 100%; will-change: transform; }
 .field .l1 { animation: none; }
 .field .l2 { animation: sway 6s ease-in-out infinite alternate; --a: 1deg; }
 .field .l3 { animation: sway 5.2s ease-in-out -2s infinite alternate; --a: 1.8deg; }
@@ -488,11 +488,11 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
 .wp-sheet { position: absolute; left: 0; right: 0; top: 0; height: 122vh; transform: translateY(100vh); will-change: transform; }
 .wp-field { position: absolute; inset: 0; }
 .wp-field::before { content: ''; position: absolute; left: 0; right: 0; top: 12vh; bottom: 0; background: var(--green); }
-.wp-field .fl { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; display: block; transform-origin: 50% 100%; will-change: transform; }
+.wp-field .fl { position: absolute; top: 0; left: -14px; width: calc(100% + 28px); max-width: none; height: 100%; object-fit: cover; object-position: 50% 0; display: block; transform-origin: 50% 100%; will-change: transform; }
 .wp-field .fl:nth-child(2) { animation: sway 5.5s ease-in-out infinite alternate; --a: 1deg; }
 .wp-field .fl:nth-child(3) { animation: sway 4.2s ease-in-out -2s infinite alternate; --a: 1.8deg; }
 /* il simbolo è enorme e vive nel prato: bianco con contorno inchiostro come in home, sale dietro l'ultima collina */
-.wp-badge { position: absolute; z-index: 1; left: 50%; top: 27vh; translate: -50% 0; height: min(86vh, 900px, 138vw); aspect-ratio: 269.13 / 414.41; pointer-events: none; }
+.wp-badge { --L: min(86vh, 900px, 138vw); --an: calc(0.78 * max(62.5vw, 122vh)); /* --an: quota delle colline (l'illustrazione è 1600×1000 in cover): la base del simbolo scende sempre sotto di esse */ position: absolute; z-index: 1; left: 50%; top: max(27vh, calc(var(--an) - var(--L))); translate: -50% 0; height: var(--L); aspect-ratio: 269.13 / 414.41; pointer-events: none; }
 .wp-badge svg { width: 100%; height: 100%; display: block; }
 .wp-badge path { fill: var(--white); stroke: var(--ink); stroke-width: 2.6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; paint-order: stroke; }
 .wp-field .fl:nth-child(3) { z-index: 2; }

@@ -3,6 +3,7 @@
 // Anima anche le singole parti (alberi, cespugli, fiori, erba con CSS dentro l'SVG), le farfalle e i petali; disattivato con prefers-reduced-motion.
 //   strati > 1 → file <nome>-1.svg … <nome>-N.svg (dal fondo al primo piano), animati a parte con CSS.
 //   c = collinetta al centro (hero, il logo HTML ci poggia sopra), r = a destra con simbolo inciso (footer), 0 = nessuna.
+// I bordi (meadow-edge-*) hanno viewBox con 70 di margine in alto ("0 -70 1600 H+70"): alberi e fiori sporgono oltre y=0 e senza margine verrebbero tagliati.
 // Deterministico (PRNG con seme). Colori: verde del brand (sfondo), bianco (fiori), nero (tratto).
 import { readFileSync, writeFileSync } from 'node:fs';
 
