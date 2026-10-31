@@ -4,7 +4,8 @@ import { test, expect } from '@playwright/test';
 test('hero: nessuna immagine di sfondo, nav a pillole fissa, hero >= viewport', async ({ page }) => {
   await page.goto('');
   await expect(page.locator('.hero img.hero-bg')).toHaveCount(0);
-  expect(await page.locator('.hero').evaluate((e) => getComputedStyle(e).backgroundImage)).toBe('none');
+  // solo la grana SVG incorporata (nessuna foto di sfondo)
+  expect(await page.locator('.hero').evaluate((e) => getComputedStyle(e).backgroundImage)).toMatch(/^(none|url\("data:image\/svg\+xml)/);
   expect(await page.locator('.hero').evaluate((e) => getComputedStyle(e).backgroundColor)).toBe('rgb(13, 158, 91)');
   expect(await page.locator('.pillbar').evaluate((e) => getComputedStyle(e).position)).toBe('fixed');
   const vh = page.viewportSize()!.height;
