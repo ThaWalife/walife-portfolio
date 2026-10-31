@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import { routes, t, type Lang } from '../lib/i18n';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const it = lang === 'it';
+const paths = { it: routes.cookies.it, en: routes.cookies.en };
+const blocks = it
+  ? [
+      ['Cosa sono i cookie', 'I cookie sono piccoli file che un sito salva nel browser. Lo stesso scopo può essere ottenuto con tecnologie simili, come il localStorage e il sessionStorage del browser. In questa pagina parliamo di tutte queste tecnologie, spiegando cosa usa questo sito.'],
+      ['Cookie di profilazione e analisi', 'Questo sito non usa cookie di profilazione, pubblicità, strumenti di statistica (come Google Analytics) né pixel di tracciamento. Per questo non compare nessun banner di consenso: non c’è nulla da accettare o rifiutare.'],
+      ['Dati salvati nel tuo browser', 'Il sito salva sul tuo dispositivo solo tre informazioni tecniche, che non contengono dati personali e non vengono mai inviate a nessuno: “wl-lang” ricorda la lingua scelta (italiano o inglese) ed è conservata finché non la cancelli; “wl-sound” ricorda se hai attivato il suono, e resta finché non la cancelli; “wl-wipe” è un segnale temporaneo usato per l’animazione di passaggio tra le pagine, e sparisce quando chiudi la scheda.'],
+      ['Video YouTube', 'Nelle pagine di alcuni progetti ci sono video di YouTube. Per rispettare la tua privacy il video non viene caricato finché non premi il pulsante di riproduzione: prima del clic non viene contattato nessun server di YouTube. Dopo il clic il video viene caricato dal dominio youtube-nocookie.com, la modalità a privacy avanzata di Google, che può comunque salvare dati tecnici secondo la propria informativa. Se non vuoi questo, non avviare i video.'],
+      ['Link esterni', 'Il sito contiene link verso servizi esterni, come Instagram, Discord, TikTok, Bluesky e il sito di Celestia. Questi link non caricano nulla finché non li apri. Una volta aperti, valgono le regole di quei servizi.'],
+      ['Dati tecnici di accesso', 'Il sito è ospitato su GitHub Pages e l’indirizzo del dominio è gestito tramite Cloudflare (solo servizio DNS). Come per ogni sito, GitHub può registrare dati tecnici di accesso, come l’indirizzo IP, per motivi di sicurezza e funzionamento, secondo la propria informativa privacy. I caratteri e le immagini sono caricati dal sito stesso, non da servizi di terzi.'],
+      ['Come cancellare o bloccare i dati', 'Puoi eliminare in qualsiasi momento i dati salvati dal sito dalle impostazioni del tuo browser (“Cancella dati di navigazione” o “Dati dei siti”). Puoi anche impostare il browser per bloccare i cookie e i dati dei siti: il sito continuerà a funzionare, ma ti chiederà di nuovo la lingua e il suono a ogni visita.'],
+      ['Contatti', 'Per domande su questa informativa: thawalife@gmail.com. Ultimo aggiornamento: 31 ottobre 2026.'],
+    ]
+  : [
+      ['What cookies are', 'Cookies are small files a website saves in your browser. The same purpose can be reached with similar technologies, like the browser’s localStorage and sessionStorage. This page covers all of them and explains what this site uses.'],
+      ['Profiling and analytics cookies', 'This site uses no profiling cookies, advertising, statistics tools (like Google Analytics) or tracking pixels. For this reason there is no consent banner: there is nothing to accept or refuse.'],
+      ['Data stored in your browser', 'The site stores only three technical items on your device. They contain no personal data and are never sent to anyone: “wl-lang” remembers the language you picked (Italian or English) and stays until you clear it; “wl-sound” remembers whether you turned the sound on and stays until you clear it; “wl-wipe” is a temporary flag used for the page transition animation and disappears when you close the tab.'],
+      ['YouTube videos', 'Some project pages include YouTube videos. To protect your privacy the video is not loaded until you press the play button: before the click no YouTube server is contacted. After the click the video is loaded from youtube-nocookie.com, Google’s enhanced privacy mode, which may still store technical data under its own policy. If you do not want this, do not start the videos.'],
+      ['External links', 'The site contains links to external services, such as Instagram, Discord, TikTok, Bluesky and the Celestia website. These links load nothing until you open them. Once opened, the rules of those services apply.'],
+      ['Technical access data', 'The site is hosted on GitHub Pages and the domain address is managed through Cloudflare (DNS service only). As with any website, GitHub may log technical access data, such as the IP address, for security and operation, under its own privacy policy. Fonts and images are loaded from the site itself, not from third-party services.'],
+      ['How to delete or block data', 'You can delete the data stored by the site at any time from your browser settings (“Clear browsing data” or “Site data”). You can also set your browser to block cookies and site data: the site will keep working, but will ask for language and sound again at every visit.'],
+      ['Contact', 'For questions about this policy: thawalife@gmail.com. Last updated: 31 October 2026.'],
+    ];
+---
+<Base lang={lang} page="privacy" paths={paths} title={t(lang, 'cookies') + ' | Walife'} description={blocks[1][1]}>
+  <section class="inner">
+    <div class="wrap about-hero">
+      <h1 style="font-size:clamp(44px,8vw,120px)">{t(lang, 'cookies')}</h1>
+      <dl class="legal-list">
+        {blocks.map(([h, p]) => (<div><dt class="label">{h}</dt><dd>{p}</dd></div>))}
+      </dl>
+      <p><a class="btn" href={url(routes.privacy[lang])} data-snd>{t(lang, 'privacy')}</a></p>
+    </div>
+  </section>
+</Base>

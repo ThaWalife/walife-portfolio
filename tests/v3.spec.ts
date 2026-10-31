@@ -337,7 +337,7 @@ test('tutti i bottoni (.btn, .chip) hanno lo stile delle pillole dell\'header', 
 });
 
 test('nessuna citazione di "Marini" nelle pagine', async ({ page }) => {
-  for (const path of ['', 'archivio/', 'chi-sono/', 'contatti/', 'privacy/', 'en/', 'en/archive/', 'en/about/', 'en/contact/', 'en/privacy/']) {
+  for (const path of ['', 'archivio/', 'chi-sono/', 'contatti/', 'privacy/', 'cookie-policy/', 'en/cookie-policy/', 'en/', 'en/archive/', 'en/about/', 'en/contact/', 'en/privacy/']) {
     await page.goto(path);
     const html = await page.content();
     expect(html.includes('Marini'), path).toBe(false);
@@ -607,7 +607,7 @@ test('home: progetti in evidenza = Tower, Octopus, Club Italia, elaborato conclu
   expect(html.includes('David Martinez')).toBe(true);
 });
 
-const ALL_PATHS = ['', 'archivio/', 'chi-sono/', 'contatti/', 'privacy/', 'en/', 'en/archive/', 'en/about/', 'en/contact/', ...SLUGS.map((s) => `progetti/${s}/`)];
+const ALL_PATHS = ['', 'archivio/', 'chi-sono/', 'contatti/', 'privacy/', 'cookie-policy/', 'en/cookie-policy/', 'en/', 'en/archive/', 'en/about/', 'en/contact/', ...SLUGS.map((s) => `progetti/${s}/`)];
 for (const w of [360, 412]) {
   test(`telefono ${w}px: nessun overflow orizzontale su tutte le pagine (anche dopo lo scroll)`, async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: w, height: 800 }, hasTouch: true, isMobile: true, locale: 'it-IT' });

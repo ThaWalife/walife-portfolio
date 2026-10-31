@@ -3,12 +3,13 @@ import site from '../content/site.json';
 export type Lang = 'it' | 'en';
 export type PageKey = 'home' | 'archive' | 'about' | 'contact' | 'privacy';
 
-export const routes: Record<PageKey, Record<Lang, string>> = {
+export const routes: Record<PageKey | 'cookies', Record<Lang, string>> = {
   home: { it: '', en: 'en/' },
   archive: { it: 'archivio/', en: 'en/archive/' },
   about: { it: 'chi-sono/', en: 'en/about/' },
   contact: { it: 'contatti/', en: 'en/contact/' },
   privacy: { it: 'privacy/', en: 'en/privacy/' },
+  cookies: { it: 'cookie-policy/', en: 'en/cookie-policy/' },
 };
 
 export const projectPath = (slug: string, lang: Lang) => (lang === 'it' ? `progetti/${slug}/` : `en/projects/${slug}/`);
@@ -42,6 +43,7 @@ const extra: Record<Lang, Record<string, string>> = {
     aboutTitle: 'Chi sono',
     projectsTitle: 'Progetti',
     privacy: 'Privacy e condizioni',
+    cookies: 'Cookie policy',
     drag: 'Scorri',
     featured: '02 / In primo piano',
     contactIntro: 'Scrivimi, rispondo volentieri.',
@@ -78,6 +80,7 @@ const extra: Record<Lang, Record<string, string>> = {
     aboutTitle: 'About me',
     projectsTitle: 'Projects',
     privacy: 'Privacy and terms',
+    cookies: 'Cookie policy',
     drag: 'Scroll',
     featured: '02 / Featured',
     contactIntro: 'Write to me, I’m happy to reply.',

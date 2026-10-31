@@ -8,7 +8,7 @@ const PAGES = [
   { path: 'chi-sono/', lang: 'it', title: /Chi sono/ }, { path: 'contatti/', lang: 'it', title: /Contattami/ },
   { path: 'en/', lang: 'en', title: /Walife/ }, { path: 'en/archive/', lang: 'en', title: /archive/i },
   { path: 'en/about/', lang: 'en', title: /About/ }, { path: 'en/contact/', lang: 'en', title: /Contact me/ },
-  { path: 'privacy/', lang: 'it', title: /Privacy/ }, { path: 'en/privacy/', lang: 'en', title: /Privacy/ },
+  { path: 'cookie-policy/', lang: 'it', title: /Cookie/ }, { path: 'en/cookie-policy/', lang: 'en', title: /Cookie/ }, { path: 'privacy/', lang: 'it', title: /Privacy/ }, { path: 'en/privacy/', lang: 'en', title: /Privacy/ },
 ];
 
 const errorsOf = (page: Page) => {
