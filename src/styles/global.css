@@ -593,7 +593,7 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
 /* gruppo di righe con larghezza massima propria (es. poster in 2×2) */
 @media (min-width: 701px) { .pj-rows[style*='--mw'] { max-width: var(--mw); } }
 
-/* grana carta/pellicola: texture sopra le pagine che smorza il bianco senza cambiare i colori (rumore SVG generato dal browser, nessun file) */
-body::after { content: ''; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: var(--grain, 0.38);
-  background-size: 220px 220px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24  0 0 0 0 0.21  0 0 0 0 0.17  0 0 0 1.5 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+/* grana carta/pellicola: sta DENTRO gli sfondi (sotto i contenuti), così il vetro liquido la sfoca insieme al resto. Rumore SVG generato dal browser, nessun file. */
+:root { --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24  0 0 0 0 0.21  0 0 0 0 0.17  0 0 0 0.57 -0.21'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+body { background: var(--grain) 0 0 / 220px 220px, var(--white); }
+.on-green, .site-footer, .wp-field::before { background: var(--grain) 0 0 / 220px 220px, var(--green); }
