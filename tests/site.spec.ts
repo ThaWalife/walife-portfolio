@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
 const site = JSON.parse(readFileSync(new URL('../src/content/site.json', import.meta.url), 'utf8'));
-const BASE = '/walife-portfolio/';
+const BASE = '/';
 const PAGES = [
   { path: '', lang: 'it', title: /Walife/ }, { path: 'archivio/', lang: 'it', title: /Archivio/ },
   { path: 'chi-sono/', lang: 'it', title: /Chi sono/ }, { path: 'contatti/', lang: 'it', title: /Contattami/ },
