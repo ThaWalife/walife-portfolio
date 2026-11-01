@@ -53,21 +53,6 @@ test('chi sono (home): il testo si rivela scrollando, grigio con contrasto leggi
   expect(await page.locator('[data-scrub] .on').count()).toBeGreaterThan(on1);
 });
 
-test('cursore custom: compare col mouse, assente su touch', async ({ browser }) => {
-  const a = await browser.newContext({ viewport: { width: 1280, height: 800 } });
-  const p = await a.newPage();
-  await p.goto('archivio/');
-  await expect(p.locator('html')).toHaveClass(/has-cursor/);
-  await p.mouse.move(300, 300);
-  await expect(p.locator('.cursor')).not.toHaveClass(/hide/);
-  await a.close();
-  const b = await browser.newContext({ viewport: { width: 390, height: 800 }, hasTouch: true, isMobile: true });
-  const q = await b.newPage();
-  await q.goto('archivio/');
-  await expect(q.locator('html')).not.toHaveClass(/has-cursor/);
-  await b.close();
-});
-
 test.describe('suono opt-in', () => {
   test('OFF: nessun pluck (hover e tastiera), nessun AudioContext', async ({ page }) => {
     await page.goto('archivio/');

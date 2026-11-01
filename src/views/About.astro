@@ -72,7 +72,7 @@ const email = site.SOCIALS.find((s) => s.name === 'Email')!;
     <div class="wrap contact-big">
       <span class="label">{t(lang, 'abCtIdx')}</span>
       <h2>{t(lang, 'abCtTitle')}</h2>
-      <a class="mail" data-cursor="MAIL" href={email.url}>{email.handle}</a>
+      <a class="mail" href={email.url}>{email.handle}</a>
       <div><a class="btn" data-snd href={url(routes.archive[lang])}>{t(lang, 'abWork')}</a></div>
     </div>
   </section>

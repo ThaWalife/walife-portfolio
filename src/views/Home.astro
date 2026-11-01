@@ -76,7 +76,7 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
     <div class="stack wrap" data-stack>
       {featured.map((p, i) => (
         <div class="stack-slot">
-          <a class="pcard" data-pcard={i} href={url(projectPath(p.slug, lang))} data-cursor="OPEN" data-snd style={`--top:${i * 28}px`}>
+          <a class="pcard" data-pcard={i} href={url(projectPath(p.slug, lang))} data-snd style={`--top:${i * 28}px`}>
             <div class="pc-text">
               <span class="n">0{i + 1}</span>
               <span class="tags">{p.tags[lang]} · {String(p.date).slice(0, 4)}</span>
@@ -98,7 +98,7 @@ const about = `${t(lang, 'abBio')} ${t(lang, 'abBio2')}`;
     <div class="wrap contact-big">
       <span class="label rv">{t(lang, 'ctIdx')}</span>
       <h2 data-split>{t(lang, 'ctLead')} <em>{t(lang, 'ctLink')}</em></h2>
-      <a class="mail" href={email.url} data-cursor="MAIL">{email.handle}</a>
+      <a class="mail" href={email.url}>{email.handle}</a>
       <ul class="socials rv">
         {(site.SOCIALS as any[]).filter((s) => s.name !== 'Email').map((s) => (
           <li><a href={s.url} target="_blank" rel="noopener" data-snd><span class="label">{s.name} ↗</span><span class="h">{s.handle}</span></a></li>

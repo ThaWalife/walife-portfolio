@@ -1,4 +1,4 @@
-// Effetti "Framer": smooth scroll, cursore custom, reveal per riga, transizione di pagina in vetro + prato.
+// Effetti "Framer": smooth scroll, reveal per riga, transizione di pagina in vetro + prato.
 import Lenis from 'lenis';
 
 const html = document.documentElement;
@@ -44,23 +44,6 @@ if (!reduced) {
   splits.forEach((el) => splitWords(el)); // le parole restano nel DOM come testo normale: lettori di schermo OK
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.2 });
   splits.forEach((el) => io.observe(el));
-}
-
-// ── cursore custom (solo mouse)
-if (fine && !reduced) {
-  html.classList.add('has-cursor');
-  const cur = document.querySelector<HTMLElement>('.cursor')!;
-  const lab = cur.querySelector<HTMLElement>('[data-cursor-label]')!;
-  let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
-  cur.classList.add('hide');
-  addEventListener('pointermove', (e) => { x = e.clientX; y = e.clientY; cur.classList.remove('hide'); }, { passive: true });
-  document.addEventListener('pointerleave', () => cur.classList.add('hide'));
-  const tick = () => { cx += (x - cx) * 0.2; cy += (y - cy) * 0.2; cur.style.transform = `translate3d(${cx}px,${cy}px,0)`; requestAnimationFrame(tick); };
-  tick();
-  document.addEventListener('pointerover', (e) => {
-    const t = (e.target as HTMLElement).closest<HTMLElement>('[data-cursor]');
-    if (t) { lab.textContent = t.dataset.cursor!; cur.classList.add('big'); } else cur.classList.remove('big');
-  });
 }
 
 // ── transizione di pagina: foglio di vetro con il prato che sale (uscita) e riscende (ingresso). ~0,35 s + ~0,45 s.

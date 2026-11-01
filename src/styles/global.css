@@ -250,14 +250,6 @@ section.inner { padding-block: clamp(48px, 8vw, 110px); }
 [data-view='list'] .card:hover { background: rgba(255, 255, 255, 0.5); }
 .mobile-nav { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.45); }
 @supports not (backdrop-filter: blur(1px)) { .brand, .pill, .card, .socials a, .tools-grid li, .chip, .btn { background: rgba(255, 255, 255, 0.85); } }
-/* cursore custom (solo pointer: fine): pallino nero, etichetta nera su cerchio bianco */
-.cursor { position: fixed; z-index: 90; left: 0; top: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 999px; background: var(--ink); pointer-events: none; display: none; place-items: center;
-  font: 700 11px/1 var(--font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), background .3s, opacity .3s; will-change: transform; }
-.has-cursor .cursor { display: grid; }
-.cursor.big { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: var(--white); box-shadow: inset 0 0 0 2px var(--ink); }
-.cursor span { opacity: 0; transition: opacity .2s; }
-.cursor.big span { opacity: 1; }
-.cursor.hide { opacity: 0; }
 
 
 /* reveal */

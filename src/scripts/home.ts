@@ -79,7 +79,7 @@ if (cards.length && !reduced) {
 // logo dell'header: bianco sopra le sezioni verdi, verde sopra le bianche (si legge sempre)
 const brand = document.querySelector<HTMLElement>('.brand-home');
 if (brand) {
-  const skip = '.pillbar, .leaf-bg, .guides, .cursor, .wipe, .skip';
+  const skip = '.pillbar, .leaf-bg, .guides, .wipe, .skip';
   let tick = false;
   const upd = () => {
     tick = false;
