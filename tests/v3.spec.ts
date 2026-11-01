@@ -564,7 +564,7 @@ test('transizione di pagina: foglio di vetro + prato, veloce (<1,6 s), la nuova 
   await page.waitForTimeout(800);
   // struttura: vetro sfocato, bordo con l'illustrazione, simbolo
   await expect(page.locator('.wipe .wp-glass')).toHaveCount(1);
-  expect(await page.locator('.wp-glass').evaluate((e) => getComputedStyle(e).backdropFilter)).toContain('blur');
+  expect(await page.locator('.wp-glass').evaluate((e) => getComputedStyle(e).backdropFilter)).toBe('none');
   await expect(page.locator('.wp-field')).toHaveCount(1);
   await expect(page.locator('.wp-badge svg')).toHaveCount(1);
   expect(await page.locator('.wipe').evaluate((e) => getComputedStyle(e).visibility)).toBe('hidden');
@@ -605,7 +605,7 @@ test('home: progetti in evidenza = Tower, Octopus, Club Italia, elaborato conclu
   expect(ids).toContain('5jSXj0SQZP0');                                              // il vecchio è tra gli altri edit
   expect(ids.indexOf('5jSXj0SQZP0')).toBeGreaterThan(2);
   const html = await page.content();
-  expect(html.includes('David Martinez')).toBe(true);
+  expect(html.includes('D D | Cyberpunk: Edgerunners 2 Edit')).toBe(true);
 });
 
 const ALL_PATHS = ['', 'archivio/', 'chi-sono/', 'contatti/', 'privacy/', 'cookie-policy/', 'en/cookie-policy/', 'en/', 'en/archive/', 'en/about/', 'en/contact/', ...SLUGS.map((s) => `progetti/${s}/`)];

@@ -71,6 +71,7 @@ const SHOW = 'translateY(-17vh)';     // il foglio copre tutto lo schermo (il bo
 const HIDE = 'translateY(100vh)';    // il foglio è sotto lo schermo
 const play = (from: string, to: string, ms: number, g0: number, g1: number) => {
   wipe.style.visibility = 'visible';
+  html.classList.add('wl-busy'); // ferma foglie e altri lavori sotto la copertura: tutta la GPU alla transizione
   const o = { duration: ms, fill: 'forwards' as const };
   glass.animate([{ opacity: g0 }, { opacity: g1 }], { ...o, easing: 'ease-out' });
   return sheet.animate([{ transform: from }, { transform: to }], { ...o, easing: 'cubic-bezier(0.65, 0, 0.25, 1)' }).finished;
@@ -85,12 +86,13 @@ const loadField = () => {
     const im = new Image();
     im.className = 'fl'; im.alt = ''; im.decoding = 'async'; im.src = src;
     field.append(im);
+    im.decode().catch(() => { /* il browser la decodifica comunque al primo uso */ }); // già decodificata prima del primo fotogramma
   });
 };
 const idle = (window as any).requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1200));
 const clear = () => {
   sheet.getAnimations().concat(glass.getAnimations()).forEach((a) => a.cancel());
-  html.classList.remove('wl-in');
+  html.classList.remove('wl-in', 'wl-busy');
   wipe.style.visibility = 'hidden';
 };
 let cameFrom = false;
@@ -98,7 +100,10 @@ try { cameFrom = sessionStorage.getItem('wl-wipe') === '1'; sessionStorage.remov
 if (!reduced) { if (cameFrom) loadField(); else idle(loadField); }
 if (cameFrom && !reduced) {
   // la pagina nasce già coperta (classe .wl-in); parte da lì e riscende
-  requestAnimationFrame(() => { html.classList.remove('wl-in'); play(SHOW, HIDE, 460, 1, 0).then(clear); });
+  // si scopre solo quando la pagina ha finito di caricare (al massimo 700 ms): così la discesa non compete con il lavoro di avvio
+  const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise<void>((r) => addEventListener('load', () => r(), { once: true }));
+  Promise.race([loaded, new Promise((r) => setTimeout(r, 700))]).then(() =>
+    requestAnimationFrame(() => requestAnimationFrame(() => { html.classList.remove('wl-in'); play(SHOW, HIDE, 460, 1, 0).then(clear); })));
 } else clear();
 if (!reduced) {
   document.addEventListener('click', (e) => {

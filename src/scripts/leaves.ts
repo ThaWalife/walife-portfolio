@@ -69,10 +69,12 @@ export function mountLeaves(canvas: HTMLCanvasElement, reduced: boolean) {
   };
 
   if (reduced) { draw(0, 0); return; }
+  const busy = () => document.documentElement.classList.contains('wl-busy') || document.documentElement.classList.contains('wl-in');
   let last = performance.now();
   const loop = (now: number) => {
     const dt = Math.min((now - last) / 1000, 0.05); last = now;
-    draw(now, dt);
+    // durante la transizione (e all'arrivo sotto la copertura) il canvas sta fermo: ogni suo ridisegno costringe il vetro sopra a ricalcolare la sfocatura
+    if (!busy()) draw(now, dt);
     requestAnimationFrame(loop);
   };
   requestAnimationFrame(loop);

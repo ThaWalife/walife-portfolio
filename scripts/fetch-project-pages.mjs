@@ -18,7 +18,7 @@ const PAGES = ctx.window.WALIFE.PAGES;
     const old = bl[i - 1];
     const grid = bl.find((b) => b.type === 'ytgrid');
     grid.items.unshift({ id: '5jSXj0SQZP0', title: old.it });
-    const title = 'David Martinez | Cyberpunk: Edgerunners Edit';
+    const title = 'D D | Cyberpunk: Edgerunners 2 Edit';
     bl[i - 1] = { type: 'h', it: title, en: title };
     bl[i] = { type: 'youtube', id: 'U9tj412zsnU' };
   }

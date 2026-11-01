@@ -484,11 +484,12 @@ body[data-page='about'] section.inner:nth-last-of-type(2) { padding-bottom: calc
 
 /* transizione di pagina: un foglio di vetro e un intero prato inciso (colline, alberi, fiori, api, vento) sale e copre lo schermo, poi riscende */
 .wipe { position: fixed; inset: 0; z-index: 120; pointer-events: none; visibility: hidden; overflow: hidden; }
-.wp-glass { position: absolute; inset: 0; opacity: 0; background: rgba(244, 244, 244, 0.28); -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); }
+.wp-glass { position: absolute; inset: 0; opacity: 0; background: rgba(244, 244, 244, 0.5); } /* niente backdrop-filter: una sfocatura a schermo intero con opacità animata fa scattare, soprattutto su telefono */
 .wp-sheet { position: absolute; left: 0; right: 0; top: 0; height: 122vh; transform: translateY(100vh); will-change: transform; }
 .wp-field { position: absolute; inset: 0; }
 .wp-field::before { content: ''; position: absolute; left: 0; right: 0; top: 12vh; bottom: 0; background: var(--green); }
 .wp-field .fl { position: absolute; top: 0; left: -14px; width: calc(100% + 28px); max-width: none; height: 100%; object-fit: cover; object-position: 50% 0; display: block; transform-origin: 50% 100%; will-change: transform; }
+html:not(.wl-busy):not(.wl-in) .wp-field .fl { animation-play-state: paused; }
 .wp-field .fl:nth-child(2) { animation: sway 5.5s ease-in-out infinite alternate; --a: 1deg; }
 .wp-field .fl:nth-child(3) { animation: sway 4.2s ease-in-out -2s infinite alternate; --a: 1.8deg; }
 /* il simbolo è enorme e vive nel prato: bianco con contorno inchiostro come in home, sale dietro l'ultima collina */

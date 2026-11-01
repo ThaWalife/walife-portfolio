@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Field from '../components/Field.astro';
 import logoRaw from '../assets/walife-logo.svg?raw';
-const wipeUrls = Object.entries(import.meta.glob('../assets/meadow-wipe-*.svg', { eager: true, query: '?url', import: 'default' }) as Record<string, string>).sort(([a], [c]) => a.localeCompare(c)).map(([, u]) => u);
+const wipeUrls = Object.entries(import.meta.glob('../assets/meadow-wipe-*.webp', { eager: true, query: '?url', import: 'default' }) as Record<string, string>).sort(([a], [c]) => a.localeCompare(c)).map(([, u]) => u);
 import site from '../content/site.json';
 import { ROOT, url } from '../lib/url';
 import { routes, t, type Lang, type PageKey } from '../lib/i18n';
