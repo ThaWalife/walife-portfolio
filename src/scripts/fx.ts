@@ -79,15 +79,17 @@ const play = (from: string, to: string, ms: number, g0: number, g1: number) => {
 // le illustrazioni del foglio si caricano a riposo (o subito se la pagina nasce coperta): niente peso sul primo caricamento
 const field = wipe.querySelector<HTMLElement>('.wp-field')!;
 let loaded = false;
+let fieldReady: Promise<unknown> = Promise.resolve();
 const loadField = () => {
   if (loaded) return;
   loaded = true;
-  (field.dataset.wipeSrcs ?? '').split(',').filter(Boolean).forEach((src) => {
+  // il simbolo compare solo quando tutti gli strati sono pronti: mai davanti a un'illustrazione incompleta
+  fieldReady = Promise.all((field.dataset.wipeSrcs ?? '').split(',').filter(Boolean).map((src) => {
     const im = new Image();
     im.className = 'fl'; im.alt = ''; im.decoding = 'async'; im.src = src;
     field.append(im);
-    im.decode().catch(() => { /* il browser la decodifica comunque al primo uso */ }); // già decodificata prima del primo fotogramma
-  });
+    return im.decode().catch(() => { /* il browser la decodifica comunque al primo uso */ }); // già decodificata prima del primo fotogramma
+  })).then(() => wipe.classList.add('rdy'));
 };
 const idle = (window as any).requestIdleCallback ?? ((f: () => void) => setTimeout(f, 1200));
 const clear = () => {
@@ -102,7 +104,7 @@ if (cameFrom && !reduced) {
   // la pagina nasce già coperta (classe .wl-in); parte da lì e riscende
   // si scopre solo quando la pagina ha finito di caricare (al massimo 700 ms): così la discesa non compete con il lavoro di avvio
   const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise<void>((r) => addEventListener('load', () => r(), { once: true }));
-  Promise.race([loaded, new Promise((r) => setTimeout(r, 700))]).then(() =>
+  Promise.race([Promise.all([loaded, fieldReady]), new Promise((r) => setTimeout(r, 700))]).then(() =>
     requestAnimationFrame(() => requestAnimationFrame(() => { html.classList.remove('wl-in'); play(SHOW, HIDE, 460, 1, 0).then(clear); })));
 } else clear();
 if (!reduced) {

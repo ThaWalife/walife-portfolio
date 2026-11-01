@@ -494,6 +494,7 @@ html:not(.wl-busy):not(.wl-in) .wp-field .fl { animation-play-state: paused; }
 .wp-field .fl:nth-child(3) { animation: sway 4.2s ease-in-out -2s infinite alternate; --a: 1.8deg; }
 /* il simbolo è enorme e vive nel prato: bianco con contorno inchiostro come in home, sale dietro l'ultima collina */
 .wp-badge { --L: min(86vh, 900px, 138vw); --an: calc(0.78 * max(62.5vw, 122vh)); /* --an: quota delle colline (l'illustrazione è 1600×1000 in cover): la base del simbolo scende sempre sotto di esse */ position: absolute; z-index: 1; left: 50%; top: max(27vh, calc(var(--an) - var(--L))); translate: -50% 0; height: var(--L); aspect-ratio: 269.13 / 414.41; pointer-events: none; }
+.wipe:not(.rdy) .wp-badge { visibility: hidden; }
 .wp-badge svg { width: 100%; height: 100%; display: block; }
 .wp-badge path { fill: var(--white); stroke: var(--ink); stroke-width: 2.6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; paint-order: stroke; }
 .wp-field .fl:nth-child(3) { z-index: 2; }
